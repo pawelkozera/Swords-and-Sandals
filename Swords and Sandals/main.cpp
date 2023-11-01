@@ -1,24 +1,13 @@
-#include <SFML/Graphics.hpp>
+#include "GameManager.h"
+#include "TextureManager.h"
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+int main() {
+    GameManager gameManager;
+    TextureManager textureManager;
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    textureManager.loadCharacterBodyTextures();
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    gameManager.run(textureManager);
 
     return 0;
 }
