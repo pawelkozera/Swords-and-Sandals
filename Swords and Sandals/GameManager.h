@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "Character.h"
 #include "TextureManager.h"
+#include "Button.h"
+#include "CityCenter.h"
 
 class GameManager {
 private:
@@ -12,5 +14,6 @@ public:
     void run(TextureManager& textureManager);
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap(TextureManager& textureManager);
     std::unordered_map<std::string, ArmorPiece> createCharacterArmorPieces(TextureManager& textureManager);
+    std::unordered_map<std::string, Button> createCityCenterButtonsMap(TextureManager& textureManager);
 };
 

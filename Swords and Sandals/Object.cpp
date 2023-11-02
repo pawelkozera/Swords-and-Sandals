@@ -9,7 +9,7 @@ Object::Object(const sf::Texture& texture) {
     sprite.setScale(scaleX, scaleY);
 }
 
-sf::Sprite const Object::getSprite() const {
+sf::Sprite const &Object::getSprite() const {
     return sprite;
 }
 
@@ -27,4 +27,8 @@ void Object::setPosition(const sf::Vector2f position) {
 
 void Object::flipSprite() {
     sprite.setScale(-scaleX, scaleY);
+}
+
+void Object::setScale(float scaleX, float scaleY) {
+    sprite.setScale(scaleX, scaleY);
 }

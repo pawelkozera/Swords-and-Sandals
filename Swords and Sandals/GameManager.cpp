@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "CityCenter.h"
 
 GameManager::GameManager() {
     window.create(sf::VideoMode(1024, 900), "Swords and Sandals");
@@ -8,10 +7,12 @@ GameManager::GameManager() {
 void GameManager::run(TextureManager &textureManager) {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap(textureManager);
     std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces(textureManager);
+    std::unordered_map<std::string, Button> Buttons = createCityCenterButtonsMap(textureManager);
 
     Character character(characterPartsMap, characterArmorPieces);
-    CityCenter cityCenter(textureManager.getTexture("cityCenter"));
+    CityCenter cityCenter(textureManager.getTexture("cityCenter"), Buttons);
     
+    cityCenter.setUpPositionOfButtons();
     character.assembleBody();
     character.updateArmorPositions();
 
@@ -24,7 +25,8 @@ void GameManager::run(TextureManager &textureManager) {
         }
         window.clear();
 
-        window.draw(cityCenter.getSprite());
+        cityCenter.displayCity(window);
+        cityCenter.displayButtons(window);
         //character.display(window);
 
         window.display();
@@ -105,4 +107,18 @@ std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPie
     characterArmorPiecesMap.insert_or_assign("footRight", armorPieceFoot);
 
     return characterArmorPiecesMap;
+}
+
+std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(TextureManager& textureManager) {
+    std::unordered_map<std::string, Button> Buttons;
+
+    Button arenaButton(textureManager.getTexture("arenaButton"));
+    Button armorerButton(textureManager.getTexture("armorerButton"));
+    Button weaponsmithButton(textureManager.getTexture("weaponsmithButton"));
+
+    Buttons.insert_or_assign("arena", arenaButton);
+    Buttons.insert_or_assign("armorer", armorerButton);
+    Buttons.insert_or_assign("weaponsmith", weaponsmithButton);
+
+    return Buttons;
 }
