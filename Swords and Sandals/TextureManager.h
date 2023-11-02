@@ -12,5 +12,6 @@ public:
     sf::Texture& getTexture(const std::string& textureKey);
     void loadTexture(std::string key, std::string textureSrc);
     void loadCharacterBodyTextures();
+    void loadDarkKnightArmor();
 };
 

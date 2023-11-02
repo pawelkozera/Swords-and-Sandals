@@ -41,3 +41,15 @@ void TextureManager::loadCharacterBodyTextures() {
     loadTexture("leg", "Assets/Body/BodyLeg.png");
     loadTexture("foot", "Assets/Body/BodyFoot.png");
 }
+
+void TextureManager::loadDarkKnightArmor() {
+    loadTexture("head", "Assets/Armor/DarkKnightArmorHead.png");
+    loadTexture("chest", "Assets/Armor/DarkKnightArmorChest.png");
+    loadTexture("shoulder", "Assets/Armor/DarkKnightArmorShoulder.png");
+    loadTexture("elbow", "Assets/Armor/DarkKnightArmorElbow.png");
+    loadTexture("arm", "Assets/Armor/DarkKnightArmorArm.png");
+    loadTexture("pelvis", "Assets/Armor/DarkKnightArmorPelvis.png");
+    loadTexture("thigh", "Assets/Armor/DarkKnightArmorThigh.png");
+    loadTexture("leg", "Assets/Armor/DarkKnightArmorLeg.png");
+    loadTexture("foot", "Assets/Armor/DarkKnightArmorFoot.png");
+}
