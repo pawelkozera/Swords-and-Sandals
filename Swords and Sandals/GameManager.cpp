@@ -1,7 +1,9 @@
 #include "GameManager.h"
 
-GameManager::GameManager() {
-    window.create(sf::VideoMode(1000, 800), "Swords and Sandals");
+GameManager::GameManager(sf::Texture &backgroundTexture) {
+    window.create(sf::VideoMode(1024, 900), "Swords and Sandals");
+    background.setTexture(backgroundTexture);
+    background.setPosition(0.0f, -30.0f);
 }
 
 void GameManager::run(TextureManager &textureManager) {
@@ -20,7 +22,8 @@ void GameManager::run(TextureManager &textureManager) {
                 window.close();
             }
         }
-        window.clear(sf::Color(50, 100, 200));
+        window.clear();
+        window.draw(background);
         character.display(window);
         window.display();
     }
