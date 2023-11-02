@@ -53,3 +53,13 @@ void TextureManager::loadDarkKnightArmor() {
     loadTexture("DKAleg", "Assets/Armor/DarkKnightArmorLeg.png");
     loadTexture("DKAfoot", "Assets/Armor/DarkKnightArmorFoot.png");
 }
+
+void TextureManager::loadCityCenter() {
+    loadTexture("cityCenter", "Assets/City/cityCenter.jpg");
+}
+
+void TextureManager::loadButtons() {
+    loadTexture("arenaButton", "Assets/Buttons/Arena.png");
+    loadTexture("armorerButton", "Assets/Buttons/Armorer.png");
+    loadTexture("weaponsmithButton", "Assets/Buttons/Weaponsmith.png");
+}

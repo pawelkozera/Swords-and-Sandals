@@ -1,9 +1,8 @@
 #include "GameManager.h"
+#include "CityCenter.h"
 
-GameManager::GameManager(sf::Texture &backgroundTexture) {
+GameManager::GameManager() {
     window.create(sf::VideoMode(1024, 900), "Swords and Sandals");
-    background.setTexture(backgroundTexture);
-    background.setPosition(0.0f, -30.0f);
 }
 
 void GameManager::run(TextureManager &textureManager) {
@@ -11,6 +10,7 @@ void GameManager::run(TextureManager &textureManager) {
     std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces(textureManager);
 
     Character character(characterPartsMap, characterArmorPieces);
+    CityCenter cityCenter(textureManager.getTexture("cityCenter"));
     
     character.assembleBody();
     character.updateArmorPositions();
@@ -23,8 +23,10 @@ void GameManager::run(TextureManager &textureManager) {
             }
         }
         window.clear();
-        window.draw(background);
-        character.display(window);
+
+        window.draw(cityCenter.getSprite());
+        //character.display(window);
+
         window.display();
     }
 }

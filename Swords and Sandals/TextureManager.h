@@ -13,5 +13,7 @@ public:
     void loadTexture(std::string key, std::string textureSrc);
     void loadCharacterBodyTextures();
     void loadDarkKnightArmor();
+    void loadCityCenter();
+    void loadButtons();
 };
 

@@ -6,9 +6,10 @@ int main() {
 
     textureManager.loadCharacterBodyTextures();
     textureManager.loadDarkKnightArmor();
-    textureManager.loadTexture("backgroundTexture", "Assets/City/cityCenter.jpg");
+    textureManager.loadCityCenter();
+    textureManager.loadButtons();
 
-    GameManager gameManager(textureManager.getTexture("backgroundTexture"));
+    GameManager gameManager;
 
     gameManager.run(textureManager);
 
