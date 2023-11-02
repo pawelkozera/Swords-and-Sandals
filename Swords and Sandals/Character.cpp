@@ -1,7 +1,7 @@
 #include "Character.h"
 
-Character::Character(std::unordered_map<std::string, CharacterPart> characterParts) 
-	: characterParts(characterParts) {
+Character::Character(std::unordered_map<std::string, CharacterPart> characterParts, std::unordered_map<std::string, ArmorPiece> armorPieces)
+	: characterParts(characterParts), armorPieces(armorPieces) {
 }
 
 void Character::assembleBody() {
@@ -56,13 +56,22 @@ void Character::assembleBody() {
     characterParts.at("footRight").setPosition(footRightPosition);
 }
 
+void Character::updateArmorPositions() {
+    for (const auto& characterPartPair : characterParts) {
+        const std::string& partKey = characterPartPair.first;
+        if (armorPieces.find(partKey) != armorPieces.end()) {
+            armorPieces.at(partKey).setPosition(characterPartPair.second.getPosition());
+        }
+    }
+}
+
 void Character::display(sf::RenderWindow& window) {
-    std::vector<std::string> const renderOrder = {
+    std::vector<std::string> const renderOrderBody = {
         "chest", "head", "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight", 
         "thighLeft", "thighRight", "pelvis", "legLeft", "legRight", "footLeft", "footRight"
     };
 
-    for (const std::string &partName : renderOrder) {
+    for (const std::string &partName : renderOrderBody) {
         if (characterParts.find(partName) != characterParts.end()) {
             const CharacterPart& part = characterParts.at(partName);
             sf::Sprite sprite = part.getSprite();
@@ -71,5 +80,18 @@ void Character::display(sf::RenderWindow& window) {
         }
     }
 
+    std::vector<std::string> const renderOrderArmor = {
+        "pelvis", "chest", "head", "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight",
+        "thighLeft", "thighRight", "footLeft", "footRight", "legLeft", "legRight"
+    };
+
+    for (const std::string& partName : renderOrderArmor) {
+        if (armorPieces.find(partName) != armorPieces.end()) {
+            const ArmorPiece& part = armorPieces.at(partName);
+            sf::Sprite sprite = part.getSprite();
+            sprite.setPosition(part.getPosition());
+            window.draw(sprite);
+        }
+    }
 }
 

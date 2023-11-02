@@ -6,6 +6,7 @@ int main() {
     TextureManager textureManager;
 
     textureManager.loadCharacterBodyTextures();
+    textureManager.loadDarkKnightArmor();
 
     gameManager.run(textureManager);
 

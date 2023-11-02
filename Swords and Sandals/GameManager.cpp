@@ -6,8 +6,12 @@ GameManager::GameManager() {
 
 void GameManager::run(TextureManager &textureManager) {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap(textureManager);
-    Character character(characterPartsMap);
+    std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces(textureManager);
+
+    Character character(characterPartsMap, characterArmorPieces);
+    
     character.assembleBody();
+    character.updateArmorPositions();
 
     while (window.isOpen()) {
         sf::Event event;
@@ -58,4 +62,42 @@ std::unordered_map<std::string, CharacterPart> GameManager::createCharacterParts
     characterPartsMap.insert_or_assign("footRight", characterPartFoot);
 
     return characterPartsMap;
+}
+
+std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPieces(TextureManager& textureManager) {
+    std::unordered_map<std::string, ArmorPiece> characterArmorPiecesMap;
+
+    ArmorPiece armorPieceHead(textureManager.getTexture("DKAhead"));
+    ArmorPiece armorPieceChest(textureManager.getTexture("DKAchest"));
+    ArmorPiece armorPieceShoulder(textureManager.getTexture("DKAshoulder"));
+    ArmorPiece armorPieceElbow(textureManager.getTexture("DKAelbow"));
+    ArmorPiece armorPieceArm(textureManager.getTexture("DKAarm"));
+    ArmorPiece armorPiecePelvis(textureManager.getTexture("DKApelvis"));
+    ArmorPiece armorPieceThigh(textureManager.getTexture("DKAthigh"));
+    ArmorPiece armorPieceLeg(textureManager.getTexture("DKAleg"));
+    ArmorPiece armorPieceFoot(textureManager.getTexture("DKAfoot"));
+
+    characterArmorPiecesMap.insert_or_assign("head", armorPieceHead);
+    characterArmorPiecesMap.insert_or_assign("chest", armorPieceChest);
+    characterArmorPiecesMap.insert_or_assign("shoulderLeft", armorPieceShoulder);
+    armorPieceShoulder.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("shoulderRight", armorPieceShoulder);
+    characterArmorPiecesMap.insert_or_assign("elbowLeft", armorPieceElbow);
+    armorPieceElbow.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("elbowRight", armorPieceElbow);
+    characterArmorPiecesMap.insert_or_assign("armLeft", armorPieceArm);
+    armorPieceArm.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("armRight", armorPieceArm);
+    characterArmorPiecesMap.insert_or_assign("pelvis", armorPiecePelvis);
+    characterArmorPiecesMap.insert_or_assign("thighLeft", armorPieceThigh);
+    armorPieceThigh.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("thighRight", armorPieceThigh);
+    characterArmorPiecesMap.insert_or_assign("legLeft", armorPieceLeg);
+    armorPieceLeg.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("legRight", armorPieceLeg);
+    characterArmorPiecesMap.insert_or_assign("footLeft", armorPieceFoot);
+    armorPieceFoot.flipSprite();
+    characterArmorPiecesMap.insert_or_assign("footRight", armorPieceFoot);
+
+    return characterArmorPiecesMap;
 }
