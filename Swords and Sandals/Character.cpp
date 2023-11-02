@@ -9,20 +9,20 @@ void Character::assembleBody() {
     
     sf::Vector2f chestPosition = bodyPosition;
 
-    sf::Vector2f headOffset(characterParts.at("chest").getSpriteSize().width / 8, -characterParts.at("head").getSpriteSize().height + 10.0f);
-    sf::Vector2f shoulderLeftOffset(characterParts.at("shoulderLeft").getSpriteSize().width - 6.0f, characterParts.at("chest").getSpriteSize().height / -10);
-    sf::Vector2f shoulderRightOffset(characterParts.at("chest").getSpriteSize().width + characterParts.at("shoulderRight").getSpriteSize().width - 6.0f, characterParts.at("chest").getSpriteSize().height / 10);
-    sf::Vector2f elbowLeftOffset(0.0f, characterParts.at("shoulderLeft").getSpriteSize().height - 5.0f);
-    sf::Vector2f elbowRightOffset(0.0f, characterParts.at("shoulderRight").getSpriteSize().height - 5.0f);
-    sf::Vector2f armLeftOffset(0.0f, characterParts.at("elbowLeft").getSpriteSize().height - 5.0f);
-    sf::Vector2f armRightOffset(0.0f, characterParts.at("elbowRight").getSpriteSize().height - 5.0f);
-    sf::Vector2f pelvisOffset(characterParts.at("chest").getSpriteSize().width / 4, characterParts.at("chest").getSpriteSize().height - 5.0f);
-    sf::Vector2f thighLeftOffset(characterParts.at("pelvis").getSpriteSize().width / -2, characterParts.at("pelvis").getSpriteSize().height / 3);
-    sf::Vector2f thighRightOffset(characterParts.at("pelvis").getSpriteSize().width * 1.5, characterParts.at("pelvis").getSpriteSize().height / 3);
-    sf::Vector2f legLeftOffset(0.0f, characterParts.at("thighLeft").getSpriteSize().height - 6.0f);
-    sf::Vector2f legRightOffset(0.0f, characterParts.at("thighRight").getSpriteSize().height - 6.0f);
-    sf::Vector2f footLeftOffset(characterParts.at("footLeft").getSpriteSize().width / -1.7f, characterParts.at("legLeft").getSpriteSize().height - 10.0f);
-    sf::Vector2f footRightOffset(characterParts.at("footRight").getSpriteSize().width / 1.7f, characterParts.at("legRight").getSpriteSize().height - 10.0f);
+    sf::Vector2f headOffset(characterParts.at("chest").getSpriteRect().width / 8, -characterParts.at("head").getSpriteRect().height + 10.0f);
+    sf::Vector2f shoulderLeftOffset(characterParts.at("shoulderLeft").getSpriteRect().width - 6.0f, characterParts.at("chest").getSpriteRect().height / -10);
+    sf::Vector2f shoulderRightOffset(characterParts.at("chest").getSpriteRect().width + characterParts.at("shoulderRight").getSpriteRect().width - 6.0f, characterParts.at("chest").getSpriteRect().height / 10);
+    sf::Vector2f elbowLeftOffset(0.0f, characterParts.at("shoulderLeft").getSpriteRect().height - 5.0f);
+    sf::Vector2f elbowRightOffset(0.0f, characterParts.at("shoulderRight").getSpriteRect().height - 5.0f);
+    sf::Vector2f armLeftOffset(0.0f, characterParts.at("elbowLeft").getSpriteRect().height - 5.0f);
+    sf::Vector2f armRightOffset(0.0f, characterParts.at("elbowRight").getSpriteRect().height - 5.0f);
+    sf::Vector2f pelvisOffset(characterParts.at("chest").getSpriteRect().width / 4, characterParts.at("chest").getSpriteRect().height - 5.0f);
+    sf::Vector2f thighLeftOffset(characterParts.at("pelvis").getSpriteRect().width / -2, characterParts.at("pelvis").getSpriteRect().height / 3);
+    sf::Vector2f thighRightOffset(characterParts.at("pelvis").getSpriteRect().width * 1.5, characterParts.at("pelvis").getSpriteRect().height / 3);
+    sf::Vector2f legLeftOffset(0.0f, characterParts.at("thighLeft").getSpriteRect().height - 6.0f);
+    sf::Vector2f legRightOffset(0.0f, characterParts.at("thighRight").getSpriteRect().height - 6.0f);
+    sf::Vector2f footLeftOffset(characterParts.at("footLeft").getSpriteRect().width / -1.7f, characterParts.at("legLeft").getSpriteRect().height - 10.0f);
+    sf::Vector2f footRightOffset(characterParts.at("footRight").getSpriteRect().width / 1.7f, characterParts.at("legRight").getSpriteRect().height - 10.0f);
 
     sf::Vector2f headPosition = chestPosition + headOffset;
     sf::Vector2f shoulderLeftPosition = chestPosition - shoulderLeftOffset;

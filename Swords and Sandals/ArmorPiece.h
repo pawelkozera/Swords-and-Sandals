@@ -1,19 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "Object.h"
 
-class ArmorPiece
+class ArmorPiece : public Object
 {
 private:
-	sf::Sprite sprite;
-	sf::Vector2f position;
-	float scaleX, scaleY;
 public:
 	ArmorPiece(const sf::Texture& texture);
-	sf::Sprite const getSprite() const;
-	sf::Vector2f const getPosition() const;
-	sf::FloatRect const getSpriteSize() const;
-	void setPosition(const sf::Vector2f position);
-	void flipSprite();
 };
 
