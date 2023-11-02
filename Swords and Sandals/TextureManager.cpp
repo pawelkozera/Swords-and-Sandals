@@ -43,13 +43,13 @@ void TextureManager::loadCharacterBodyTextures() {
 }
 
 void TextureManager::loadDarkKnightArmor() {
-    loadTexture("head", "Assets/Armor/DarkKnightArmorHead.png");
-    loadTexture("chest", "Assets/Armor/DarkKnightArmorChest.png");
-    loadTexture("shoulder", "Assets/Armor/DarkKnightArmorShoulder.png");
-    loadTexture("elbow", "Assets/Armor/DarkKnightArmorElbow.png");
-    loadTexture("arm", "Assets/Armor/DarkKnightArmorArm.png");
-    loadTexture("pelvis", "Assets/Armor/DarkKnightArmorPelvis.png");
-    loadTexture("thigh", "Assets/Armor/DarkKnightArmorThigh.png");
-    loadTexture("leg", "Assets/Armor/DarkKnightArmorLeg.png");
-    loadTexture("foot", "Assets/Armor/DarkKnightArmorFoot.png");
+    loadTexture("DKAhead", "Assets/Armor/DarkKnightArmorHead.png");
+    loadTexture("DKAchest", "Assets/Armor/DarkKnightArmorChest.png");
+    loadTexture("DKAshoulder", "Assets/Armor/DarkKnightArmorShoulder.png");
+    loadTexture("DKAelbow", "Assets/Armor/DarkKnightArmorElbow.png");
+    loadTexture("DKAarm", "Assets/Armor/DarkKnightArmorArm.png");
+    loadTexture("DKApelvis", "Assets/Armor/DarkKnightArmorPelvis.png");
+    loadTexture("DKAthigh", "Assets/Armor/DarkKnightArmorThigh.png");
+    loadTexture("DKAleg", "Assets/Armor/DarkKnightArmorLeg.png");
+    loadTexture("DKAfoot", "Assets/Armor/DarkKnightArmorFoot.png");
 }
