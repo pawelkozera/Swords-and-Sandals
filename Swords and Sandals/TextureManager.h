@@ -17,5 +17,6 @@ public:
     void loadCityCenter();
     void loadButtons();
     void loadCursor();
+    void loadShop();
 };
 

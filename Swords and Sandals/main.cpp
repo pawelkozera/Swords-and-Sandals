@@ -9,6 +9,7 @@ int main() {
     textureManager.loadCityCenter();
     textureManager.loadButtons();
     textureManager.loadCursor();
+    textureManager.loadShop();
 
     GameManager gameManager(textureManager);
 
