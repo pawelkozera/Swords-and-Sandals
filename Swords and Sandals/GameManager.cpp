@@ -50,10 +50,7 @@ void GameManager::handleEvents() {
     case GameState::GameMode::InCity:
         cityCenter.displayCity(window);
         cityCenter.displayButtons(window);
-
-        if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
-
-        }
+        handleCityCenterButtons();
         break;
     case GameState::GameMode::InWeaponsmithShop:
         break;
@@ -63,6 +60,18 @@ void GameManager::handleEvents() {
         break;
     default:
         break;
+    }
+}
+
+void GameManager::handleCityCenterButtons() {
+    if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
+        gameState.setMode(GameState::GameMode::InArena);
+    }
+    else if (cityCenter.getButton("armorer").isClicked(cursor.getPosition())) {
+        gameState.setMode(GameState::GameMode::InArmorerShop);
+    }
+    else if (cityCenter.getButton("weaponsmith").isClicked(cursor.getPosition())) {
+        gameState.setMode(GameState::GameMode::InWeaponsmithShop);
     }
 }
 
