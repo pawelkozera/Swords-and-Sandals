@@ -1,4 +1,5 @@
 #pragma once
+
 class GameState
 {
 private:
@@ -9,6 +10,16 @@ private:
         InArmorerShop,
         InArena,
     };
+
+    GameMode currentMode;
 public:
+    GameState();
+    void setMode(GameMode mode);
+    GameMode getMode() const;
+    bool isMainMenu() const;
+    bool isInCity() const;
+    bool InWeaponsmithShop() const;
+    bool InArmorerShop() const;
+    bool InArena() const;
 };
 
