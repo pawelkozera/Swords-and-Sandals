@@ -16,9 +16,7 @@ const sf::Sprite CityCenter::getSprite() const {
 void CityCenter::displayButtons(sf::RenderWindow &window) {
     for (const auto& pair : Buttons) {
         const Button& button = pair.second;
-        sf::Sprite sprite = button.getSprite();
-        sprite.setPosition(button.getPosition());
-        window.draw(sprite);
+        window.draw(button.getSprite());
     }
 }
 

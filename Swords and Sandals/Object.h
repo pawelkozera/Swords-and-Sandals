@@ -7,7 +7,6 @@ class Object
 {
 private:
 	sf::Sprite sprite;
-	sf::Vector2f position;
 	float scaleX, scaleY;
 public:
 	Object(const sf::Texture& texture);

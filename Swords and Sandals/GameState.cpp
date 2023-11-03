@@ -1,7 +1,7 @@
 #include "GameState.h"
 
 
-GameState::GameState() : currentMode(GameMode::MainMenu) {}
+GameState::GameState() : currentMode(GameMode::InCity) {}
 
 void GameState::setMode(GameMode mode) {
     currentMode = mode;

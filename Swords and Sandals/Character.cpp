@@ -78,9 +78,7 @@ void Character::display(sf::RenderWindow& window) {
     for (const std::string &partName : renderOrderBody) {
         if (characterParts.find(partName) != characterParts.end()) {
             const CharacterPart& part = characterParts.at(partName);
-            sf::Sprite sprite = part.getSprite();
-            sprite.setPosition(part.getPosition());
-            window.draw(sprite);
+            window.draw(part.getSprite());
         }
     }
 
@@ -92,9 +90,7 @@ void Character::display(sf::RenderWindow& window) {
     for (const std::string& partName : renderOrderArmor) {
         if (armorPieces.find(partName) != armorPieces.end()) {
             const ArmorPiece& part = armorPieces.at(partName);
-            sf::Sprite sprite = part.getSprite();
-            sprite.setPosition(part.getPosition());
-            window.draw(sprite);
+            window.draw(part.getSprite());
         }
     }
 }

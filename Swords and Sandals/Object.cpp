@@ -14,7 +14,7 @@ sf::Sprite const &Object::getSprite() const {
 }
 
 sf::Vector2f const Object::getPosition() const {
-    return position;
+    return sprite.getPosition();
 }
 
 sf::FloatRect const Object::getSpriteRect() const {
@@ -22,7 +22,7 @@ sf::FloatRect const Object::getSpriteRect() const {
 }
 
 void Object::setPosition(const sf::Vector2f position) {
-    this->position = position;
+    sprite.setPosition(position);
 }
 
 void Object::flipSprite() {

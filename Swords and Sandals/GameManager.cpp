@@ -16,12 +16,9 @@ void GameManager::run() {
             }
         }
 
-        handleEvents();
-
         window.clear();
 
-        cityCenter.displayCity(window);
-        cityCenter.displayButtons(window);
+        handleEvents();
         //character.display(window);
 
         window.display();
@@ -41,12 +38,13 @@ void GameManager::setUp() {
     character.updateArmorPositions();
 
     gameState = GameState();
-    gameState.setMode(GameState::GameMode::InCity);
 }
 
 void GameManager::handleEvents() {
     switch (gameState.getMode()) {
     case GameState::GameMode::InCity:
+        cityCenter.displayCity(window);
+        cityCenter.displayButtons(window);
         break;
     case GameState::GameMode::InWeaponsmithShop:
         break;
