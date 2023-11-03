@@ -20,5 +20,6 @@ public:
     void displayBackground(sf::RenderWindow& window);
     const Button getButton(const std::string& buttonName) const;
     std::unordered_map<std::string, Button>& getButtons();
+    void setSpriteTexture(sf::Texture &texture);
 };
 

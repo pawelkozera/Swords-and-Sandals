@@ -31,12 +31,15 @@ void GameManager::run() {
 void GameManager::setUp() {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap();
     std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces();
-    std::unordered_map<std::string, Button> Buttons = createCityCenterButtonsMap();
+    std::unordered_map<std::string, Button> cityCenterButtons = createCityCenterButtonsMap();
+    std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
 
     character = Character(characterPartsMap, characterArmorPieces);
-    cityCenter = CityCenter(textureManager.getTexture("cityCenter"), Buttons);
+    cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
+    shop = Shop(textureManager.getTexture("armorerBackground"), textureManager.getTexture("weaponsmithBackground"), shopButtons);
 
     cityCenter.setUpPositionOfButtons();
+    shop.setUpPositionOfButtons();
     character.assembleBody();
     character.updateArmorPositions();
 
@@ -53,8 +56,16 @@ void GameManager::handleEvents() {
         handleCityCenterButtons();
         break;
     case GameState::GameMode::InWeaponsmithShop:
+        shop.setShopToArmorer(false);
+        shop.displayBackground(window);
+        shop.displayButtons(window);
+        handleShopArmorerButtons();
         break;
     case GameState::GameMode::InArmorerShop:
+        shop.setShopToArmorer(true);
+        shop.displayBackground(window);
+        shop.displayButtons(window);
+        handleShopArmorerButtons();
         break;
     case GameState::GameMode::InArena:
         break;
@@ -72,6 +83,12 @@ void GameManager::handleCityCenterButtons() {
     }
     else if (cityCenter.getButton("weaponsmith").isClicked(cursor.getPosition())) {
         gameState.setMode(GameState::GameMode::InWeaponsmithShop);
+    }
+}
+
+void GameManager::handleShopArmorerButtons() {
+    if (shop.getButton("backButton").isClicked(cursor.getPosition())) {
+        gameState.setMode(GameState::GameMode::InCity);
     }
 }
 
@@ -161,6 +178,16 @@ std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(
     Buttons.insert_or_assign("arena", arenaButton);
     Buttons.insert_or_assign("armorer", armorerButton);
     Buttons.insert_or_assign("weaponsmith", weaponsmithButton);
+
+    return Buttons;
+}
+
+std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
+    std::unordered_map<std::string, Button> Buttons;
+
+    Button backButton(textureManager.getTexture("backButton"));
+
+    Buttons.insert_or_assign("backButton", backButton);
 
     return Buttons;
 }

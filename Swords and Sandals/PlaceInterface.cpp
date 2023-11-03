@@ -40,3 +40,7 @@ const Button PlaceInterface::getButton(const std::string& buttonName) const {
 std::unordered_map<std::string, Button>& PlaceInterface::getButtons() {
     return buttons;
 }
+
+void PlaceInterface::setSpriteTexture(sf::Texture &texture) {
+    sprite.setTexture(texture);
+}
