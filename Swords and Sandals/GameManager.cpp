@@ -50,6 +50,10 @@ void GameManager::handleEvents() {
     case GameState::GameMode::InCity:
         cityCenter.displayCity(window);
         cityCenter.displayButtons(window);
+
+        if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
+
+        }
         break;
     case GameState::GameMode::InWeaponsmithShop:
         break;
