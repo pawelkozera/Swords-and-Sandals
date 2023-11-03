@@ -66,6 +66,7 @@ void TextureManager::loadButtons() {
     loadTexture("arenaButton", "Assets/Buttons/Arena.png");
     loadTexture("armorerButton", "Assets/Buttons/Armorer.png");
     loadTexture("weaponsmithButton", "Assets/Buttons/Weaponsmith.png");
+    loadTexture("backButton", "Assets/Buttons/Back.png");
 }
 
 void TextureManager::loadCursor() {

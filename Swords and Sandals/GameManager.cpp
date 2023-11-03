@@ -48,7 +48,7 @@ void GameManager::setUp() {
 void GameManager::handleEvents() {
     switch (gameState.getMode()) {
     case GameState::GameMode::InCity:
-        cityCenter.displayCity(window);
+        cityCenter.displayBackground(window);
         cityCenter.displayButtons(window);
         handleCityCenterButtons();
         break;

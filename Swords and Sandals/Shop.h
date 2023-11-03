@@ -8,6 +8,8 @@
 class Shop
 {
 private:
+	std::unordered_map<std::string, ArmorPiece> availableArmorPieces;
+	std::unordered_map<std::string, ArmorPiece> soldArmorPieces;
 public:
 	Shop(const sf::Texture& backgroundTexture, const std::vector<Button>& buttons);
 };
