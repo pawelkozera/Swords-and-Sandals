@@ -21,6 +21,9 @@ void GameManager::run() {
         handleEvents();
         //character.display(window);
 
+        cursor.update();
+        cursor.render();
+
         window.display();
     }
 }
@@ -38,6 +41,8 @@ void GameManager::setUp() {
     character.updateArmorPositions();
 
     gameState = GameState();
+
+    cursor = Cursor(textureManager.getTexture("cursor"), window);
 }
 
 void GameManager::handleEvents() {

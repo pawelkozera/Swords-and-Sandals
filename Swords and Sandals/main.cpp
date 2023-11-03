@@ -8,6 +8,7 @@ int main() {
     textureManager.loadDarkKnightArmor();
     textureManager.loadCityCenter();
     textureManager.loadButtons();
+    textureManager.loadCursor();
 
     GameManager gameManager(textureManager);
 

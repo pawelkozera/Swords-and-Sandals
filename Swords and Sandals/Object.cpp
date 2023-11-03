@@ -1,5 +1,7 @@
 #include "Object.h"
 
+Object::Object() {}
+
 Object::Object(const sf::Texture& texture) {
     scaleX = 0.12f;
     scaleY = 0.12f;

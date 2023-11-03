@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "CityCenter.h"
 #include "GameState.h"
+#include "Cursor.h"
 
 class GameManager {
 private:
@@ -14,6 +15,7 @@ private:
     CityCenter cityCenter;
     GameState gameState;
     TextureManager textureManager;
+    Cursor cursor;
 public:
     GameManager(TextureManager &textureManager);
     void run();

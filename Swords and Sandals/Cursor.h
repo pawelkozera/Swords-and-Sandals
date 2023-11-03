@@ -6,7 +6,12 @@
 class Cursor : public Object
 {
 private:
+	sf::RenderWindow* window;
 public:
-	Cursor(const sf::Texture& texture);
+	Cursor();
+	Cursor(sf::Texture& texture, sf::RenderWindow &window);
+	void update();
+	void render();
+	void setCursorVisible(bool visible);
 };
 

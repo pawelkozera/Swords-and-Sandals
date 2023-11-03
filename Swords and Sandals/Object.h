@@ -9,6 +9,7 @@ private:
 	sf::Sprite sprite;
 	float scaleX, scaleY;
 public:
+	Object();
 	Object(const sf::Texture& texture);
 	sf::Sprite const &getSprite() const;
 	sf::Vector2f const getPosition() const;

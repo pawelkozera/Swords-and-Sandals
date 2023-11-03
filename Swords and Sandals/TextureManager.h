@@ -16,5 +16,6 @@ public:
     void loadDarkKnightArmor();
     void loadCityCenter();
     void loadButtons();
+    void loadCursor();
 };
 
