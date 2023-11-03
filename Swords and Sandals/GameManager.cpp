@@ -16,6 +16,8 @@ void GameManager::run() {
             }
         }
 
+        handleEvents();
+
         window.clear();
 
         cityCenter.displayCity(window);
@@ -40,6 +42,21 @@ void GameManager::setUp() {
 
     gameState = GameState();
     gameState.setMode(GameState::GameMode::InCity);
+}
+
+void GameManager::handleEvents() {
+    switch (gameState.getMode()) {
+    case GameState::GameMode::InCity:
+        break;
+    case GameState::GameMode::InWeaponsmithShop:
+        break;
+    case GameState::GameMode::InArmorerShop:
+        break;
+    case GameState::GameMode::InArena:
+        break;
+    default:
+        break;
+    }
 }
 
 std::unordered_map<std::string, CharacterPart> GameManager::createCharacterPartsMap() {

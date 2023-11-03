@@ -18,6 +18,7 @@ public:
     GameManager(TextureManager &textureManager);
     void run();
     void setUp();
+    void handleEvents();
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap();
     std::unordered_map<std::string, ArmorPiece> createCharacterArmorPieces();
     std::unordered_map<std::string, Button> createCityCenterButtonsMap();
