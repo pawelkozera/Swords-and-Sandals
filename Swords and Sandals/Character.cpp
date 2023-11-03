@@ -1,5 +1,9 @@
 #include "Character.h"
 
+Character::Character()
+{
+}
+
 Character::Character(std::unordered_map<std::string, CharacterPart> &characterParts, std::unordered_map<std::string, ArmorPiece> &armorPieces)
 	: characterParts(characterParts), armorPieces(armorPieces) {
 }

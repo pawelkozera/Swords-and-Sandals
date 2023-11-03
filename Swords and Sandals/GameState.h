@@ -2,7 +2,7 @@
 
 class GameState
 {
-private:
+public:
     enum class GameMode {
         MainMenu,
         InCity,
@@ -11,8 +11,6 @@ private:
         InArena,
     };
 
-    GameMode currentMode;
-public:
     GameState();
     void setMode(GameMode mode);
     GameMode getMode() const;
@@ -21,5 +19,8 @@ public:
     bool InWeaponsmithShop() const;
     bool InArmorerShop() const;
     bool InArena() const;
+
+private:
+    GameMode currentMode;
 };
 

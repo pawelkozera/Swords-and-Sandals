@@ -10,6 +10,7 @@ private:
 	sf::Sprite citySprite;
 	std::unordered_map<std::string, Button> Buttons;
 public:
+	CityCenter();
 	CityCenter(sf::Texture &cityTexture, std::unordered_map<std::string, Button> &Buttons);
 	const sf::Sprite getSprite() const;
 	void displayButtons(sf::RenderWindow &window);

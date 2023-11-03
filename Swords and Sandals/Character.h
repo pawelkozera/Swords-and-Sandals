@@ -11,6 +11,7 @@ private:
 	std::unordered_map<std::string, CharacterPart> characterParts;
 	std::unordered_map<std::string, ArmorPiece> armorPieces;
 public:
+	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts, std::unordered_map<std::string, ArmorPiece> &armorPieces);
 	void assembleBody();
 	void updateArmorPositions();

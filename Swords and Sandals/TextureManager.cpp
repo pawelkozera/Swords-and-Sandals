@@ -1,5 +1,9 @@
 #include "TextureManager.h"
 
+TextureManager::TextureManager()
+{
+}
+
 sf::Texture& TextureManager::getTexture(const std::string& textureKey) {
     if (textures.find(textureKey) == textures.end()) {
         sf::Texture texture;

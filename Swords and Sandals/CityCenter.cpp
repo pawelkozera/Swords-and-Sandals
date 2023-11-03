@@ -1,5 +1,9 @@
 #include "CityCenter.h"
 
+CityCenter::CityCenter()
+{
+}
+
 CityCenter::CityCenter(sf::Texture &cityTexture, std::unordered_map<std::string, Button> &Buttons) : Buttons(Buttons) {
 	citySprite.setTexture(cityTexture);
 	citySprite.setPosition(0.0f, -30.0f);

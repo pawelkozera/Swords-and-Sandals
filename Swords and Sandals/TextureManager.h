@@ -9,6 +9,7 @@ class TextureManager
 private:
     std::unordered_map<std::string, sf::Texture> textures;
 public:
+    TextureManager();
     sf::Texture& getTexture(const std::string& textureKey);
     void loadTexture(std::string key, std::string textureSrc);
     void loadCharacterBodyTextures();

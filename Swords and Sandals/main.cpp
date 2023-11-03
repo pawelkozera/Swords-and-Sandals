@@ -9,9 +9,9 @@ int main() {
     textureManager.loadCityCenter();
     textureManager.loadButtons();
 
-    GameManager gameManager;
+    GameManager gameManager(textureManager);
 
-    gameManager.run(textureManager);
+    gameManager.run();
 
     return 0;
 }

@@ -1,28 +1,21 @@
 #include "GameManager.h"
 
-GameManager::GameManager() {
+GameManager::GameManager(TextureManager &textureManager) : textureManager(textureManager) {
     window.create(sf::VideoMode(1024, 900), "Swords and Sandals");
 }
 
-void GameManager::run(TextureManager &textureManager) {
-    std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap(textureManager);
-    std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces(textureManager);
-    std::unordered_map<std::string, Button> Buttons = createCityCenterButtonsMap(textureManager);
-
-    Character character(characterPartsMap, characterArmorPieces);
-    CityCenter cityCenter(textureManager.getTexture("cityCenter"), Buttons);
-    
-    cityCenter.setUpPositionOfButtons();
-    character.assembleBody();
-    character.updateArmorPositions();
+void GameManager::run() {
+    setUp();
 
     while (window.isOpen()) {
         sf::Event event;
+
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
         }
+
         window.clear();
 
         cityCenter.displayCity(window);
@@ -33,7 +26,23 @@ void GameManager::run(TextureManager &textureManager) {
     }
 }
 
-std::unordered_map<std::string, CharacterPart> GameManager::createCharacterPartsMap(TextureManager& textureManager) {
+void GameManager::setUp() {
+    std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap();
+    std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces();
+    std::unordered_map<std::string, Button> Buttons = createCityCenterButtonsMap();
+
+    character = Character(characterPartsMap, characterArmorPieces);
+    cityCenter = CityCenter(textureManager.getTexture("cityCenter"), Buttons);
+
+    cityCenter.setUpPositionOfButtons();
+    character.assembleBody();
+    character.updateArmorPositions();
+
+    gameState = GameState();
+    gameState.setMode(GameState::GameMode::InCity);
+}
+
+std::unordered_map<std::string, CharacterPart> GameManager::createCharacterPartsMap() {
     std::unordered_map<std::string, CharacterPart> characterPartsMap;
 
     CharacterPart characterPartHead(textureManager.getTexture("head"));
@@ -71,7 +80,7 @@ std::unordered_map<std::string, CharacterPart> GameManager::createCharacterParts
     return characterPartsMap;
 }
 
-std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPieces(TextureManager& textureManager) {
+std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPieces() {
     std::unordered_map<std::string, ArmorPiece> characterArmorPiecesMap;
 
     ArmorPiece armorPieceHead(textureManager.getTexture("DKAhead"));
@@ -109,7 +118,7 @@ std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPie
     return characterArmorPiecesMap;
 }
 
-std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(TextureManager& textureManager) {
+std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap() {
     std::unordered_map<std::string, Button> Buttons;
 
     Button arenaButton(textureManager.getTexture("arenaButton"));
