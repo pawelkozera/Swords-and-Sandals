@@ -76,4 +76,15 @@ void TextureManager::loadCursor() {
 void TextureManager::loadShop() {
     loadTexture("armorerBackground", "Assets/Shops/armorer.jpg");
     loadTexture("weaponsmithBackground", "Assets/Shops/weaponsmith.jpg");
+    loadTexture("armIcon", "Assets/UI/Arm_Icon.png");
+    loadTexture("calfIcon", "Assets/UI/Calf_Icon.png");
+    loadTexture("chestIcon", "Assets/UI/Chest_Icon.png");
+    loadTexture("feetIcon", "Assets/UI/Feet_Icon.png");
+    loadTexture("forearm_icon", "Assets/UI/Forearm_Icon.png");
+    loadTexture("hemletIcon", "Assets/UI/Helmet_Icon.png");
+    loadTexture("pantsIcon", "Assets/UI/Pants_Icon.png");
+    loadTexture("shoulderIcon", "Assets/UI/Shoulder_Icon.png");
+    loadTexture("swordIcon", "Assets/UI/Sword_Icon.png");
+    loadTexture("thighIcon", "Assets/UI/Thigh_Icon.png");
+    loadTexture("coinIcon", "Assets/UI/Coin_Icon.png");
 }

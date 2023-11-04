@@ -64,6 +64,7 @@ void GameManager::handleEvents() {
     case GameState::GameMode::InArmorerShop:
         shop.setShopToArmorer(true);
         shop.displayBackground(window);
+        shop.displayInterface(window);
         shop.displayButtons(window);
         handleShopArmorerButtons();
         break;
@@ -186,6 +187,32 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     std::unordered_map<std::string, Button> Buttons;
 
     Button backButton(textureManager.getTexture("backButton"));
+    Button armButton(textureManager.getTexture("armIcon"));
+    Button calfButton(textureManager.getTexture("calfIcon"));
+    Button chestButton(textureManager.getTexture("chestIcon"));
+    Button feetButton(textureManager.getTexture("feetIcon"));
+    Button forearmButton(textureManager.getTexture("forearm_icon"));
+    Button helmetButton(textureManager.getTexture("hemletIcon"));
+    Button pantsButton(textureManager.getTexture("pantsIcon"));
+    Button shoulderButton(textureManager.getTexture("shoulderIcon"));
+    Button swordButton(textureManager.getTexture("swordIcon"));
+    Button thighButton(textureManager.getTexture("thighIcon"));
+
+    Buttons.insert_or_assign("armButton", armButton);
+    Buttons.insert_or_assign("calfButton", calfButton);
+    Buttons.insert_or_assign("chestButton", chestButton);
+    Buttons.insert_or_assign("feetButton", feetButton);
+    Buttons.insert_or_assign("forearmButton", forearmButton);
+    Buttons.insert_or_assign("helmetButton", helmetButton);
+    Buttons.insert_or_assign("pantsButton", pantsButton);
+    Buttons.insert_or_assign("shoulderButton", shoulderButton);
+    Buttons.insert_or_assign("swordButton", swordButton);
+    Buttons.insert_or_assign("thighButton", thighButton);
+
+    for (auto& pair : Buttons) {
+        Button& button = pair.second;
+        button.setScale(0.15f, 0.15f);
+    }
 
     Buttons.insert_or_assign("backButton", backButton);
 
