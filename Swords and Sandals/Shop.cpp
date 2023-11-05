@@ -16,6 +16,8 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh")) });
     availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg")) });
     availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot")) });
+    
+    setUpItemsPosition();
 }
 
 Shop::Shop(){}
@@ -53,6 +55,28 @@ void Shop::setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>
 }
 
 void Shop::setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons) {
+}
+
+void Shop::setUpItemsPosition() {
+    std::unordered_map<std::string, sf::Vector2f> positions;
+
+    for (auto& entry : availableArmorPieces) {
+        const std::string& key = entry.first;
+        ArmorPiece& armorPiece = entry.second;
+
+        if (positions.find(key) == positions.end()) {
+            positions[key] = sf::Vector2f(50.0f, 80.0f);
+        }
+
+        armorPiece.setPosition(positions[key]);
+
+        positions[key].x += 90.0f;
+
+        if (positions[key].x > 580.0f) {
+            positions[key].x = 50.0f;
+            positions[key].y += 90.0f;
+        }
+    }
 }
 
 void Shop::setShopToArmorer(bool isArmorer) {
