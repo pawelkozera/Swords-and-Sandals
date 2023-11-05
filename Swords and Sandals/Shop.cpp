@@ -1,14 +1,24 @@
 #include "Shop.h"
 
-Shop::Shop(sf::Texture& armorer, sf::Texture& weaponsmith, std::unordered_map<std::string, Button> buttons) : PlaceInterface(armorer, buttons) {
+Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& textureManager)
+    : PlaceInterface(textureManager.getTexture("armorerBackground"), buttons) {
     isArmorer = true;
-    this->armorer = armorer;
-    this->weaponsmith = weaponsmith;
+    this->armorer = &textureManager.getTexture("armorerBackground");
+    this->weaponsmith = &textureManager.getTexture("weaponsmithBackground");
+    setMode(ShopMode::Nothing);
+
+    availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead")) });
+    availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest")) });
+    availableArmorPieces.insert({ "shoulder", ArmorPiece(textureManager.getTexture("DKAshoulder")) });
+    availableArmorPieces.insert({ "elbow", ArmorPiece(textureManager.getTexture("DKAelbow")) });
+    availableArmorPieces.insert({ "arm", ArmorPiece(textureManager.getTexture("DKAarm")) });
+    availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis")) });
+    availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh")) });
+    availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg")) });
+    availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot")) });
 }
 
-Shop::Shop(){
-    isArmorer = true;
-}
+Shop::Shop(){}
 
 void Shop::setUpPositionOfButtons() {
     std::unordered_map<std::string, Button>& buttons = getButtons();
@@ -49,10 +59,10 @@ void Shop::setShopToArmorer(bool isArmorer) {
     this->isArmorer = isArmorer;
     
     if (isArmorer) {
-        setSpriteTexture(armorer);
+        setSpriteTexture(*armorer);
     }
     else {
-        setSpriteTexture(weaponsmith);
+        setSpriteTexture(*weaponsmith);
     }
 }
 
@@ -94,4 +104,53 @@ void Shop::displayButtons(sf::RenderWindow& window) {
             window.draw(button.getSprite());
         }
     }
+}
+
+void Shop::displayItems(sf::RenderWindow& window) {
+    std::string itemName = "";
+
+    switch (getMode()) {
+    case ShopMode::Head:
+        itemName = "head";
+        break;
+    case ShopMode::Chest:
+        itemName = "chest";
+        break;
+    case ShopMode::Shoulder:
+        itemName = "shoulder";
+        break;
+    case ShopMode::Elbow:
+        itemName = "elbow";
+        break;
+    case ShopMode::Arm:
+        itemName = "arm";
+        break;
+    case ShopMode::Pelvis:
+        itemName = "pelvis";
+        break;
+    case ShopMode::Thigh:
+        itemName = "thigh";
+        break;
+    case ShopMode::Leg:
+        itemName = "leg";
+        break;
+    case ShopMode::Foot:
+        itemName = "foot";
+        break;
+    }
+
+    auto range = availableArmorPieces.equal_range(itemName);
+
+    for (auto it = range.first; it != range.second; ++it) {
+        const ArmorPiece& armorPiece = it->second;
+        window.draw(armorPiece.getSprite());
+    }
+}
+
+void Shop::setMode(ShopMode mode) {
+    currentMode = mode;
+}
+
+Shop::ShopMode Shop::getMode() const {
+    return currentMode;
 }

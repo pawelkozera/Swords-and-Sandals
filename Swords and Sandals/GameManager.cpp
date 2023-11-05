@@ -5,22 +5,34 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
 
     buttonHandlers["backButton"] = [this]() {
         gameState.setMode(GameState::GameMode::InCity);
+        shop.setMode(Shop::ShopMode::Nothing);
         };
     buttonHandlers["helmetButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Head);
+        };
+    buttonHandlers["chestButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Chest);
         };
     buttonHandlers["shoulderButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Shoulder);
         };
     buttonHandlers["forearmButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Elbow);
         };
     buttonHandlers["armButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Arm);
         };
     buttonHandlers["pantsButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Pelvis);
         };
     buttonHandlers["thighButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Thigh);
         };
     buttonHandlers["calfButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Leg);
         };
     buttonHandlers["feetButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Foot);
         };
 }
 
@@ -39,7 +51,6 @@ void GameManager::run() {
         window.clear();
 
         handleEvents();
-        //character.display(window);
 
         cursor.update();
         cursor.render();
@@ -56,7 +67,7 @@ void GameManager::setUp() {
 
     character = Character(characterPartsMap, characterArmorPieces);
     cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
-    shop = Shop(textureManager.getTexture("armorerBackground"), textureManager.getTexture("weaponsmithBackground"), shopButtons);
+    shop = Shop(shopButtons, textureManager);
 
     cityCenter.setUpPositionOfButtons();
     shop.setUpPositionOfButtons();
@@ -86,9 +97,11 @@ void GameManager::handleEvents() {
         shop.displayBackground(window);
         shop.displayInterface(window);
         shop.displayButtons(window);
+        shop.displayItems(window);
         handleShopArmorerButtons();
         break;
     case GameState::GameMode::InArena:
+        character.display(window);
         break;
     default:
         break;

@@ -5,22 +5,41 @@
 #include "ArmorPiece.h"
 #include <unordered_map>
 #include "PlaceInterface.h"
+#include "TextureManager.h"
 
 class Shop : public PlaceInterface
 {
-private:
-	sf::Texture armorer;
-	sf::Texture weaponsmith;
-	bool isArmorer;
-	std::unordered_map<std::string, ArmorPiece> availableArmorPieces;
-	void setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons);
-	void setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons);
 public:
+	enum class ShopMode {
+		Nothing,
+		Head,
+		Chest,
+		Shoulder,
+		Elbow,
+		Arm,
+		Pelvis,
+		Thigh,
+		Leg,
+		Foot
+	};
+
 	Shop();
-	Shop(sf::Texture& armorer, sf::Texture& weaponsmith, std::unordered_map<std::string, Button> buttons);
+	Shop(std::unordered_map<std::string, Button> buttons, TextureManager &textureManager);
 	void setUpPositionOfButtons() override;
 	void setShopToArmorer(bool isArmorer);
 	void displayInterface(sf::RenderWindow& window);
 	void displayButtons(sf::RenderWindow& window);
+	void displayItems(sf::RenderWindow& window);
+	void setMode(ShopMode mode);
+	ShopMode getMode() const;
+private:
+	ShopMode currentMode;
+
+	sf::Texture* armorer;
+	sf::Texture* weaponsmith;
+	bool isArmorer;
+	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
+	void setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons);
+	void setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons);
 };
 
