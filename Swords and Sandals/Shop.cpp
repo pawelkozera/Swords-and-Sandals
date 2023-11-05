@@ -6,6 +6,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     this->armorer = &textureManager.getTexture("armorerBackground");
     this->weaponsmith = &textureManager.getTexture("weaponsmithBackground");
     setMode(ShopMode::Nothing);
+    selectedArmorPiece = nullptr;
 
     availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead")) });
     availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest")) });
@@ -165,9 +166,39 @@ void Shop::displayItems(sf::RenderWindow& window) {
 
     auto range = availableArmorPieces.equal_range(itemName);
 
-    for (auto it = range.first; it != range.second; ++it) {
+    for (auto& it = range.first; it != range.second; ++it) {
         const ArmorPiece& armorPiece = it->second;
         window.draw(armorPiece.getSprite());
+    }
+}
+
+void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
+    if (isArmorer) {
+        for (auto& pair : availableArmorPieces) {
+            ArmorPiece& armorPiece = pair.second;
+            if (armorPiece.isClicked(mousePosition)) {
+                selectedArmorPiece = &armorPiece;
+                break;
+            }
+        }
+    }
+}
+
+void Shop::displayStatsOfSelectedItem(sf::RenderWindow& window) {
+    if (isArmorer) {
+        if (selectedArmorPiece) {
+            sf::Font font;
+            if (!font.loadFromFile("Fonts/Pacifico.ttf")) {
+            }
+
+            sf::Text stats;
+            stats.setFont(font);
+            stats.setString("Stats");
+            stats.setCharacterSize(40);
+            stats.setFillColor(sf::Color::White);
+            stats.setPosition(770.0f, 80.0f);
+            window.draw(stats);
+        }
     }
 }
 

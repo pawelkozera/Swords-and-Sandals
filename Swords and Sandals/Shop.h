@@ -30,15 +30,17 @@ public:
 	void displayInterface(sf::RenderWindow& window);
 	void displayButtons(sf::RenderWindow& window);
 	void displayItems(sf::RenderWindow& window);
+	void checkForClickedItems(const sf::Vector2f& mousePosition);
+	void displayStatsOfSelectedItem(sf::RenderWindow& window);
 	void setMode(ShopMode mode);
 	ShopMode getMode() const;
 private:
 	ShopMode currentMode;
-
 	sf::Texture* armorer;
 	sf::Texture* weaponsmith;
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
+	ArmorPiece* selectedArmorPiece;
 	void setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons);
 	void setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons);
 	void setUpItemsPosition();

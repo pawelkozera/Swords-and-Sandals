@@ -99,6 +99,8 @@ void GameManager::handleEvents() {
         shop.displayButtons(window);
         shop.displayItems(window);
         handleShopArmorerButtons();
+        shop.checkForClickedItems(cursor.getPosition());
+        shop.displayStatsOfSelectedItem(window);
         break;
     case GameState::GameMode::InArena:
         character.display(window);
