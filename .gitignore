@@ -1,6 +1,4 @@
 .vs/
 x64/
 Swords and Sandals/x64
-*.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
