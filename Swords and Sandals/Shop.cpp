@@ -23,15 +23,15 @@ void Shop::setUpPositionOfButtons() {
 
 void Shop::setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons) {
     std::unordered_map<std::string, sf::Vector2f> buttonPositions = {
-        {"armButton", sf::Vector2f(200.0f, 580.0f)},
-        {"calfButton", sf::Vector2f(600.0f, 580.0f)},
-        {"chestButton", sf::Vector2f(120.0f, 580.0f)},
-        {"feetButton", sf::Vector2f(680.0f, 580.0f)},
-        {"forearmButton", sf::Vector2f(360.0f, 580.0f)},
         {"helmetButton", sf::Vector2f(40.0f, 580.0f)},
+        {"chestButton", sf::Vector2f(120.0f, 580.0f)},
+        {"shoulderButton", sf::Vector2f(200.0f, 580.0f)},
+        {"forearmButton", sf::Vector2f(280.0f, 580.0f)},
+        {"armButton", sf::Vector2f(360.0f, 580.0f)},
         {"pantsButton", sf::Vector2f(440.0f, 580.0f)},
-        {"shoulderButton", sf::Vector2f(280.0f, 580.0f)},
-        {"thighButton", sf::Vector2f(520.0f, 580.0f)}
+        {"thighButton", sf::Vector2f(520.0f, 580.0f)},
+        {"calfButton", sf::Vector2f(600.0f, 580.0f)},
+        {"feetButton", sf::Vector2f(680.0f, 580.0f)}
     };
 
     for (const auto& pair : buttons) {

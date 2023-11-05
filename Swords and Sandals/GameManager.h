@@ -8,6 +8,7 @@
 #include "GameState.h"
 #include "Cursor.h"
 #include "Shop.h"
+#include <functional>
 
 class GameManager {
 private:
@@ -18,6 +19,8 @@ private:
     TextureManager textureManager;
     Cursor cursor;
     Shop shop;
+
+    std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 public:
     GameManager(TextureManager &textureManager);
     void run();

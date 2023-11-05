@@ -2,6 +2,26 @@
 
 GameManager::GameManager(TextureManager &textureManager) : textureManager(textureManager) {
     window.create(sf::VideoMode(1024, 900), "Swords and Sandals");
+
+    buttonHandlers["backButton"] = [this]() {
+        gameState.setMode(GameState::GameMode::InCity);
+        };
+    buttonHandlers["helmetButton"] = [this]() {
+        };
+    buttonHandlers["shoulderButton"] = [this]() {
+        };
+    buttonHandlers["forearmButton"] = [this]() {
+        };
+    buttonHandlers["armButton"] = [this]() {
+        };
+    buttonHandlers["pantsButton"] = [this]() {
+        };
+    buttonHandlers["thighButton"] = [this]() {
+        };
+    buttonHandlers["calfButton"] = [this]() {
+        };
+    buttonHandlers["feetButton"] = [this]() {
+        };
 }
 
 void GameManager::run() {
@@ -88,8 +108,16 @@ void GameManager::handleCityCenterButtons() {
 }
 
 void GameManager::handleShopArmorerButtons() {
-    if (shop.getButton("backButton").isClicked(cursor.getPosition())) {
-        gameState.setMode(GameState::GameMode::InCity);
+    for (const auto& pair : shop.getButtons()) {
+        const std::string& buttonName = pair.first;
+        const Button& button = pair.second;
+
+        if (button.isClicked(cursor.getPosition())) {
+            if (buttonHandlers.find(buttonName) != buttonHandlers.end()) {
+                buttonHandlers[buttonName]();
+                break;
+            }
+        }
     }
 }
 
