@@ -30,11 +30,10 @@ void Shop::setUpPositionOfButtons() {
         buttons.at("backButton").setPosition(sf::Vector2f(100.0f, 800.0f));
     }
 
-    setUpPositionOfButtonsArmorer(buttons);
-    setUpPositionOfButtonsWeaponsmith(buttons);
+    setUpPositionOfButtons(buttons);
 }
 
-void Shop::setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons) {
+void Shop::setUpPositionOfButtons(std::unordered_map<std::string, Button>& buttons) {
     std::unordered_map<std::string, sf::Vector2f> buttonPositions = {
         {"helmetButton", sf::Vector2f(40.0f, 580.0f)},
         {"chestButton", sf::Vector2f(120.0f, 580.0f)},
@@ -44,7 +43,8 @@ void Shop::setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>
         {"pantsButton", sf::Vector2f(440.0f, 580.0f)},
         {"thighButton", sf::Vector2f(520.0f, 580.0f)},
         {"calfButton", sf::Vector2f(600.0f, 580.0f)},
-        {"feetButton", sf::Vector2f(680.0f, 580.0f)}
+        {"feetButton", sf::Vector2f(680.0f, 580.0f)},
+        {"swordButton", sf::Vector2f(40.0f, 580.0f)}
     };
 
     for (const auto& pair : buttons) {
@@ -53,9 +53,6 @@ void Shop::setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>
             buttons.at(buttonName).setPosition(buttonPositions.at(buttonName));
         }
     }
-}
-
-void Shop::setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons) {
 }
 
 void Shop::setUpItemsPosition() {
@@ -161,6 +158,9 @@ void Shop::displayItems(sf::RenderWindow& window) {
         break;
     case ShopMode::Foot:
         itemName = "foot";
+        break;
+    case ShopMode::Sword:
+        itemName = "sword";
         break;
     }
 

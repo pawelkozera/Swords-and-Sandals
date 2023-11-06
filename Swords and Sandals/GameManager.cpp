@@ -34,6 +34,9 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
     buttonHandlers["feetButton"] = [this]() {
         shop.setMode(Shop::ShopMode::Foot);
         };
+    buttonHandlers["swordButton"] = [this]() {
+        shop.setMode(Shop::ShopMode::Sword);
+        };
 }
 
 void GameManager::run() {
@@ -88,19 +91,11 @@ void GameManager::handleEvents() {
         break;
     case GameState::GameMode::InWeaponsmithShop:
         shop.setShopToArmorer(false);
-        shop.displayBackground(window);
-        shop.displayButtons(window);
-        handleShopArmorerButtons();
+        handleShopEvents();
         break;
     case GameState::GameMode::InArmorerShop:
         shop.setShopToArmorer(true);
-        shop.displayBackground(window);
-        shop.displayInterface(window);
-        shop.displayButtons(window);
-        shop.displayItems(window);
-        handleShopArmorerButtons();
-        shop.checkForClickedItems(cursor.getPosition());
-        shop.displayStatsOfSelectedItem(window);
+        handleShopEvents();
         break;
     case GameState::GameMode::InArena:
         character.display(window);
@@ -108,6 +103,16 @@ void GameManager::handleEvents() {
     default:
         break;
     }
+}
+
+void GameManager::handleShopEvents() {
+    shop.displayBackground(window);
+    shop.displayInterface(window);
+    shop.displayButtons(window);
+    shop.displayItems(window);
+    handleShopButtons();
+    shop.checkForClickedItems(cursor.getPosition());
+    shop.displayStatsOfSelectedItem(window);
 }
 
 void GameManager::handleCityCenterButtons() {
@@ -122,7 +127,7 @@ void GameManager::handleCityCenterButtons() {
     }
 }
 
-void GameManager::handleShopArmorerButtons() {
+void GameManager::handleShopButtons() {
     for (const auto& pair : shop.getButtons()) {
         const std::string& buttonName = pair.first;
         const Button& button = pair.second;
@@ -238,8 +243,8 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     Button helmetButton(textureManager.getTexture("hemletIcon"));
     Button pantsButton(textureManager.getTexture("pantsIcon"));
     Button shoulderButton(textureManager.getTexture("shoulderIcon"));
-    Button swordButton(textureManager.getTexture("swordIcon"));
     Button thighButton(textureManager.getTexture("thighIcon"));
+    Button swordButton(textureManager.getTexture("swordIcon"));
 
     Buttons.insert_or_assign("armButton", armButton);
     Buttons.insert_or_assign("calfButton", calfButton);
@@ -249,8 +254,8 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     Buttons.insert_or_assign("helmetButton", helmetButton);
     Buttons.insert_or_assign("pantsButton", pantsButton);
     Buttons.insert_or_assign("shoulderButton", shoulderButton);
-    Buttons.insert_or_assign("swordButton", swordButton);
     Buttons.insert_or_assign("thighButton", thighButton);
+    Buttons.insert_or_assign("swordButton", swordButton);
 
     for (auto& pair : Buttons) {
         Button& button = pair.second;

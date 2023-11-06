@@ -26,8 +26,9 @@ public:
     void run();
     void setUp();
     void handleEvents();
+    void handleShopEvents();
     void handleCityCenterButtons();
-    void handleShopArmorerButtons();
+    void handleShopButtons();
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap();
     std::unordered_map<std::string, ArmorPiece> createCharacterArmorPieces();
     std::unordered_map<std::string, Button> createCityCenterButtonsMap();

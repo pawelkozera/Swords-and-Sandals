@@ -20,7 +20,8 @@ public:
 		Pelvis,
 		Thigh,
 		Leg,
-		Foot
+		Foot,
+		Sword
 	};
 
 	Shop();
@@ -41,8 +42,7 @@ private:
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
 	ArmorPiece* selectedArmorPiece;
-	void setUpPositionOfButtonsArmorer(std::unordered_map<std::string, Button>& buttons);
-	void setUpPositionOfButtonsWeaponsmith(std::unordered_map<std::string, Button>& buttons);
+	void setUpPositionOfButtons(std::unordered_map<std::string, Button>& buttons);
 	void setUpItemsPosition();
 };
 
