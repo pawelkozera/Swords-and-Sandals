@@ -4,8 +4,8 @@ Character::Character()
 {
 }
 
-Character::Character(std::unordered_map<std::string, CharacterPart> &characterParts, std::unordered_map<std::string, ArmorPiece> &armorPieces)
-	: characterParts(characterParts), armorPieces(armorPieces) {
+Character::Character(std::unordered_map<std::string, CharacterPart> &characterParts)
+	: characterParts(characterParts){
 }
 
 void Character::assembleBody() {

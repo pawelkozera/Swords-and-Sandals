@@ -6,6 +6,7 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
     buttonHandlers["backButton"] = [this]() {
         gameState.setMode(GameState::GameMode::InCity);
         shop.setMode(Shop::ShopMode::Nothing);
+        shop.setSelectedArmorPiece(nullptr);
         };
     buttonHandlers["helmetButton"] = [this]() {
         shop.setMode(Shop::ShopMode::Head);
@@ -64,11 +65,10 @@ void GameManager::run() {
 
 void GameManager::setUp() {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap();
-    std::unordered_map<std::string, ArmorPiece> characterArmorPieces = createCharacterArmorPieces();
     std::unordered_map<std::string, Button> cityCenterButtons = createCityCenterButtonsMap();
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
 
-    character = Character(characterPartsMap, characterArmorPieces);
+    character = Character(characterPartsMap);
     cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
     shop = Shop(shopButtons, textureManager);
 
@@ -90,11 +90,9 @@ void GameManager::handleEvents() {
         handleCityCenterButtons();
         break;
     case GameState::GameMode::InWeaponsmithShop:
-        shop.setShopToArmorer(false);
         handleShopEvents();
         break;
     case GameState::GameMode::InArmorerShop:
-        shop.setShopToArmorer(true);
         handleShopEvents();
         break;
     case GameState::GameMode::InArena:
@@ -121,9 +119,13 @@ void GameManager::handleCityCenterButtons() {
     }
     else if (cityCenter.getButton("armorer").isClicked(cursor.getPosition())) {
         gameState.setMode(GameState::GameMode::InArmorerShop);
+        shop.setShopToArmorer(true);
+        shop.setUpPositionOfIconButtons();
     }
     else if (cityCenter.getButton("weaponsmith").isClicked(cursor.getPosition())) {
         gameState.setMode(GameState::GameMode::InWeaponsmithShop);
+        shop.setShopToArmorer(false);
+        shop.setUpPositionOfIconButtons();
     }
 }
 
@@ -177,44 +179,6 @@ std::unordered_map<std::string, CharacterPart> GameManager::createCharacterParts
     characterPartsMap.insert_or_assign("footRight", characterPartFoot);
 
     return characterPartsMap;
-}
-
-std::unordered_map<std::string, ArmorPiece> GameManager::createCharacterArmorPieces() {
-    std::unordered_map<std::string, ArmorPiece> characterArmorPiecesMap;
-
-    ArmorPiece armorPieceHead(textureManager.getTexture("DKAhead"));
-    ArmorPiece armorPieceChest(textureManager.getTexture("DKAchest"));
-    ArmorPiece armorPieceShoulder(textureManager.getTexture("DKAshoulder"));
-    ArmorPiece armorPieceElbow(textureManager.getTexture("DKAelbow"));
-    ArmorPiece armorPieceArm(textureManager.getTexture("DKAarm"));
-    ArmorPiece armorPiecePelvis(textureManager.getTexture("DKApelvis"));
-    ArmorPiece armorPieceThigh(textureManager.getTexture("DKAthigh"));
-    ArmorPiece armorPieceLeg(textureManager.getTexture("DKAleg"));
-    ArmorPiece armorPieceFoot(textureManager.getTexture("DKAfoot"));
-
-    characterArmorPiecesMap.insert_or_assign("head", armorPieceHead);
-    characterArmorPiecesMap.insert_or_assign("chest", armorPieceChest);
-    characterArmorPiecesMap.insert_or_assign("shoulderLeft", armorPieceShoulder);
-    armorPieceShoulder.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("shoulderRight", armorPieceShoulder);
-    characterArmorPiecesMap.insert_or_assign("elbowLeft", armorPieceElbow);
-    armorPieceElbow.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("elbowRight", armorPieceElbow);
-    characterArmorPiecesMap.insert_or_assign("armLeft", armorPieceArm);
-    armorPieceArm.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("armRight", armorPieceArm);
-    characterArmorPiecesMap.insert_or_assign("pelvis", armorPiecePelvis);
-    characterArmorPiecesMap.insert_or_assign("thighLeft", armorPieceThigh);
-    armorPieceThigh.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("thighRight", armorPieceThigh);
-    characterArmorPiecesMap.insert_or_assign("legLeft", armorPieceLeg);
-    armorPieceLeg.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("legRight", armorPieceLeg);
-    characterArmorPiecesMap.insert_or_assign("footLeft", armorPieceFoot);
-    armorPieceFoot.flipSprite();
-    characterArmorPiecesMap.insert_or_assign("footRight", armorPieceFoot);
-
-    return characterArmorPiecesMap;
 }
 
 std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap() {

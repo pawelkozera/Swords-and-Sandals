@@ -12,6 +12,7 @@ private:
 	int vitality;
 	int charisma;
 	int stamina;
+	int gold;
 public:
 };
 

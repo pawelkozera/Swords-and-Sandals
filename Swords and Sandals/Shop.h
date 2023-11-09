@@ -27,6 +27,7 @@ public:
 	Shop();
 	Shop(std::unordered_map<std::string, Button> buttons, TextureManager &textureManager);
 	void setUpPositionOfButtons() override;
+	void setUpPositionOfIconButtons();
 	void setShopToArmorer(bool isArmorer);
 	void displayInterface(sf::RenderWindow& window);
 	void displayButtons(sf::RenderWindow& window);
@@ -35,6 +36,7 @@ public:
 	void displayStatsOfSelectedItem(sf::RenderWindow& window);
 	void setMode(ShopMode mode);
 	ShopMode getMode() const;
+	void setSelectedArmorPiece(ArmorPiece* selectedArmorPiece);
 private:
 	ShopMode currentMode;
 	sf::Texture* armorer;
@@ -42,7 +44,6 @@ private:
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
 	ArmorPiece* selectedArmorPiece;
-	void setUpPositionOfButtons(std::unordered_map<std::string, Button>& buttons);
 	void setUpItemsPosition();
 };
 

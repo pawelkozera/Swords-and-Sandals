@@ -1,7 +1,9 @@
 #include "ArmorPiece.h"
 
 
-ArmorPiece::ArmorPiece(const sf::Texture& texture) : Object(texture) {
+ArmorPiece::ArmorPiece(const sf::Texture& texture, int defence, int price) : Object(texture) {
+    this->defence = defence;
+    this->price = price;
 }
 
 const bool ArmorPiece::isClicked(const sf::Vector2f& mousePosition) const {
@@ -12,4 +14,14 @@ const bool ArmorPiece::isClicked(const sf::Vector2f& mousePosition) const {
     }
 
     return false;
+}
+
+const int ArmorPiece::getDefence() const
+{
+    return defence;
+}
+
+const int ArmorPiece::getPrice() const
+{
+    return price;
 }

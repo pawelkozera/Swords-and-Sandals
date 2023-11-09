@@ -12,7 +12,7 @@ private:
 	std::unordered_map<std::string, ArmorPiece> armorPieces;
 public:
 	Character();
-	Character(std::unordered_map<std::string, CharacterPart> &characterParts, std::unordered_map<std::string, ArmorPiece> &armorPieces);
+	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
 	void assembleBody();
 	void updateArmorPositions();
 	void display(sf::RenderWindow& window);
