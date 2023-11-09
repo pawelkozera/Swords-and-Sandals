@@ -9,15 +9,15 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     setMode(ShopMode::Nothing);
     selectedArmorPiece = nullptr;
 
-    availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead"), 1, 200) });
-    availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 1, 500) });
-    availableArmorPieces.insert({ "shoulder", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 300) });
-    availableArmorPieces.insert({ "elbow", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 300) });
-    availableArmorPieces.insert({ "arm", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 300) });
-    availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis"), 1, 300) });
-    availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300) });
-    availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300) });
-    availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300) });
+    availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead"), 1, 200, "Dark knight", "helmet")});
+    availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 1, 500, "Dark knight", "breastplate")});
+    availableArmorPieces.insert({ "shoulder", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguards")});
+    availableArmorPieces.insert({ "elbow", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlets")});
+    availableArmorPieces.insert({ "arm", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "gloves")});
+    availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis"), 1, 300, "Dark knight", "pants")});
+    availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greaves")});
+    availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguards")});
+    availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boots")});
     
     setUpItemsPosition();
 }
@@ -76,28 +76,6 @@ void Shop::setUpPositionOfIconButtons() {
     }
 }
 
-void Shop::setUpItemsPosition() {
-    std::unordered_map<std::string, sf::Vector2f> positions;
-
-    for (auto& entry : availableArmorPieces) {
-        const std::string& key = entry.first;
-        ArmorPiece& armorPiece = entry.second;
-
-        if (positions.find(key) == positions.end()) {
-            positions[key] = sf::Vector2f(50.0f, 80.0f);
-        }
-
-        armorPiece.setPosition(positions[key]);
-
-        positions[key].x += 90.0f;
-
-        if (positions[key].x > 580.0f) {
-            positions[key].x = 50.0f;
-            positions[key].y += 90.0f;
-        }
-    }
-}
-
 void Shop::setShopToArmorer(bool isArmorer) {
     this->isArmorer = isArmorer;
     
@@ -150,46 +128,44 @@ void Shop::displayButtons(sf::RenderWindow& window) {
 }
 
 void Shop::displayItems(sf::RenderWindow& window) {
-    std::string itemName = "";
-
-    switch (getMode()) {
-    case ShopMode::Head:
-        itemName = "head";
-        break;
-    case ShopMode::Chest:
-        itemName = "chest";
-        break;
-    case ShopMode::Shoulder:
-        itemName = "shoulder";
-        break;
-    case ShopMode::Elbow:
-        itemName = "elbow";
-        break;
-    case ShopMode::Arm:
-        itemName = "arm";
-        break;
-    case ShopMode::Pelvis:
-        itemName = "pelvis";
-        break;
-    case ShopMode::Thigh:
-        itemName = "thigh";
-        break;
-    case ShopMode::Leg:
-        itemName = "leg";
-        break;
-    case ShopMode::Foot:
-        itemName = "foot";
-        break;
-    case ShopMode::Sword:
-        itemName = "sword";
-        break;
-    }
+    std::string itemName = shopModeToString();
 
     auto range = availableArmorPieces.equal_range(itemName);
 
     for (auto& it = range.first; it != range.second; ++it) {
         const ArmorPiece& armorPiece = it->second;
         window.draw(armorPiece.getSprite());
+    }
+}
+
+void Shop::setUpItemsPosition() {
+    std::string itemName = shopModeToString();
+
+    std::unordered_map<std::string, sf::Vector2f> positions;
+
+    for (auto& entry : availableArmorPieces) {
+        const std::string& key = entry.first;
+        ArmorPiece& armorPiece = entry.second;
+
+        if (key == itemName) {
+            if (positions.find(key) == positions.end()) {
+                positions[key] = sf::Vector2f(50.0f, 80.0f);
+            }
+
+            armorPiece.setPosition(positions[key]);
+
+            positions[key].x += 90.0f;
+
+            if (positions[key].x > 580.0f) {
+                positions[key].x = 50.0f;
+                positions[key].y += 90.0f;
+            }
+        }
+        else {
+            if (positions.find(key) == positions.end()) {
+                armorPiece.setPosition(sf::Vector2f(-100.0f, -100.0f));
+            }
+        }
     }
 }
 
@@ -209,7 +185,7 @@ void Shop::displayStatsOfSelectedItem(sf::RenderWindow& window) {
     if (isArmorer) {
         if (selectedArmorPiece && currentMode != ShopMode::Nothing) {
             sf::Font font;
-            if (!font.loadFromFile("Fonts/Pacifico.ttf")) {
+            if (!font.loadFromFile("Fonts/PlayfairDisplay.ttf")) {
             }
 
             sf::Text stats;
@@ -221,22 +197,32 @@ void Shop::displayStatsOfSelectedItem(sf::RenderWindow& window) {
             stats.setPosition(770.0f, 80.0f);
             window.draw(stats);
 
+            stats.setCharacterSize(32);
+
+            stats.setString(selectedArmorPiece->getName());
+            stats.setPosition(700, 160.0f);
+            window.draw(stats);
+
+            stats.setString(selectedArmorPiece->getType());
+            stats.setPosition(700, 200.0f);
+            window.draw(stats);
+
             stats.setString("Defence :");
-            stats.setPosition(700.0f, 180.0f);
-            padding_x = stats.getPosition().x + stats.getLocalBounds().width + 40;
-            window.draw(stats);
-
-            stats.setString(std::to_string(selectedArmorPiece->getDefence()));
-            stats.setPosition(padding_x, 180.0f);
-            window.draw(stats);
-
-            stats.setString("Price :");
             stats.setPosition(700.0f, 280.0f);
             padding_x = stats.getPosition().x + stats.getLocalBounds().width + 40;
             window.draw(stats);
 
-            stats.setString(std::to_string(selectedArmorPiece->getPrice()));
+            stats.setString(std::to_string(selectedArmorPiece->getDefence()));
             stats.setPosition(padding_x, 280.0f);
+            window.draw(stats);
+
+            stats.setString("Price :");
+            stats.setPosition(700.0f, 320.0f);
+            padding_x = stats.getPosition().x + stats.getLocalBounds().width + 40;
+            window.draw(stats);
+
+            stats.setString(std::to_string(selectedArmorPiece->getPrice()));
+            stats.setPosition(padding_x, 320.0f);
             window.draw(stats);
         }
     }
@@ -248,6 +234,27 @@ void Shop::setMode(ShopMode mode) {
 
 Shop::ShopMode Shop::getMode() const {
     return currentMode;
+}
+
+std::string Shop::shopModeToString() const
+{
+    static const std::unordered_map<ShopMode, std::string> modeToStringMap = {
+        {ShopMode::Nothing, "nothing"},
+        {ShopMode::Head, "head"},
+        {ShopMode::Chest, "chest"},
+        {ShopMode::Shoulder, "shoulder"},
+        {ShopMode::Elbow, "elbow"},
+        {ShopMode::Arm, "arm"},
+        {ShopMode::Pelvis, "pelvis"},
+        {ShopMode::Thigh, "thigh"},
+        {ShopMode::Leg, "leg"},
+        {ShopMode::Foot, "foot"},
+        {ShopMode::Sword, "sword"}
+    };
+
+    auto it = modeToStringMap.find(getMode());
+
+    return (it != modeToStringMap.end()) ? it->second : "";
 }
 
 void Shop::setSelectedArmorPiece(ArmorPiece* selectedArmorPiece) {

@@ -32,10 +32,12 @@ public:
 	void displayInterface(sf::RenderWindow& window);
 	void displayButtons(sf::RenderWindow& window);
 	void displayItems(sf::RenderWindow& window);
+	void setUpItemsPosition();
 	void checkForClickedItems(const sf::Vector2f& mousePosition);
 	void displayStatsOfSelectedItem(sf::RenderWindow& window);
 	void setMode(ShopMode mode);
 	ShopMode getMode() const;
+	std::string shopModeToString() const;
 	void setSelectedArmorPiece(ArmorPiece* selectedArmorPiece);
 private:
 	ShopMode currentMode;
@@ -44,6 +46,5 @@ private:
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
 	ArmorPiece* selectedArmorPiece;
-	void setUpItemsPosition();
 };
 

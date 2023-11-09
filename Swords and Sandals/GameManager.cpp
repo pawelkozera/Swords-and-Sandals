@@ -137,6 +137,7 @@ void GameManager::handleShopButtons() {
         if (button.isClicked(cursor.getPosition())) {
             if (buttonHandlers.find(buttonName) != buttonHandlers.end()) {
                 buttonHandlers[buttonName]();
+                shop.setUpItemsPosition();
                 break;
             }
         }
