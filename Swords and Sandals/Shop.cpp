@@ -22,7 +22,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     const std::unordered_multimap<std::string, ArmorPiece>& armorMap = availableArmorPieces;
 
     for (const auto& armor : armorMap) {
-        boughtArmorPieces.insert({ armor.second.getName(), false });
+        boughtArmorPieces.insert({ armor.second.getName() + armor.second.getType(), false});
     }
     
     setUpItemsPosition();
@@ -197,7 +197,7 @@ void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
 }
 
 void Shop::displayBuyOrEquipButton() {
-    auto it = boughtArmorPieces.find(selectedArmorPiece->getName());
+    auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
 
     if (it != boughtArmorPieces.end()) {
         std::unordered_map<std::string, Button>& buttons = getButtons();
@@ -205,11 +205,13 @@ void Shop::displayBuyOrEquipButton() {
         if (it->second) {
             if (buttons.find("equipButton") != buttons.end()) {
                 buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
             }
         }
         else {
             if (buttons.find("buyButton") != buttons.end()) {
                 buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
             }
         }
     }
@@ -301,4 +303,27 @@ std::string Shop::shopModeToString() const
 
 void Shop::setSelectedArmorPiece(ArmorPiece* selectedArmorPiece) {
     this->selectedArmorPiece = selectedArmorPiece;
+}
+
+void Shop::buyItem() {
+    if (isArmorer) {
+        auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
+
+        if (it != boughtArmorPieces.end()) {
+            std::unordered_map<std::string, Button>& buttons = getButtons();
+
+            if (it->second) {
+                
+            }
+            else {
+                if (buttons.find("equipButton") != buttons.end() && buttons.find("buyButton") != buttons.end()) {
+                    it->second = true;
+                    buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+        }
+    }
+    else {
+    }
 }

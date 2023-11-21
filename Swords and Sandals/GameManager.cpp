@@ -10,6 +10,12 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
         shop.changeButtonPosition("equipButton", sf::Vector2f(-100.0f, -100.0f));
         shop.changeButtonPosition("buyButton", sf::Vector2f(-100.0f, -100.0f));
         };
+    buttonHandlers["buyButton"] = [this]() {
+        shop.buyItem();
+        };
+    buttonHandlers["equipButton"] = [this]() {
+        
+        };
     buttonHandlers["helmetButton"] = [this]() {
         shop.setMode(Shop::ShopMode::Head);
         };

@@ -41,6 +41,7 @@ public:
 	ShopMode getMode() const;
 	std::string shopModeToString() const;
 	void setSelectedArmorPiece(ArmorPiece* selectedArmorPiece);
+	void buyItem();
 private:
 	ShopMode currentMode;
 	sf::Texture* armorer;
