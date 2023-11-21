@@ -67,6 +67,8 @@ void TextureManager::loadButtons() {
     loadTexture("armorerButton", "Assets/Buttons/Armorer.png");
     loadTexture("weaponsmithButton", "Assets/Buttons/Weaponsmith.png");
     loadTexture("backButton", "Assets/Buttons/Back.png");
+    loadTexture("buyButton", "Assets/Buttons/Buy.png");
+    loadTexture("equipButton", "Assets/Buttons/Equip.png");
 }
 
 void TextureManager::loadCursor() {
@@ -86,5 +88,6 @@ void TextureManager::loadShop() {
     loadTexture("shoulderIcon", "Assets/UI/Shoulder_Icon.png");
     loadTexture("swordIcon", "Assets/UI/Sword_Icon.png");
     loadTexture("thighIcon", "Assets/UI/Thigh_Icon.png");
+
     loadTexture("coinIcon", "Assets/UI/Coin_Icon.png");
 }

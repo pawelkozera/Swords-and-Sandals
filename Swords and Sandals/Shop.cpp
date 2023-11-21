@@ -18,6 +18,12 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greaves")});
     availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguards")});
     availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boots")});
+
+    const std::unordered_multimap<std::string, ArmorPiece>& armorMap = availableArmorPieces;
+
+    for (const auto& armor : armorMap) {
+        boughtArmorPieces.insert({ armor.second.getName(), false });
+    }
     
     setUpItemsPosition();
 }
@@ -29,6 +35,14 @@ void Shop::setUpPositionOfButtons() {
 
     if (buttons.find("backButton") != buttons.end()) {
         buttons.at("backButton").setPosition(sf::Vector2f(100.0f, 800.0f));
+    }
+
+    if (buttons.find("buyButton") != buttons.end()) {
+        buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+    }
+
+    if (buttons.find("equipButton") != buttons.end()) {
+        buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
     }
 
     setUpPositionOfIconButtons();
@@ -111,12 +125,12 @@ void Shop::displayButtons(sf::RenderWindow& window) {
 
     if (isArmorer) {
         buttonsToDisplay = {
-            "backButton", "armButton", "calfButton", "chestButton", "feetButton",
+            "backButton", "equipButton", "buyButton", "armButton", "calfButton", "chestButton", "feetButton",
             "forearmButton", "helmetButton", "pantsButton", "shoulderButton", "thighButton"
         };
     }
     else {
-        buttonsToDisplay = {"backButton", "swordButton"};
+        buttonsToDisplay = {"backButton", "equipButton", "swordButton"};
     }
 
     for (const auto& buttonName : buttonsToDisplay) {
@@ -175,9 +189,37 @@ void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
             ArmorPiece& armorPiece = pair.second;
             if (armorPiece.isClicked(mousePosition)) {
                 selectedArmorPiece = &armorPiece;
+                displayBuyOrEquipButton();
                 break;
             }
         }
+    }
+}
+
+void Shop::displayBuyOrEquipButton() {
+    auto it = boughtArmorPieces.find(selectedArmorPiece->getName());
+
+    if (it != boughtArmorPieces.end()) {
+        std::unordered_map<std::string, Button>& buttons = getButtons();
+
+        if (it->second) {
+            if (buttons.find("equipButton") != buttons.end()) {
+                buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+            }
+        }
+        else {
+            if (buttons.find("buyButton") != buttons.end()) {
+                buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+            }
+        }
+    }
+}
+
+void Shop::changeButtonPosition(const std::string &buttonName, const sf::Vector2f& position) {
+    std::unordered_map<std::string, Button>& buttons = getButtons();
+
+    if (buttons.find(buttonName) != buttons.end()) {
+        buttons.at(buttonName).setPosition(position);
     }
 }
 

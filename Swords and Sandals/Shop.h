@@ -34,6 +34,8 @@ public:
 	void displayItems(sf::RenderWindow& window);
 	void setUpItemsPosition();
 	void checkForClickedItems(const sf::Vector2f& mousePosition);
+	void displayBuyOrEquipButton();
+	void changeButtonPosition(const std::string& buttonName, const sf::Vector2f& position);
 	void displayStatsOfSelectedItem(sf::RenderWindow& window);
 	void setMode(ShopMode mode);
 	ShopMode getMode() const;
@@ -45,6 +47,8 @@ private:
 	sf::Texture* weaponsmith;
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
+	std::unordered_map<std::string, bool> boughtArmorPieces;
+
 	ArmorPiece* selectedArmorPiece;
 };
 
