@@ -13,6 +13,10 @@ private:
 	int charisma;
 	int stamina;
 	int gold;
+
+	std::unordered_multimap<std::string, ArmorPiece> equipedArmorPieces;
 public:
+	Player() = default;
+	Player(std::unordered_map<std::string, CharacterPart>& characterPart);
 };
 

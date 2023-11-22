@@ -1,8 +1,8 @@
 #include "Shop.h"
 
 
-Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& textureManager)
-    : PlaceInterface(textureManager.getTexture("armorerBackground"), buttons) {
+Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& textureManager, Player* player)
+    : PlaceInterface(textureManager.getTexture("armorerBackground"), buttons), player(player) {
     isArmorer = true;
     this->armorer = &textureManager.getTexture("armorerBackground");
     this->weaponsmith = &textureManager.getTexture("weaponsmithBackground");
@@ -11,13 +11,44 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
 
     availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead"), 1, 200, "Dark knight", "helmet")});
     availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 1, 500, "Dark knight", "breastplate")});
-    availableArmorPieces.insert({ "shoulder", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguards")});
-    availableArmorPieces.insert({ "elbow", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlets")});
-    availableArmorPieces.insert({ "arm", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "gloves")});
+
+    availableArmorPieces.insert({ "shoulderLeft", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguard left")});
+
+    ArmorPiece DKAshoulderRight(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguard right");
+    DKAshoulderRight.flipSprite();
+    availableArmorPieces.insert({ "shoulderRight", DKAshoulderRight });
+
+    availableArmorPieces.insert({ "elbowLeft", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlet left") });
+
+    ArmorPiece DKAeblowRight(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlet right");
+    DKAeblowRight.flipSprite();
+    availableArmorPieces.insert({ "elbowRight", DKAeblowRight });
+
+    availableArmorPieces.insert({ "armLeft", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "glove left")});
+
+    ArmorPiece DKAarmRight(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "glove right");
+    DKAarmRight.flipSprite();
+    availableArmorPieces.insert({ "armRight",  DKAarmRight });
+
     availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis"), 1, 300, "Dark knight", "pants")});
-    availableArmorPieces.insert({ "thigh", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greaves")});
-    availableArmorPieces.insert({ "leg", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguards")});
-    availableArmorPieces.insert({ "foot", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boots")});
+
+    availableArmorPieces.insert({ "thighLeft", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greave left")});
+
+    ArmorPiece DKAthighRight(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greave right");
+    DKAthighRight.flipSprite();
+    availableArmorPieces.insert({ "thighRight",  DKAthighRight });
+
+    availableArmorPieces.insert({ "legLeft", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguard left")});
+
+    ArmorPiece DKAlegRight(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguard right");
+    DKAlegRight.flipSprite();
+    availableArmorPieces.insert({ "legRight",  DKAlegRight });
+
+    availableArmorPieces.insert({ "footLeft", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boot left")});
+
+    ArmorPiece DKAfootRight(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boot right");
+    DKAfootRight.flipSprite();
+    availableArmorPieces.insert({ "footRight",  DKAfootRight });
 
     const std::unordered_multimap<std::string, ArmorPiece>& armorMap = availableArmorPieces;
 
@@ -143,10 +174,23 @@ void Shop::displayButtons(sf::RenderWindow& window) {
 
 void Shop::displayItems(sf::RenderWindow& window) {
     std::string itemName = shopModeToString();
+    std::string itemNameRight = "";
+
+    if (itemName.find("Left") != std::string::npos) {
+        itemNameRight = itemName;
+        itemNameRight.replace(itemNameRight.size() - 4, 4, "Right");
+    }
 
     auto range = availableArmorPieces.equal_range(itemName);
 
-    for (auto& it = range.first; it != range.second; ++it) {
+    for (auto it = range.first; it != range.second; ++it) {
+        const ArmorPiece& armorPiece = it->second;
+        window.draw(armorPiece.getSprite());
+    }
+
+    auto rangeRight = availableArmorPieces.equal_range(itemNameRight);
+
+    for (auto it = rangeRight.first; it != rangeRight.second; ++it) {
         const ArmorPiece& armorPiece = it->second;
         window.draw(armorPiece.getSprite());
     }
@@ -154,30 +198,37 @@ void Shop::displayItems(sf::RenderWindow& window) {
 
 void Shop::setUpItemsPosition() {
     std::string itemName = shopModeToString();
+    std::string itemNameRight = "";
+
+    if (itemName.find("Left") != std::string::npos) {
+        itemNameRight = itemName;
+        itemNameRight.replace(itemNameRight.size() - 4, 4, "Right");
+    }
 
     std::unordered_map<std::string, sf::Vector2f> positions;
+    if (isArmorer) {
+        for (auto& entry : availableArmorPieces) {
+            const std::string& key = entry.first;
+            ArmorPiece& armorPiece = entry.second;
 
-    for (auto& entry : availableArmorPieces) {
-        const std::string& key = entry.first;
-        ArmorPiece& armorPiece = entry.second;
+            if (key == itemName || key == itemNameRight) {
+                if (positions.find(itemName) == positions.end()) {
+                    positions[itemName] = sf::Vector2f(50.0f, 80.0f);
+                }
 
-        if (key == itemName) {
-            if (positions.find(key) == positions.end()) {
-                positions[key] = sf::Vector2f(50.0f, 80.0f);
+                armorPiece.setPosition(positions[itemName]);
+
+                positions[itemName].x += 90.0f;
+
+                if (positions[itemName].x > 580.0f) {
+                    positions[itemName].x = 50.0f;
+                    positions[itemName].y += 90.0f;
+                }
             }
-
-            armorPiece.setPosition(positions[key]);
-
-            positions[key].x += 90.0f;
-
-            if (positions[key].x > 580.0f) {
-                positions[key].x = 50.0f;
-                positions[key].y += 90.0f;
-            }
-        }
-        else {
-            if (positions.find(key) == positions.end()) {
-                armorPiece.setPosition(sf::Vector2f(-100.0f, -100.0f));
+            else {
+                if (positions.find(key) == positions.end()) {
+                    armorPiece.setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
             }
         }
     }
@@ -286,13 +337,13 @@ std::string Shop::shopModeToString() const
         {ShopMode::Nothing, "nothing"},
         {ShopMode::Head, "head"},
         {ShopMode::Chest, "chest"},
-        {ShopMode::Shoulder, "shoulder"},
-        {ShopMode::Elbow, "elbow"},
-        {ShopMode::Arm, "arm"},
+        {ShopMode::Shoulder, "shoulderLeft"},
+        {ShopMode::Elbow, "elbowLeft"},
+        {ShopMode::Arm, "armLeft"},
         {ShopMode::Pelvis, "pelvis"},
-        {ShopMode::Thigh, "thigh"},
-        {ShopMode::Leg, "leg"},
-        {ShopMode::Foot, "foot"},
+        {ShopMode::Thigh, "thighLeft"},
+        {ShopMode::Leg, "legLeft"},
+        {ShopMode::Foot, "footLeft"},
         {ShopMode::Sword, "sword"}
     };
 
@@ -320,10 +371,28 @@ void Shop::buyItem() {
                     it->second = true;
                     buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
                     buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+
+                    std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+                    player->addArmorPiece(characterPart, *selectedArmorPiece);
+                    player->updateArmorPositions();
                 }
             }
         }
     }
     else {
+    }
+}
+
+std::string Shop::findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) const {
+    auto it = std::find_if(availableArmorPieces.begin(), availableArmorPieces.end(),
+        [selectedArmorPiece, this](const auto& pair) {
+            return &pair.second == selectedArmorPiece;
+        });
+
+    if (it != availableArmorPieces.end()) {
+        return it->first;
+    }
+    else {
+        return "";
     }
 }

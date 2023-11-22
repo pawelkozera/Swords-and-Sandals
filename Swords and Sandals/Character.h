@@ -16,5 +16,6 @@ public:
 	void assembleBody();
 	void updateArmorPositions();
 	void display(sf::RenderWindow& window);
+	void addArmorPiece(std::string& characterPart, ArmorPiece& armorPiece);
 };
 

@@ -77,13 +77,16 @@ void GameManager::setUp() {
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
 
     character = Character(characterPartsMap);
+
+    player = Player(characterPartsMap);
+    player.assembleBody();
+    player.updateArmorPositions();
+
     cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
-    shop = Shop(shopButtons, textureManager);
+    shop = Shop(shopButtons, textureManager, &player);
 
     cityCenter.setUpPositionOfButtons();
     shop.setUpPositionOfButtons();
-    character.assembleBody();
-    character.updateArmorPositions();
 
     gameState = GameState();
 
@@ -104,7 +107,7 @@ void GameManager::handleEvents() {
         handleShopEvents();
         break;
     case GameState::GameMode::InArena:
-        character.display(window);
+        player.display(window);
         break;
     default:
         break;
@@ -119,6 +122,9 @@ void GameManager::handleShopEvents() {
     handleShopButtons();
     shop.checkForClickedItems(cursor.getPosition());
     shop.displayStatsOfSelectedItem(window);
+    
+    player.updateArmorPositions();
+    player.display(window);
 }
 
 void GameManager::handleCityCenterButtons() {

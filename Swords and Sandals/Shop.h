@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "PlaceInterface.h"
 #include "TextureManager.h"
+#include "Player.h"
 
 class Shop : public PlaceInterface
 {
@@ -25,7 +26,7 @@ public:
 	};
 
 	Shop();
-	Shop(std::unordered_map<std::string, Button> buttons, TextureManager &textureManager);
+	Shop(std::unordered_map<std::string, Button> buttons, TextureManager &textureManager, Player* player);
 	void setUpPositionOfButtons() override;
 	void setUpPositionOfIconButtons();
 	void setShopToArmorer(bool isArmorer);
@@ -46,10 +47,13 @@ private:
 	ShopMode currentMode;
 	sf::Texture* armorer;
 	sf::Texture* weaponsmith;
+	Player* player;
 	bool isArmorer;
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
 	std::unordered_map<std::string, bool> boughtArmorPieces;
 
 	ArmorPiece* selectedArmorPiece;
+
+	std::string findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) const;
 };
 

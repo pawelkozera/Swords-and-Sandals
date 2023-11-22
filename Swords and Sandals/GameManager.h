@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Character.h"
+#include "Player.h"
 #include "TextureManager.h"
 #include "Button.h"
 #include "CityCenter.h"
@@ -14,6 +14,7 @@ class GameManager {
 private:
     sf::RenderWindow window;
     Character character;
+    Player player;
     CityCenter cityCenter;
     GameState gameState;
     TextureManager textureManager;

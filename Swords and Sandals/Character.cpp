@@ -95,3 +95,6 @@ void Character::display(sf::RenderWindow& window) {
     }
 }
 
+void Character::addArmorPiece(std::string& characterPart,ArmorPiece& armorPiece) {
+    armorPieces.insert_or_assign(characterPart, armorPiece);
+}
