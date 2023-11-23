@@ -65,7 +65,7 @@ void Shop::setUpPositionOfButtons() {
     std::unordered_map<std::string, Button>& buttons = getButtons();
 
     if (buttons.find("backButton") != buttons.end()) {
-        buttons.at("backButton").setPosition(sf::Vector2f(100.0f, 800.0f));
+        buttons.at("backButton").setPosition(sf::Vector2f(100.0f, 750.0f));
     }
 
     if (buttons.find("buyButton") != buttons.end()) {

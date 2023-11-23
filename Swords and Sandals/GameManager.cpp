@@ -64,6 +64,8 @@ void GameManager::run() {
 
         handleEvents();
 
+        playerInterface.displayInterface(window, player);
+
         cursor.update();
         cursor.render();
 
@@ -81,6 +83,8 @@ void GameManager::setUp() {
     player = Player(characterPartsMap);
     player.assembleBody();
     player.updateArmorPositions();
+
+    playerInterface = PlayerInterface(textureManager.getTexture("coinIcon"));
 
     cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
     shop = Shop(shopButtons, textureManager, &player);

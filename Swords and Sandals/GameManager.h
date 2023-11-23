@@ -9,6 +9,7 @@
 #include "Cursor.h"
 #include "Shop.h"
 #include <functional>
+#include "PlayerInterface.h"
 
 class GameManager {
 private:
@@ -20,6 +21,7 @@ private:
     TextureManager textureManager;
     Cursor cursor;
     Shop shop;
+    PlayerInterface playerInterface;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 public:
