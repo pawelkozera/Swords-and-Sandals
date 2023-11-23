@@ -43,6 +43,7 @@ public:
 	std::string shopModeToString() const;
 	void setSelectedArmorPiece(ArmorPiece* selectedArmorPiece);
 	void buyItem();
+	void equipItem();
 private:
 	ShopMode currentMode;
 	sf::Texture* armorer;

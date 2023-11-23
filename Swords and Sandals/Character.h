@@ -17,5 +17,7 @@ public:
 	void updateArmorPositions();
 	void display(sf::RenderWindow& window);
 	void addArmorPiece(std::string& characterPart, ArmorPiece& armorPiece);
+	bool isArmorPieceInMap(ArmorPiece* armorPiece) const;
+	void removeArmorPiece(const std::string &characterPart);
 };
 

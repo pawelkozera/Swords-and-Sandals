@@ -14,7 +14,7 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
         shop.buyItem();
         };
     buttonHandlers["equipButton"] = [this]() {
-        
+        shop.equipItem();
         };
     buttonHandlers["helmetButton"] = [this]() {
         shop.setMode(Shop::ShopMode::Head);

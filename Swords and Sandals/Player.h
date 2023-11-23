@@ -18,5 +18,7 @@ private:
 public:
 	Player() = default;
 	Player(std::unordered_map<std::string, CharacterPart>& characterPart);
+	const int getGold();
+	void buy(int gold);
 };
 

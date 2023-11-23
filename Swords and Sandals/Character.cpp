@@ -98,3 +98,24 @@ void Character::display(sf::RenderWindow& window) {
 void Character::addArmorPiece(std::string& characterPart,ArmorPiece& armorPiece) {
     armorPieces.insert_or_assign(characterPart, armorPiece);
 }
+
+bool Character::isArmorPieceInMap(ArmorPiece* armorPiece) const {
+    for (const auto& pair : armorPieces) {
+        std::string armorInMapName = pair.second.getName() + pair.second.getType();
+        std::string selectedArmor = armorPiece->getName() + armorPiece->getType();
+        if (armorInMapName == selectedArmor) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Character::removeArmorPiece(const std::string& characterPart) {
+    auto it = armorPieces.find(characterPart);
+
+    if (it != armorPieces.end()) {
+        it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
+        armorPieces.erase(it);
+    }
+}

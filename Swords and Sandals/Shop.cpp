@@ -359,27 +359,42 @@ void Shop::setSelectedArmorPiece(ArmorPiece* selectedArmorPiece) {
 void Shop::buyItem() {
     if (isArmorer) {
         auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
-
         if (it != boughtArmorPieces.end()) {
             std::unordered_map<std::string, Button>& buttons = getButtons();
 
-            if (it->second) {
-                
-            }
-            else {
+            bool itemIsBought = it->second;
+            if (!itemIsBought) {
                 if (buttons.find("equipButton") != buttons.end() && buttons.find("buyButton") != buttons.end()) {
-                    it->second = true;
-                    buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
-                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                    if (selectedArmorPiece->getPrice() <= player->getGold()) {
+                        player->buy(selectedArmorPiece->getPrice());
 
-                    std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
-                    player->addArmorPiece(characterPart, *selectedArmorPiece);
-                    player->updateArmorPositions();
+                        it->second = true;
+                        buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                        buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+
+                        std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+                        player->addArmorPiece(characterPart, *selectedArmorPiece);
+                        player->updateArmorPositions();
+                    }
                 }
             }
         }
     }
     else {
+    }
+}
+
+void Shop::equipItem() {
+    if (isArmorer) {
+        if (player->isArmorPieceInMap(selectedArmorPiece)) {
+            std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+            player->removeArmorPiece(characterPart);
+        }
+        else {
+            std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+            player->addArmorPiece(characterPart, *selectedArmorPiece);
+            player->updateArmorPositions();
+        }
     }
 }
 

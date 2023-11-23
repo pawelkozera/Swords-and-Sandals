@@ -18,7 +18,7 @@ public:
     void displayButtons(sf::RenderWindow& window);
     virtual void setUpPositionOfButtons();
     void displayBackground(sf::RenderWindow& window);
-    const Button getButton(const std::string& buttonName) const;
+    Button getButton(const std::string& buttonName);
     std::unordered_map<std::string, Button>& getButtons();
     void setSpriteTexture(sf::Texture &texture);
 };

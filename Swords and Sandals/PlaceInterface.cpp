@@ -29,7 +29,7 @@ void PlaceInterface::displayBackground(sf::RenderWindow& window) {
     window.draw(sprite);
 }
 
-const Button PlaceInterface::getButton(const std::string& buttonName) const {
+Button PlaceInterface::getButton(const std::string& buttonName) {
     if (buttons.find(buttonName) != buttons.end()) {
         return buttons.at(buttonName);
     }

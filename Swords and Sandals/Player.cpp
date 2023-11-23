@@ -9,6 +9,14 @@ Player::Player(std::unordered_map<std::string, CharacterPart>& characterPart)
     vitality(1),
     charisma(1),
     stamina(1),
-    gold(10000)
+    gold(900)
 {
+}
+
+const int Player::getGold() {
+    return gold;
+}
+
+void Player::buy(int gold) {
+    this->gold -= gold;
 }
