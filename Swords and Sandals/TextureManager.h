@@ -18,5 +18,6 @@ public:
     void loadButtons();
     void loadCursor();
     void loadShop();
+    void loadSwords();
 };
 

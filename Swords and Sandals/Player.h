@@ -15,6 +15,7 @@ private:
 	int gold;
 
 	std::unordered_multimap<std::string, ArmorPiece> equipedArmorPieces;
+	std::unordered_multimap<std::string, ArmorPiece> equipedWeapons;
 public:
 	Player() = default;
 	Player(std::unordered_map<std::string, CharacterPart>& characterPart);

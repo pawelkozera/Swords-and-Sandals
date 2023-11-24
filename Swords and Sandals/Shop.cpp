@@ -8,6 +8,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     this->weaponsmith = &textureManager.getTexture("weaponsmithBackground");
     setMode(ShopMode::Nothing);
     selectedArmorPiece = nullptr;
+    selectedWeapon = nullptr;
 
     availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead"), 1, 200, "Dark knight", "helmet")});
     availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 1, 500, "Dark knight", "breastplate")});
@@ -54,6 +55,14 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
 
     for (const auto& armor : armorMap) {
         boughtArmorPieces.insert({ armor.second.getName() + armor.second.getType(), false});
+    }
+
+    availableWeapons.insert({ "handRight", Weapon(textureManager.getTexture("DKAchest"), 1, 300, "Blue", "sword") });
+
+    const std::unordered_multimap<std::string, Weapon>& weaponMap = availableWeapons;
+
+    for (const auto& weapon : weaponMap) {
+        boughtWeapons.insert({ weapon.second.getName() + weapon.second.getType(), false });
     }
     
     setUpItemsPosition();
@@ -161,7 +170,7 @@ void Shop::displayButtons(sf::RenderWindow& window) {
         };
     }
     else {
-        buttonsToDisplay = {"backButton", "equipButton", "swordButton"};
+        buttonsToDisplay = {"backButton", "equipButton", "buyButton", "swordButton"};
     }
 
     for (const auto& buttonName : buttonsToDisplay) {
@@ -181,18 +190,35 @@ void Shop::displayItems(sf::RenderWindow& window) {
         itemNameRight.replace(itemNameRight.size() - 4, 4, "Right");
     }
 
-    auto range = availableArmorPieces.equal_range(itemName);
+    if (isArmorer) {
+        auto range = availableArmorPieces.equal_range(itemName);
 
-    for (auto it = range.first; it != range.second; ++it) {
-        const ArmorPiece& armorPiece = it->second;
-        window.draw(armorPiece.getSprite());
+        for (auto it = range.first; it != range.second; ++it) {
+            const ArmorPiece& armorPiece = it->second;
+            window.draw(armorPiece.getSprite());
+        }
+
+        auto rangeRight = availableArmorPieces.equal_range(itemNameRight);
+
+        for (auto it = rangeRight.first; it != rangeRight.second; ++it) {
+            const ArmorPiece& armorPiece = it->second;
+            window.draw(armorPiece.getSprite());
+        }
     }
+    else {
+        auto range = availableWeapons.equal_range(itemName);
+    
+        for (auto it = range.first; it != range.second; ++it) {
+            const Weapon& weapon = it->second;
+            window.draw(weapon.getSprite());
+        }
 
-    auto rangeRight = availableArmorPieces.equal_range(itemNameRight);
+        auto rangeRight = availableWeapons.equal_range(itemNameRight);
 
-    for (auto it = rangeRight.first; it != rangeRight.second; ++it) {
-        const ArmorPiece& armorPiece = it->second;
-        window.draw(armorPiece.getSprite());
+        for (auto it = rangeRight.first; it != rangeRight.second; ++it) {
+            const Weapon& weapon = it->second;
+            window.draw(weapon.getSprite());
+        }
     }
 }
 
@@ -232,6 +258,32 @@ void Shop::setUpItemsPosition() {
             }
         }
     }
+    else {
+        for (auto& entry : availableWeapons) {
+            const std::string& key = entry.first;
+            Weapon& weapon = entry.second;
+
+            if (key == itemName || key == itemNameRight) {
+                if (positions.find(itemName) == positions.end()) {
+                    positions[itemName] = sf::Vector2f(50.0f, 80.0f);
+                }
+
+                weapon.setPosition(positions[itemName]);
+
+                positions[itemName].x += 90.0f;
+
+                if (positions[itemName].x > 580.0f) {
+                    positions[itemName].x = 50.0f;
+                    positions[itemName].y += 90.0f;
+                }
+            }
+            else {
+                if (positions.find(key) == positions.end()) {
+                    weapon.setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+        }
+    }
 }
 
 void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
@@ -245,24 +297,56 @@ void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
             }
         }
     }
+    else {
+        for (auto& pair : availableWeapons) {
+            Weapon& weapon = pair.second;
+            if (weapon.isClicked(mousePosition)) {
+                selectedWeapon = &weapon;
+                displayBuyOrEquipButton();
+                break;
+            }
+        }
+    }
 }
 
 void Shop::displayBuyOrEquipButton() {
-    auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
+    if (isArmorer) {
+        auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
 
-    if (it != boughtArmorPieces.end()) {
-        std::unordered_map<std::string, Button>& buttons = getButtons();
+        if (it != boughtArmorPieces.end()) {
+            std::unordered_map<std::string, Button>& buttons = getButtons();
 
-        if (it->second) {
-            if (buttons.find("equipButton") != buttons.end()) {
-                buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
-                buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+            if (it->second) {
+                if (buttons.find("equipButton") != buttons.end()) {
+                    buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+            else {
+                if (buttons.find("buyButton") != buttons.end()) {
+                    buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
             }
         }
-        else {
-            if (buttons.find("buyButton") != buttons.end()) {
-                buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
-                buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+    }
+    else {
+        auto it = boughtWeapons.find(selectedWeapon->getName() + selectedWeapon->getType());
+
+        if (it != boughtWeapons.end()) {
+            std::unordered_map<std::string, Button>& buttons = getButtons();
+
+            if (it->second) {
+                if (buttons.find("equipButton") != buttons.end()) {
+                    buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+            else {
+                if (buttons.find("buyButton") != buttons.end()) {
+                    buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
             }
         }
     }
@@ -321,6 +405,50 @@ void Shop::displayStatsOfSelectedItem(sf::RenderWindow& window) {
             window.draw(stats);
         }
     }
+    else {
+        if (selectedWeapon && currentMode != ShopMode::Nothing) {
+            sf::Font font;
+            if (!font.loadFromFile("Fonts/PlayfairDisplay.ttf")) {
+            }
+
+            sf::Text stats;
+            float padding_x;
+            stats.setFont(font);
+            stats.setString("Stats");
+            stats.setCharacterSize(40);
+            stats.setFillColor(sf::Color::White);
+            stats.setPosition(770.0f, 80.0f);
+            window.draw(stats);
+
+            stats.setCharacterSize(32);
+
+            stats.setString(selectedWeapon->getName());
+            stats.setPosition(700, 160.0f);
+            window.draw(stats);
+
+            stats.setString(selectedWeapon->getType());
+            stats.setPosition(700, 200.0f);
+            window.draw(stats);
+
+            stats.setString("Attack :");
+            stats.setPosition(700.0f, 280.0f);
+            padding_x = stats.getPosition().x + stats.getLocalBounds().width + 40;
+            window.draw(stats);
+
+            stats.setString(std::to_string(selectedWeapon->getAttack()));
+            stats.setPosition(padding_x, 280.0f);
+            window.draw(stats);
+
+            stats.setString("Price :");
+            stats.setPosition(700.0f, 320.0f);
+            padding_x = stats.getPosition().x + stats.getLocalBounds().width + 40;
+            window.draw(stats);
+
+            stats.setString(std::to_string(selectedWeapon->getPrice()));
+            stats.setPosition(padding_x, 320.0f);
+            window.draw(stats);
+        }
+    }
 }
 
 void Shop::setMode(ShopMode mode) {
@@ -344,7 +472,7 @@ std::string Shop::shopModeToString() const
         {ShopMode::Thigh, "thighLeft"},
         {ShopMode::Leg, "legLeft"},
         {ShopMode::Foot, "footLeft"},
-        {ShopMode::Sword, "sword"}
+        {ShopMode::Sword, "handLeft"}
     };
 
     auto it = modeToStringMap.find(getMode());
@@ -354,6 +482,10 @@ std::string Shop::shopModeToString() const
 
 void Shop::setSelectedArmorPiece(ArmorPiece* selectedArmorPiece) {
     this->selectedArmorPiece = selectedArmorPiece;
+}
+
+void Shop::setSelectedWeapon(Weapon* selectedWeapon) {
+    this->selectedWeapon = selectedWeapon;
 }
 
 void Shop::buyItem() {
@@ -381,6 +513,27 @@ void Shop::buyItem() {
         }
     }
     else {
+        auto it = boughtWeapons.find(selectedWeapon->getName() + selectedWeapon->getType());
+        if (it != boughtWeapons.end()) {
+            std::unordered_map<std::string, Button>& buttons = getButtons();
+
+            bool itemIsBought = it->second;
+            if (!itemIsBought) {
+                if (buttons.find("equipButton") != buttons.end() && buttons.find("buyButton") != buttons.end()) {
+                    if (selectedWeapon->getPrice() <= player->getGold()) {
+                        player->buy(selectedWeapon->getPrice());
+
+                        it->second = true;
+                        buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                        buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+
+                        std::string characterPart = this->findKeyForWeapon(selectedWeapon);
+                        player->addWeapon(characterPart, *selectedWeapon);
+                        player->updateArmorPositions();
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -388,6 +541,17 @@ void Shop::equipItem() {
     if (isArmorer) {
         if (player->isArmorPieceInMap(selectedArmorPiece)) {
             std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+            player->removeArmorPiece(characterPart);
+        }
+        else {
+            std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
+            player->addArmorPiece(characterPart, *selectedArmorPiece);
+            player->updateArmorPositions();
+        }
+    }
+    else {
+        if (player->isWeaponInMap(selectedWeapon)) {
+            std::string characterPart = this->findKeyForWeapon(selectedWeapon);
             player->removeArmorPiece(characterPart);
         }
         else {
@@ -405,6 +569,20 @@ std::string Shop::findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) con
         });
 
     if (it != availableArmorPieces.end()) {
+        return it->first;
+    }
+    else {
+        return "";
+    }
+}
+
+std::string Shop::findKeyForWeapon(const Weapon* selectedWeapon) const {
+    auto it = std::find_if(availableWeapons.begin(), availableWeapons.end(),
+        [selectedWeapon, this](const auto& pair) {
+            return &pair.second == selectedWeapon;
+        });
+
+    if (it != availableWeapons.end()) {
         return it->first;
     }
     else {

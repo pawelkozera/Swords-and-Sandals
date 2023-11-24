@@ -99,11 +99,27 @@ void Character::addArmorPiece(std::string& characterPart,ArmorPiece& armorPiece)
     armorPieces.insert_or_assign(characterPart, armorPiece);
 }
 
+void Character::addWeapon(std::string& characterPart, Weapon& weapon) {
+    weapons.insert_or_assign(characterPart, weapon);
+}
+
 bool Character::isArmorPieceInMap(ArmorPiece* armorPiece) const {
     for (const auto& pair : armorPieces) {
         std::string armorInMapName = pair.second.getName() + pair.second.getType();
         std::string selectedArmor = armorPiece->getName() + armorPiece->getType();
         if (armorInMapName == selectedArmor) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Character::isWeaponInMap(Weapon* weapon) const {
+    for (const auto& pair : weapons) {
+        std::string weaponInMapName = pair.second.getName() + pair.second.getType();
+        std::string selectedWeapon = weapon->getName() + weapon->getType();
+        if (weaponInMapName == selectedWeapon) {
             return true;
         }
     }
@@ -117,5 +133,14 @@ void Character::removeArmorPiece(const std::string& characterPart) {
     if (it != armorPieces.end()) {
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
         armorPieces.erase(it);
+    }
+}
+
+void Character::removeWeapon(const std::string& characterPart) {
+    auto it = weapons.find(characterPart);
+
+    if (it != weapons.end()) {
+        it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
+        weapons.erase(it);
     }
 }

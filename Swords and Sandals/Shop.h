@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Button.h"
 #include "ArmorPiece.h"
+#include "Weapon.h"
 #include <unordered_map>
 #include "PlaceInterface.h"
 #include "TextureManager.h"
@@ -42,6 +43,7 @@ public:
 	ShopMode getMode() const;
 	std::string shopModeToString() const;
 	void setSelectedArmorPiece(ArmorPiece* selectedArmorPiece);
+	void setSelectedWeapon(Weapon* selectedWeapon);
 	void buyItem();
 	void equipItem();
 private:
@@ -53,8 +55,13 @@ private:
 	std::unordered_multimap<std::string, ArmorPiece> availableArmorPieces;
 	std::unordered_map<std::string, bool> boughtArmorPieces;
 
+	std::unordered_multimap<std::string, Weapon> availableWeapons;
+	std::unordered_map<std::string, bool> boughtWeapons;
+
 	ArmorPiece* selectedArmorPiece;
+	Weapon* selectedWeapon;
 
 	std::string findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) const;
+	std::string findKeyForWeapon(const Weapon* selectedWeapon) const;
 };
 
