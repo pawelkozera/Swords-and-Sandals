@@ -6,6 +6,8 @@ PlayerCreation::PlayerCreation()
 
 PlayerCreation::PlayerCreation(sf::Texture& cityTexture, std::unordered_map<std::string, Button>& buttons) : PlaceInterface(cityTexture, buttons) {
     setPosition(sf::Vector2f(0.0f, -30.0f));
+
+    oldAgility = oldAttack = oldCharisma = oldDefence = oldStamina = oldStrength = oldVitality = 1;
 }
 
 void PlayerCreation::setUpPositionOfButtons() {
@@ -128,16 +130,14 @@ void PlayerCreation::checkForClickedButton(const sf::Vector2f& mousePosition, Pl
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            if (player.getAvailablePoints() > 0) {
-                handleButtonClick(buttonName, player, gameState);
-            }
+            handleButtonClick(buttonName, player, gameState);
             break;
         }
     }
 }
 
 void PlayerCreation::handleButtonClick(const std::string& buttonName, Player& player, GameState& gameState) {
-    if (buttonName.find("plus") != std::string::npos) {
+    if (buttonName.find("plus") != std::string::npos && player.getAvailablePoints() > 0) {
         handlePlusButtonClick(buttonName, player);
     }
     else if (buttonName.find("minus") != std::string::npos) {
@@ -146,8 +146,19 @@ void PlayerCreation::handleButtonClick(const std::string& buttonName, Player& pl
 
     if (buttonName == "goToCityButton") {
         gameState.setMode(GameState::GameMode::InCity);
-        hideButtons();
+        setOldStats(player);
+
     }
+}
+
+void PlayerCreation::setOldStats(Player& player) {
+    oldStrength = player.getStrength();
+    oldAgility = player.getAgility();
+    oldAttack = player.getAttack();
+    oldCharisma = player.getCharisma();
+    oldDefence = player.getDefence();
+    oldStamina = player.getStamina();
+    oldVitality = player.getVitality();
 }
 
 void PlayerCreation::handlePlusButtonClick(const std::string& buttonName, Player& player) {
@@ -182,31 +193,31 @@ void PlayerCreation::handlePlusButtonClick(const std::string& buttonName, Player
 }
 
 void PlayerCreation::handleMinusButtonClick(const std::string& buttonName, Player& player) {
-    if (buttonName == "minusStrengthButton" && player.getStrength() > 1) {
+    if (buttonName == "minusStrengthButton" && player.getStrength() > oldStrength) {
         player.decrementStrength();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusAgilityButton" && player.getAgility() > 1) {
+    else if (buttonName == "minusAgilityButton" && player.getAgility() > oldAgility) {
         player.decrementAgility();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusVitalityButton" && player.getVitality() > 1) {
+    else if (buttonName == "minusVitalityButton" && player.getVitality() > oldVitality) {
         player.decrementVitality();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusStaminaButton" && player.getStamina() > 1) {
+    else if (buttonName == "minusStaminaButton" && player.getStamina() > oldStamina) {
         player.decrementStamina();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusAttackButton" && player.getAttack() > 1) {
+    else if (buttonName == "minusAttackButton" && player.getAttack() > oldAttack) {
         player.decrementAttack();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusDefenceButton" && player.getDefence() > 1) {
+    else if (buttonName == "minusDefenceButton" && player.getDefence() > oldDefence) {
         player.decrementDefence();
         player.addAvailablePoints(1);
     }
-    else if (buttonName == "minusCharismaButton" && player.getCharisma() > 1) {
+    else if (buttonName == "minusCharismaButton" && player.getCharisma() > oldCharisma) {
         player.decrementCharisma();
         player.addAvailablePoints(1);
     }

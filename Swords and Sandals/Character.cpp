@@ -9,7 +9,7 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
 }
 
 void Character::assembleBody() {
-    sf::Vector2f bodyPosition(300.0f, 200.0f);
+    sf::Vector2f bodyPosition(800.0f, 600.0f);
     
     sf::Vector2f chestPosition = bodyPosition;
 

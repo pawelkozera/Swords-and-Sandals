@@ -69,9 +69,11 @@ void TextureManager::loadButtons() {
     loadTexture("backButton", "Assets/Buttons/Back.png");
     loadTexture("buyButton", "Assets/Buttons/Buy.png");
     loadTexture("equipButton", "Assets/Buttons/Equip.png");
+    loadTexture("unequipButton", "Assets/Buttons/Unequip.png");
     loadTexture("plusButton", "Assets/Buttons/Plus.png");
     loadTexture("minusButton", "Assets/Buttons/Minus.png");
     loadTexture("goToCityButton", "Assets/Buttons/City.png");
+    loadTexture("characterCreation", "Assets/Buttons/Character.png");
 }
 
 void TextureManager::loadCursor() {

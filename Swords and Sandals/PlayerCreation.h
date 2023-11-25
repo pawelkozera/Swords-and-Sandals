@@ -8,8 +8,17 @@ class PlayerCreation : public PlaceInterface
 {
 private:
 	void handleButtonClick(const std::string& buttonName, Player& player, GameState& gameState);
+	void setOldStats(Player &player);
 	void handlePlusButtonClick(const std::string& buttonName, Player& player);
 	void handleMinusButtonClick(const std::string& buttonName, Player& player);
+
+	int oldStrength;
+	int oldAgility;
+	int oldAttack;
+	int oldDefence;
+	int oldVitality;
+	int oldCharisma;
+	int oldStamina;
 public:
 	PlayerCreation();
 	PlayerCreation(sf::Texture& cityTexture, std::unordered_map<std::string, Button>& buttons);

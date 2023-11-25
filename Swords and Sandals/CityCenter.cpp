@@ -20,4 +20,7 @@ void CityCenter::setUpPositionOfButtons() {
     if (buttons.find("weaponsmith") != buttons.end()) {
         buttons.at("weaponsmith").setPosition(sf::Vector2f(250.0f, 680.0f));
     }
+    if (buttons.find("characterCreation") != buttons.end()) {
+        buttons.at("characterCreation").setPosition(sf::Vector2f(860.0f, 840.0f));
+    }
 }

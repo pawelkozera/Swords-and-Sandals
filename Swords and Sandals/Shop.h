@@ -35,8 +35,8 @@ public:
 	void displayButtons(sf::RenderWindow& window);
 	void displayItems(sf::RenderWindow& window);
 	void setUpItemsPosition();
-	void checkForClickedItems(const sf::Vector2f& mousePosition);
-	void displayBuyOrEquipButton();
+	void checkForClickedItems(const sf::Vector2f& mousePosition, Player& player);
+	void displayBuyOrEquipButton(Player& player);
 	void changeButtonPosition(const std::string& buttonName, const sf::Vector2f& position);
 	void displayStatsOfSelectedItem(sf::RenderWindow& window);
 	void setMode(ShopMode mode);

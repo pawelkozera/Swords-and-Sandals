@@ -85,6 +85,10 @@ void Shop::setUpPositionOfButtons() {
         buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
     }
 
+    if (buttons.find("unequipButton") != buttons.end()) {
+        buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+    }
+
     setUpPositionOfIconButtons();
 
     setButtonsHidden(false);
@@ -148,11 +152,11 @@ void Shop::displayInterface(sf::RenderWindow& window) {
     itemsDisplay.setFillColor(sf::Color(148, 75, 34, 200));
     itemsDisplay.setPosition(20, 60);
 
-    sf::RectangleShape stats(sf::Vector2f(320, 460));
+    sf::RectangleShape stats(sf::Vector2f(320, 760));
     stats.setFillColor(sf::Color(148, 75, 34, 200));
     stats.setPosition(680, 60);
 
-    sf::RectangleShape iconsBackground(sf::Vector2f(980, 120));
+    sf::RectangleShape iconsBackground(sf::Vector2f(660, 120));
     iconsBackground.setFillColor(sf::Color(148, 75, 34, 200));
     iconsBackground.setPosition(20, 560);
 
@@ -167,12 +171,12 @@ void Shop::displayButtons(sf::RenderWindow& window) {
 
     if (isArmorer) {
         buttonsToDisplay = {
-            "backButton", "equipButton", "buyButton", "armButton", "calfButton", "chestButton", "feetButton",
+            "backButton", "equipButton", "unequipButton", "buyButton", "armButton", "calfButton", "chestButton", "feetButton",
             "forearmButton", "helmetButton", "pantsButton", "shoulderButton", "thighButton"
         };
     }
     else {
-        buttonsToDisplay = {"backButton", "equipButton", "buyButton", "swordButton"};
+        buttonsToDisplay = {"backButton", "equipButton", "buyButton", "swordButton", "unequipButton"};
     }
 
     for (const auto& buttonName : buttonsToDisplay) {
@@ -288,13 +292,13 @@ void Shop::setUpItemsPosition() {
     }
 }
 
-void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
+void Shop::checkForClickedItems(const sf::Vector2f& mousePosition, Player& player) {
     if (isArmorer) {
         for (auto& pair : availableArmorPieces) {
             ArmorPiece& armorPiece = pair.second;
             if (armorPiece.isClicked(mousePosition)) {
                 selectedArmorPiece = &armorPiece;
-                displayBuyOrEquipButton();
+                displayBuyOrEquipButton(player);
                 break;
             }
         }
@@ -304,29 +308,41 @@ void Shop::checkForClickedItems(const sf::Vector2f& mousePosition) {
             Weapon& weapon = pair.second;
             if (weapon.isClicked(mousePosition)) {
                 selectedWeapon = &weapon;
-                displayBuyOrEquipButton();
+                displayBuyOrEquipButton(player);
                 break;
             }
         }
     }
 }
 
-void Shop::displayBuyOrEquipButton() {
+void Shop::displayBuyOrEquipButton(Player& player) {
     if (isArmorer) {
         auto it = boughtArmorPieces.find(selectedArmorPiece->getName() + selectedArmorPiece->getType());
 
         if (it != boughtArmorPieces.end()) {
             std::unordered_map<std::string, Button>& buttons = getButtons();
 
-            if (it->second) {
+            bool itemBought = it->second;
+            bool itemEquiped = player.isArmorPieceInMap(selectedArmorPiece);
+
+            if (itemBought && itemEquiped) {
                 if (buttons.find("equipButton") != buttons.end()) {
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+            else if (itemBought && !itemEquiped) {
+                if (buttons.find("buyButton") != buttons.end()) {
                     buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                     buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                 }
             }
             else {
                 if (buttons.find("buyButton") != buttons.end()) {
                     buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                     buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                 }
             }
@@ -338,15 +354,27 @@ void Shop::displayBuyOrEquipButton() {
         if (it != boughtWeapons.end()) {
             std::unordered_map<std::string, Button>& buttons = getButtons();
 
-            if (it->second) {
+            bool itemBought = it->second;
+            bool itemEquiped = player.isWeaponInMap(selectedWeapon);
+
+            if (itemBought && itemEquiped) {
                 if (buttons.find("equipButton") != buttons.end()) {
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                    buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                }
+            }
+            else if (itemBought && !itemEquiped) {
+                if (buttons.find("buyButton") != buttons.end()) {
                     buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                     buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                 }
             }
             else {
                 if (buttons.find("buyButton") != buttons.end()) {
                     buttons.at("buyButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                    buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                     buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
                 }
             }
@@ -498,13 +526,14 @@ void Shop::buyItem() {
 
             bool itemIsBought = it->second;
             if (!itemIsBought) {
-                if (buttons.find("equipButton") != buttons.end() && buttons.find("buyButton") != buttons.end()) {
+                if (buttons.find("unequipButton") != buttons.end() && buttons.find("buyButton") != buttons.end()) {
                     if (selectedArmorPiece->getPrice() <= player->getGold()) {
                         player->buy(selectedArmorPiece->getPrice());
 
                         it->second = true;
-                        buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                        buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
                         buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                        buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
 
                         std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
                         player->addArmorPiece(characterPart, *selectedArmorPiece);
@@ -526,8 +555,9 @@ void Shop::buyItem() {
                         player->buy(selectedWeapon->getPrice());
 
                         it->second = true;
-                        buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+                        buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
                         buttons.at("buyButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+                        buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
 
                         std::string characterPart = this->findKeyForWeapon(selectedWeapon);
                         player->addWeapon(characterPart, *selectedWeapon);
@@ -540,26 +570,40 @@ void Shop::buyItem() {
 }
 
 void Shop::equipItem() {
+    std::unordered_map<std::string, Button>& buttons = getButtons();
+
     if (isArmorer) {
         if (player->isArmorPieceInMap(selectedArmorPiece)) {
             std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
             player->removeArmorPiece(characterPart);
+
+            buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+            buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
         }
         else {
             std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
             player->addArmorPiece(characterPart, *selectedArmorPiece);
             player->updateArmorPositions();
+
+            buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+            buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
         }
     }
     else {
         if (player->isWeaponInMap(selectedWeapon)) {
             std::string characterPart = this->findKeyForWeapon(selectedWeapon);
             player->removeArmorPiece(characterPart);
+
+            buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
+            buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
         }
         else {
             std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
             player->addArmorPiece(characterPart, *selectedArmorPiece);
             player->updateArmorPositions();
+
+            buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
+            buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
         }
     }
 }

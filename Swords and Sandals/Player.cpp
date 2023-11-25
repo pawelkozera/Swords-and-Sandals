@@ -9,7 +9,7 @@ Player::Player(std::unordered_map<std::string, CharacterPart>& characterPart)
     vitality(1),
     charisma(1),
     stamina(1),
-    availablePoints(99),
+    availablePoints(5),
     gold(900)
 {
 }

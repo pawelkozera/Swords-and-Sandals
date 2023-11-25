@@ -16,6 +16,9 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
     buttonHandlers["equipButton"] = [this]() {
         shop.equipItem();
         };
+    buttonHandlers["unequipButton"] = [this]() {
+        shop.equipItem();
+        };
     buttonHandlers["helmetButton"] = [this]() {
         shop.setMode(Shop::ShopMode::Head);
         };
@@ -64,8 +67,6 @@ void GameManager::run() {
 
         handleEvents();
 
-        playerInterface.displayInterface(window, player);
-
         cursor.update();
         cursor.render();
 
@@ -106,17 +107,21 @@ void GameManager::handleEvents() {
     switch (gameState.getMode()) {
     case GameState::GameMode::InCity:
         cityCenter.displayBackground(window);
+        playerInterface.displayInterface(window, player);
         cityCenter.displayButtons(window);
         handleCityCenterButtons();
         break;
     case GameState::GameMode::InWeaponsmithShop:
         handleShopEvents();
+        playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InArmorerShop:
         handleShopEvents();
+        playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InArena:
         player.display(window);
+        playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InCreationMenu:
         handlePlayerCreationEvents();
@@ -136,7 +141,7 @@ void GameManager::handleShopEvents() {
     shop.displayButtons(window);
     shop.displayItems(window);
     handleShopButtons();
-    shop.checkForClickedItems(cursor.getPosition());
+    shop.checkForClickedItems(cursor.getPosition(), player);
     shop.displayStatsOfSelectedItem(window);
     
     player.updateArmorPositions();
@@ -163,6 +168,9 @@ void GameManager::handleCityCenterButtons() {
         gameState.setMode(GameState::GameMode::InWeaponsmithShop);
         shop.setShopToArmorer(false);
         shop.setUpPositionOfIconButtons();
+    }
+    else if (cityCenter.getButton("characterCreation").isClicked(cursor.getPosition())) {
+        gameState.setMode(GameState::GameMode::InCreationMenu);
     }
 }
 
@@ -225,10 +233,12 @@ std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(
     Button arenaButton(textureManager.getTexture("arenaButton"));
     Button armorerButton(textureManager.getTexture("armorerButton"));
     Button weaponsmithButton(textureManager.getTexture("weaponsmithButton"));
+    Button characterCreation(textureManager.getTexture("characterCreation"));
 
     Buttons.insert_or_assign("arena", arenaButton);
     Buttons.insert_or_assign("armorer", armorerButton);
     Buttons.insert_or_assign("weaponsmith", weaponsmithButton);
+    Buttons.insert_or_assign("characterCreation", characterCreation);
 
     return Buttons;
 }
@@ -249,6 +259,7 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     Button swordButton(textureManager.getTexture("swordIcon"));
     Button buyButton(textureManager.getTexture("buyButton"));
     Button equipButton(textureManager.getTexture("equipButton"));
+    Button unequipButton(textureManager.getTexture("unequipButton"));
 
     Buttons.insert_or_assign("armButton", armButton);
     Buttons.insert_or_assign("calfButton", calfButton);
@@ -269,6 +280,7 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     Buttons.insert_or_assign("backButton", backButton);
     Buttons.insert_or_assign("buyButton", buyButton);
     Buttons.insert_or_assign("equipButton", equipButton);
+    Buttons.insert_or_assign("unequipButton", unequipButton);
 
     return Buttons;
 }
