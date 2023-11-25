@@ -1,7 +1,7 @@
 #include "GameState.h"
 
 
-GameState::GameState() : currentMode(GameMode::InCity) {}
+GameState::GameState() : currentMode(GameMode::InCreationMenu) {}
 
 void GameState::setMode(GameMode mode) {
     currentMode = mode;
@@ -29,4 +29,9 @@ bool GameState::InArmorerShop() const {
 
 bool GameState::InArena() const {
     return currentMode == GameMode::InArena;
+}
+
+bool GameState::InCreationMenu() const
+{
+    return currentMode == GameMode::InCreationMenu;
 }

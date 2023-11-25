@@ -69,6 +69,9 @@ void TextureManager::loadButtons() {
     loadTexture("backButton", "Assets/Buttons/Back.png");
     loadTexture("buyButton", "Assets/Buttons/Buy.png");
     loadTexture("equipButton", "Assets/Buttons/Equip.png");
+    loadTexture("plusButton", "Assets/Buttons/Plus.png");
+    loadTexture("minusButton", "Assets/Buttons/Minus.png");
+    loadTexture("goToCityButton", "Assets/Buttons/City.png");
 }
 
 void TextureManager::loadCursor() {
@@ -90,4 +93,12 @@ void TextureManager::loadShop() {
     loadTexture("thighIcon", "Assets/UI/Thigh_Icon.png");
 
     loadTexture("coinIcon", "Assets/UI/Coin_Icon.png");
+}
+
+void TextureManager::loadSwords() {
+    loadTexture("blueSword", "Assets/Swords/blueSword.png");
+}
+
+void TextureManager::loadPlayerCreation() {
+    loadTexture("playerCreationBackground", "Assets/PlayerCreation/background.jpg");
 }

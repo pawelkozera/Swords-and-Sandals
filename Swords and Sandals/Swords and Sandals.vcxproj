@@ -146,6 +146,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PlaceInterface.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCreation.cpp" />
     <ClCompile Include="PlayerInterface.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="PlaceInterface.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerCreation.h" />
     <ClInclude Include="PlayerInterface.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="TextureManager.h" />

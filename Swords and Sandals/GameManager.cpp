@@ -7,8 +7,8 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
         gameState.setMode(GameState::GameMode::InCity);
         shop.setMode(Shop::ShopMode::Nothing);
         shop.setSelectedArmorPiece(nullptr);
-        shop.changeButtonPosition("equipButton", sf::Vector2f(-100.0f, -100.0f));
-        shop.changeButtonPosition("buyButton", sf::Vector2f(-100.0f, -100.0f));
+        shop.setSelectedWeapon(nullptr);
+        shop.hideButtons();
         };
     buttonHandlers["buyButton"] = [this]() {
         shop.buyItem();
@@ -77,6 +77,7 @@ void GameManager::setUp() {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap();
     std::unordered_map<std::string, Button> cityCenterButtons = createCityCenterButtonsMap();
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
+    std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
 
     character = Character(characterPartsMap);
 
@@ -91,6 +92,10 @@ void GameManager::setUp() {
 
     cityCenter.setUpPositionOfButtons();
     shop.setUpPositionOfButtons();
+
+    playerCreation = PlayerCreation(textureManager.getTexture("playerCreationBackground"), playerCreationButtons);
+
+    playerCreation.setUpPositionOfButtons();
 
     gameState = GameState();
 
@@ -113,12 +118,19 @@ void GameManager::handleEvents() {
     case GameState::GameMode::InArena:
         player.display(window);
         break;
+    case GameState::GameMode::InCreationMenu:
+        handlePlayerCreationEvents();
+        break;
     default:
         break;
     }
 }
 
 void GameManager::handleShopEvents() {
+    if (shop.getAreButtonsHidden()) {
+        shop.setUpPositionOfButtons();
+    }
+
     shop.displayBackground(window);
     shop.displayInterface(window);
     shop.displayButtons(window);
@@ -129,6 +141,13 @@ void GameManager::handleShopEvents() {
     
     player.updateArmorPositions();
     player.display(window);
+}
+
+void GameManager::handlePlayerCreationEvents() {
+    playerCreation.displayBackground(window);
+    playerCreation.displayInterface(window, player);
+    playerCreation.displayButtons(window);
+    playerCreation.checkForClickedButton(cursor.getPosition(), player, gameState);
 }
 
 void GameManager::handleCityCenterButtons() {
@@ -250,6 +269,40 @@ std::unordered_map<std::string, Button> GameManager::createShopButtonsMap() {
     Buttons.insert_or_assign("backButton", backButton);
     Buttons.insert_or_assign("buyButton", buyButton);
     Buttons.insert_or_assign("equipButton", equipButton);
+
+    return Buttons;
+}
+
+std::unordered_map<std::string, Button> GameManager::createPlayerCreationButtonsMap()
+{
+    std::unordered_map<std::string, Button> Buttons;
+
+    Button plusButton(textureManager.getTexture("plusButton"));
+    Button minusButton(textureManager.getTexture("minusButton"));
+    Button goToCityButton(textureManager.getTexture("goToCityButton"));
+
+    Buttons.insert_or_assign("plusStrengthButton", plusButton);
+    Buttons.insert_or_assign("minusStrengthButton", minusButton);
+
+    Buttons.insert_or_assign("plusAgilityButton", plusButton);
+    Buttons.insert_or_assign("minusAgilityButton", minusButton);
+
+    Buttons.insert_or_assign("plusAttackButton", plusButton);
+    Buttons.insert_or_assign("minusAttackButton", minusButton);
+
+    Buttons.insert_or_assign("plusDefenceButton", plusButton);
+    Buttons.insert_or_assign("minusDefenceButton", minusButton);
+
+    Buttons.insert_or_assign("plusVitalityButton", plusButton);
+    Buttons.insert_or_assign("minusVitalityButton", minusButton);
+
+    Buttons.insert_or_assign("plusCharismaButton", plusButton);
+    Buttons.insert_or_assign("minusCharismaButton", minusButton);
+
+    Buttons.insert_or_assign("plusStaminaButton", plusButton);
+    Buttons.insert_or_assign("minusStaminaButton", minusButton);
+
+    Buttons.insert_or_assign("goToCityButton", goToCityButton);
 
     return Buttons;
 }

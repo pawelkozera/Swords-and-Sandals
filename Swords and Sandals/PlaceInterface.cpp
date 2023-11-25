@@ -1,6 +1,6 @@
 #include "PlaceInterface.h"
 
-PlaceInterface::PlaceInterface()
+PlaceInterface::PlaceInterface() : areButtonsHidden(true)
 {
 }
 
@@ -25,6 +25,15 @@ void PlaceInterface::displayButtons(sf::RenderWindow& window) {
 
 void PlaceInterface::setUpPositionOfButtons(){}
 
+void PlaceInterface::hideButtons() {
+    for (auto& pair : buttons) {
+        Button& button = pair.second;
+        button.setPosition(sf::Vector2f(-100.0f, -100.0f));
+    }
+
+    areButtonsHidden = true;
+}
+
 void PlaceInterface::displayBackground(sf::RenderWindow& window) {
     window.draw(sprite);
 }
@@ -43,4 +52,13 @@ std::unordered_map<std::string, Button>& PlaceInterface::getButtons() {
 
 void PlaceInterface::setSpriteTexture(sf::Texture &texture) {
     sprite.setTexture(texture);
+}
+
+const bool PlaceInterface::getAreButtonsHidden()
+{
+    return areButtonsHidden;
+}
+
+void PlaceInterface::setButtonsHidden(bool buttonsHidden) {
+    areButtonsHidden = buttonsHidden;
 }

@@ -9,6 +9,7 @@ public:
         InWeaponsmithShop,
         InArmorerShop,
         InArena,
+        InCreationMenu,
     };
 
     GameState();
@@ -19,6 +20,7 @@ public:
     bool InWeaponsmithShop() const;
     bool InArmorerShop() const;
     bool InArena() const;
+    bool InCreationMenu() const;
 
 private:
     GameMode currentMode;

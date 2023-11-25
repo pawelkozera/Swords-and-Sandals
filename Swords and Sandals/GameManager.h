@@ -10,6 +10,7 @@
 #include "Shop.h"
 #include <functional>
 #include "PlayerInterface.h"
+#include "PlayerCreation.h"
 
 class GameManager {
 private:
@@ -22,6 +23,7 @@ private:
     Cursor cursor;
     Shop shop;
     PlayerInterface playerInterface;
+    PlayerCreation playerCreation;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 public:
@@ -30,11 +32,13 @@ public:
     void setUp();
     void handleEvents();
     void handleShopEvents();
+    void handlePlayerCreationEvents();
     void handleCityCenterButtons();
     void handleShopButtons();
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap();
     std::unordered_map<std::string, ArmorPiece> createCharacterArmorPieces();
     std::unordered_map<std::string, Button> createCityCenterButtonsMap();
     std::unordered_map<std::string, Button> createShopButtonsMap();
+    std::unordered_map<std::string, Button> createPlayerCreationButtonsMap();
 };
 

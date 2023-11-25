@@ -10,6 +10,8 @@ int main() {
     textureManager.loadButtons();
     textureManager.loadCursor();
     textureManager.loadShop();
+    textureManager.loadSwords();
+    textureManager.loadPlayerCreation();
 
     GameManager gameManager(textureManager);
 

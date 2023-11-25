@@ -57,7 +57,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
         boughtArmorPieces.insert({ armor.second.getName() + armor.second.getType(), false});
     }
 
-    availableWeapons.insert({ "handRight", Weapon(textureManager.getTexture("DKAchest"), 1, 300, "Blue", "sword") });
+    availableWeapons.insert({ "handRight", Weapon(textureManager.getTexture("blueSword"), 1, 300, "Blue", "sword") });
 
     const std::unordered_multimap<std::string, Weapon>& weaponMap = availableWeapons;
 
@@ -86,6 +86,8 @@ void Shop::setUpPositionOfButtons() {
     }
 
     setUpPositionOfIconButtons();
+
+    setButtonsHidden(false);
 }
 
 void Shop::setUpPositionOfIconButtons() {
