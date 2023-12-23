@@ -5,6 +5,7 @@ Arena::Arena()
 }
 
 Arena::Arena(sf::Texture& cityTexture, std::unordered_map<std::string, Button>& buttons) : PlaceInterface(cityTexture, buttons) {
+    playerTurn = true;
 }
 
 void Arena::setUpPositionOfButtons(Player& player) {
@@ -29,21 +30,46 @@ void Arena::setUpPositionOfButtons(Player& player) {
     }
 }
 
-void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player) {
+void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Character &enemy) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            handleButtonClick(buttonName, player);
+            handleButtonClick(buttonName, player, enemy);
+            playerTurn = false;
             break;
         }
     }
 }
 
-void Arena::handleButtonClick(const std::string& buttonName, Player& player) {
+void Arena::handleButtonClick(const std::string& buttonName, Player& player, Character &enemy) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
         player.moveBody(sf::Vector2f(10, 0));
         setUpPositionOfButtons(player);
     }
+    else if (buttonName.find("movePlayerBackwards") != std::string::npos) {
+        player.moveBody(sf::Vector2f(-10, 0));
+        setUpPositionOfButtons(player);
+    }
+    else if (buttonName.find("attackPlayer") != std::string::npos) {
+        player.attackEnemy(enemy);
+    }
+    else if (buttonName.find("restPlayer") != std::string::npos) {
+        player.rest();
+    }
+}
+
+void Arena::handleEnemyMove(Character& enemy, Player& player) {
+    if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > 80) {
+        enemy.moveBody(sf::Vector2f(-40, 0));
+    }
+    else {
+        enemy.attackEnemy(player);
+    }
+    playerTurn = true;
+}
+
+const bool Arena::getPlayerTurn() {
+    return playerTurn;
 }

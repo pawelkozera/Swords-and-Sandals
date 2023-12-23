@@ -84,6 +84,7 @@ void GameManager::setUp() {
     enemy = Character(characterPartsMap);
     enemy.assembleBody();
     enemy.updateArmorPositions();
+    enemy.setBodyPosition(sf::Vector2f(920, 400));
 
     player = Player(characterPartsMap);
     player.assembleBody();
@@ -156,10 +157,15 @@ void GameManager::handleShopEvents() {
 
 void GameManager::handleArenaEvents() {
     arena.displayBackground(window);
-    arena.displayButtons(window);
+    if (arena.getPlayerTurn()) {
+        arena.displayButtons(window);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy);
+    }
+    else {
+        arena.handleEnemyMove(enemy, player);
+    }
     enemy.display(window);
     player.display(window);
-    arena.checkForClickedButton(cursor.getPosition(), player);
 }
 
 void GameManager::handlePlayerCreationEvents() {

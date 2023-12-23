@@ -165,6 +165,14 @@ void Character::removeWeapon(const std::string& characterPart) {
     }
 }
 
+void Character::attackEnemy(Character& enemy) {
+    if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x < 80)) {
+        enemy.vitality -= 4;
+    }
+}
+
+void Character::rest() {
+}
 
 void Character::incrementStrength() {
     strength++;

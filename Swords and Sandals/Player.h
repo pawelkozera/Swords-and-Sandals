@@ -5,8 +5,6 @@
 class Player : public Character
 {
 private:
-	std::unordered_multimap<std::string, ArmorPiece> equipedArmorPieces;
-	std::unordered_multimap<std::string, ArmorPiece> equipedWeapons;
 	int gold;
 public:
 	Player() = default;
