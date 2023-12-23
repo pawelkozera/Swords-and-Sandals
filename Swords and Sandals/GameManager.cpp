@@ -77,6 +77,7 @@ void GameManager::run() {
 void GameManager::setUp() {
     std::unordered_map<std::string, CharacterPart> characterPartsMap = createCharacterPartsMap();
     std::unordered_map<std::string, Button> cityCenterButtons = createCityCenterButtonsMap();
+    std::unordered_map<std::string, Button> arenaButtons = createArenaButtonsMap();
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
     std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
 
@@ -91,13 +92,16 @@ void GameManager::setUp() {
     playerInterface = PlayerInterface(textureManager.getTexture("coinIcon"));
 
     cityCenter = CityCenter(textureManager.getTexture("cityCenter"), cityCenterButtons);
+
+    arena = Arena(textureManager.getTexture("arena"), arenaButtons);
+
     shop = Shop(shopButtons, textureManager, &player);
 
     cityCenter.setUpPositionOfButtons();
     shop.setUpPositionOfButtons();
+    arena.setUpPositionOfButtons();
 
     playerCreation = PlayerCreation(textureManager.getTexture("playerCreationBackground"), playerCreationButtons);
-
     playerCreation.setUpPositionOfButtons();
 
     gameState = GameState();
@@ -122,8 +126,7 @@ void GameManager::handleEvents() {
         playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InArena:
-        enemy.display(window);
-        player.display(window);
+        handleArenaEvents();
         playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InCreationMenu:
@@ -149,6 +152,14 @@ void GameManager::handleShopEvents() {
     
     player.updateArmorPositions();
     player.display(window);
+}
+
+void GameManager::handleArenaEvents() {
+    arena.displayBackground(window);
+    arena.displayButtons(window);
+    enemy.display(window);
+    player.display(window);
+    arena.checkForClickedButton(cursor.getPosition(), player);
 }
 
 void GameManager::handlePlayerCreationEvents() {
@@ -245,6 +256,16 @@ std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(
     Buttons.insert_or_assign("armorer", armorerButton);
     Buttons.insert_or_assign("weaponsmith", weaponsmithButton);
     Buttons.insert_or_assign("characterCreation", characterCreation);
+
+    return Buttons;
+}
+
+std::unordered_map<std::string, Button> GameManager::createArenaButtonsMap() {
+    std::unordered_map<std::string, Button> Buttons;
+
+    Button moveButton(textureManager.getTexture("movePlayerForward"));
+
+    Buttons.insert_or_assign("movePlayerForward", moveButton);
 
     return Buttons;
 }

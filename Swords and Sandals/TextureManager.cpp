@@ -61,6 +61,10 @@ void TextureManager::loadCityCenter() {
     loadTexture("cityCenter", "Assets/City/cityCenter.jpg");
 }
 
+void TextureManager::loadArena() {
+    loadTexture("arena", "Assets/Arena/background.png");
+}
+
 void TextureManager::loadButtons() {
     loadTexture("arenaButton", "Assets/Buttons/Arena.png");
     loadTexture("armorerButton", "Assets/Buttons/Armorer.png");
@@ -73,6 +77,7 @@ void TextureManager::loadButtons() {
     loadTexture("minusButton", "Assets/Buttons/Minus.png");
     loadTexture("goToCityButton", "Assets/Buttons/City.png");
     loadTexture("characterCreation", "Assets/Buttons/Character.png");
+    loadTexture("movePlayerForward", "Assets/Buttons/movePlayerForward.png");
 }
 
 void TextureManager::loadCursor() {

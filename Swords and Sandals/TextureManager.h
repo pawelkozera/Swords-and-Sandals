@@ -15,6 +15,7 @@ public:
     void loadCharacterBodyTextures();
     void loadDarkKnightArmor();
     void loadCityCenter();
+    void loadArena();
     void loadButtons();
     void loadCursor();
     void loadShop();

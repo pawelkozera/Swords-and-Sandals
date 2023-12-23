@@ -7,6 +7,7 @@ int main() {
     textureManager.loadCharacterBodyTextures();
     textureManager.loadDarkKnightArmor();
     textureManager.loadCityCenter();
+    textureManager.loadArena();
     textureManager.loadButtons();
     textureManager.loadCursor();
     textureManager.loadShop();

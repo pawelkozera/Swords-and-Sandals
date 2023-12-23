@@ -11,6 +11,7 @@
 #include <functional>
 #include "PlayerInterface.h"
 #include "PlayerCreation.h"
+#include "Arena.h"
 
 class GameManager {
 private:
@@ -24,6 +25,7 @@ private:
     Shop shop;
     PlayerInterface playerInterface;
     PlayerCreation playerCreation;
+    Arena arena;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 public:
@@ -32,12 +34,14 @@ public:
     void setUp();
     void handleEvents();
     void handleShopEvents();
+    void handleArenaEvents();
     void handlePlayerCreationEvents();
     void handleCityCenterButtons();
     void handleShopButtons();
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap();
     std::unordered_map<std::string, ArmorPiece> createCharacterArmorPieces();
     std::unordered_map<std::string, Button> createCityCenterButtonsMap();
+    std::unordered_map<std::string, Button> createArenaButtonsMap();
     std::unordered_map<std::string, Button> createShopButtonsMap();
     std::unordered_map<std::string, Button> createPlayerCreationButtonsMap();
 };
