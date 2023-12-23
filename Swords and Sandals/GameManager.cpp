@@ -80,7 +80,9 @@ void GameManager::setUp() {
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
     std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
 
-    character = Character(characterPartsMap);
+    enemy = Character(characterPartsMap);
+    enemy.assembleBody();
+    enemy.updateArmorPositions();
 
     player = Player(characterPartsMap);
     player.assembleBody();
@@ -120,6 +122,7 @@ void GameManager::handleEvents() {
         playerInterface.displayInterface(window, player);
         break;
     case GameState::GameMode::InArena:
+        enemy.display(window);
         player.display(window);
         playerInterface.displayInterface(window, player);
         break;

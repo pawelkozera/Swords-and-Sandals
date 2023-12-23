@@ -15,7 +15,7 @@
 class GameManager {
 private:
     sf::RenderWindow window;
-    Character character;
+    Character enemy;
     Player player;
     CityCenter cityCenter;
     GameState gameState;
