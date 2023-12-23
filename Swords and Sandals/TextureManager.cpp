@@ -33,7 +33,6 @@ void TextureManager::loadTexture(std::string key, std::string textureSrc) {
     }
 }
 
-
 void TextureManager::loadCharacterBodyTextures() {
     loadTexture("head", "Assets/Body/BodyHeadEyesOpened.png");
     loadTexture("chest", "Assets/Body/BodyChest.png");

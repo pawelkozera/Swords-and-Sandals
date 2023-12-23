@@ -592,14 +592,14 @@ void Shop::equipItem() {
     else {
         if (player->isWeaponInMap(selectedWeapon)) {
             std::string characterPart = this->findKeyForWeapon(selectedWeapon);
-            player->removeArmorPiece(characterPart);
+            player->removeWeapon(characterPart);
 
             buttons.at("unequipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
             buttons.at("equipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
         }
         else {
-            std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
-            player->addArmorPiece(characterPart, *selectedArmorPiece);
+            std::string characterPart = this->findKeyForWeapon(selectedWeapon);
+            player->addWeapon(characterPart, *selectedWeapon);
             player->updateArmorPositions();
 
             buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));

@@ -12,11 +12,14 @@ private:
 	std::unordered_map<std::string, CharacterPart> characterParts;
 	std::unordered_map<std::string, ArmorPiece> armorPieces;
 	std::unordered_map<std::string, Weapon> weapons;
+	sf::Vector2f bodyPosition;
 public:
 	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
 	void assembleBody();
 	void updateArmorPositions();
+	void moveBody(sf::Vector2f movePosition);
+	void setBodyPosition(sf::Vector2f bodyPosition);
 	void display(sf::RenderWindow& window);
 	void addArmorPiece(std::string& characterPart, ArmorPiece& armorPiece);
 	void addWeapon(std::string& characterPart, Weapon& weapon);

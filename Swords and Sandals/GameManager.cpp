@@ -157,14 +157,17 @@ void GameManager::handlePlayerCreationEvents() {
 
 void GameManager::handleCityCenterButtons() {
     if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
+        player.setBodyPosition(sf::Vector2f(100, 400));
         gameState.setMode(GameState::GameMode::InArena);
     }
     else if (cityCenter.getButton("armorer").isClicked(cursor.getPosition())) {
+        player.setBodyPosition(sf::Vector2f(800, 600));
         gameState.setMode(GameState::GameMode::InArmorerShop);
         shop.setShopToArmorer(true);
         shop.setUpPositionOfIconButtons();
     }
     else if (cityCenter.getButton("weaponsmith").isClicked(cursor.getPosition())) {
+        player.setBodyPosition(sf::Vector2f(800, 600));
         gameState.setMode(GameState::GameMode::InWeaponsmithShop);
         shop.setShopToArmorer(false);
         shop.setUpPositionOfIconButtons();

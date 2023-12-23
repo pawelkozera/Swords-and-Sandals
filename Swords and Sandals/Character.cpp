@@ -6,11 +6,10 @@ Character::Character()
 
 Character::Character(std::unordered_map<std::string, CharacterPart> &characterParts)
 	: characterParts(characterParts){
+    bodyPosition = sf::Vector2f(800.0f, 600.0f);
 }
 
 void Character::assembleBody() {
-    sf::Vector2f bodyPosition(800.0f, 600.0f);
-    
     sf::Vector2f chestPosition = bodyPosition;
 
     sf::Vector2f headOffset(characterParts.at("chest").getSpriteRect().width / 8, -characterParts.at("head").getSpriteRect().height + 10.0f);
@@ -67,6 +66,18 @@ void Character::updateArmorPositions() {
             armorPieces.at(partKey).setPosition(characterPartPair.second.getPosition());
         }
     }
+}
+
+void Character::moveBody(sf::Vector2f movePosition) {
+    this->bodyPosition += movePosition;
+    assembleBody();
+    updateArmorPositions();
+}
+
+void Character::setBodyPosition(sf::Vector2f bodyPosition) {
+    this->bodyPosition = bodyPosition;
+    assembleBody();
+    updateArmorPositions();
 }
 
 void Character::display(sf::RenderWindow& window) {
