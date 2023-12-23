@@ -13,6 +13,15 @@ private:
 	std::unordered_map<std::string, ArmorPiece> armorPieces;
 	std::unordered_map<std::string, Weapon> weapons;
 	sf::Vector2f bodyPosition;
+
+	int strength;
+	int agility;
+	int attack;
+	int defence;
+	int vitality;
+	int charisma;
+	int stamina;
+	int availablePoints;
 public:
 	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
@@ -27,5 +36,28 @@ public:
 	bool isWeaponInMap(Weapon* armorPiece) const;
 	void removeArmorPiece(const std::string &characterPart);
 	void removeWeapon(const std::string &characterPart);
+	void addAvailablePoints(int amount);
+	void incrementStrength();
+	void decrementStrength();
+	void incrementAgility();
+	void decrementAgility();
+	void incrementAttack();
+	void decrementAttack();
+	void incrementDefence();
+	void decrementDefence();
+	void incrementVitality();
+	void decrementVitality();
+	void incrementCharisma();
+	void decrementCharisma();
+	void incrementStamina();
+	void decrementStamina();
+	const int getStrength();
+	const int getAgility();
+	const int getAttack();
+	const int getDefence();
+	const int getVitality();
+	const int getCharisma();
+	const int getStamina();
+	const int getAvailablePoints();
 };
 

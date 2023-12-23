@@ -5,7 +5,16 @@ Character::Character()
 }
 
 Character::Character(std::unordered_map<std::string, CharacterPart> &characterParts)
-	: characterParts(characterParts){
+	: characterParts(characterParts), 
+    strength(1),
+    agility(1),
+    attack(1),
+    defence(1),
+    vitality(1),
+    charisma(1),
+    stamina(1),
+    availablePoints(5)
+{
     bodyPosition = sf::Vector2f(800.0f, 600.0f);
 }
 
@@ -154,4 +163,105 @@ void Character::removeWeapon(const std::string& characterPart) {
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
         weapons.erase(it);
     }
+}
+
+
+void Character::incrementStrength() {
+    strength++;
+}
+
+void Character::decrementStrength() {
+    strength--;
+}
+
+void Character::incrementAgility() {
+    agility++;
+}
+
+void Character::decrementAgility() {
+    agility--;
+}
+
+void Character::incrementAttack() {
+    attack++;
+}
+
+void Character::decrementAttack() {
+    attack--;
+}
+
+void Character::incrementDefence() {
+    defence++;
+}
+
+void Character::decrementDefence() {
+    defence--;
+}
+
+void Character::incrementVitality() {
+    vitality++;
+}
+
+void Character::decrementVitality() {
+    vitality--;
+}
+
+void Character::incrementCharisma() {
+    charisma++;
+}
+
+void Character::decrementCharisma() {
+    charisma--;
+}
+
+void Character::incrementStamina() {
+    stamina++;
+}
+
+void Character::decrementStamina() {
+    stamina--;
+}
+
+const int Character::getStrength()
+{
+    return strength;
+}
+
+const int Character::getAgility()
+{
+    return agility;
+}
+
+const int Character::getAttack()
+{
+    return attack;
+}
+
+const int Character::getDefence()
+{
+    return defence;
+}
+
+const int Character::getVitality()
+{
+    return vitality;
+}
+
+const int Character::getCharisma()
+{
+    return charisma;
+}
+
+const int Character::getStamina()
+{
+    return stamina;
+}
+
+const int Character::getAvailablePoints()
+{
+    return availablePoints;
+}
+
+void Character::addAvailablePoints(int amount) {
+    availablePoints += amount;
 }
