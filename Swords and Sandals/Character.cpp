@@ -265,3 +265,7 @@ const int Character::getAvailablePoints()
 void Character::addAvailablePoints(int amount) {
     availablePoints += amount;
 }
+
+const sf::Vector2f Character::getBodyPosition() {
+    return bodyPosition;
+}

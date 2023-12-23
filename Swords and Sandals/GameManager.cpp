@@ -99,7 +99,7 @@ void GameManager::setUp() {
 
     cityCenter.setUpPositionOfButtons();
     shop.setUpPositionOfButtons();
-    arena.setUpPositionOfButtons();
+    arena.setUpPositionOfButtons(player);
 
     playerCreation = PlayerCreation(textureManager.getTexture("playerCreationBackground"), playerCreationButtons);
     playerCreation.setUpPositionOfButtons();
@@ -172,6 +172,7 @@ void GameManager::handlePlayerCreationEvents() {
 void GameManager::handleCityCenterButtons() {
     if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
         player.setBodyPosition(sf::Vector2f(100, 400));
+        arena.setUpPositionOfButtons(player);
         gameState.setMode(GameState::GameMode::InArena);
     }
     else if (cityCenter.getButton("armorer").isClicked(cursor.getPosition())) {
@@ -263,9 +264,15 @@ std::unordered_map<std::string, Button> GameManager::createCityCenterButtonsMap(
 std::unordered_map<std::string, Button> GameManager::createArenaButtonsMap() {
     std::unordered_map<std::string, Button> Buttons;
 
-    Button moveButton(textureManager.getTexture("movePlayerForward"));
+    Button moveButtonForward(textureManager.getTexture("movePlayerForward"));
+    Button movePlayerBackwards(textureManager.getTexture("movePlayerBackwards"));
+    Button attackPlayer(textureManager.getTexture("attackPlayer"));
+    Button restPlayer(textureManager.getTexture("restPlayer"));
 
-    Buttons.insert_or_assign("movePlayerForward", moveButton);
+    Buttons.insert_or_assign("movePlayerForward", moveButtonForward);
+    Buttons.insert_or_assign("movePlayerBackwards", movePlayerBackwards);
+    Buttons.insert_or_assign("attackPlayer", attackPlayer);
+    Buttons.insert_or_assign("restPlayer", restPlayer);
 
     return Buttons;
 }

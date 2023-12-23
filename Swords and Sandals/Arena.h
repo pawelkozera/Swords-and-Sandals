@@ -10,7 +10,7 @@ private:
 public:
 	Arena();
 	Arena(sf::Texture& arenaTexture, std::unordered_map<std::string, Button>& buttons);
-	void setUpPositionOfButtons();
+	void setUpPositionOfButtons(Player& player);
 	void checkForClickedButton(const sf::Vector2f& mousePosition, Player& player);
 };
 

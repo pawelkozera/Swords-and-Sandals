@@ -78,6 +78,9 @@ void TextureManager::loadButtons() {
     loadTexture("goToCityButton", "Assets/Buttons/City.png");
     loadTexture("characterCreation", "Assets/Buttons/Character.png");
     loadTexture("movePlayerForward", "Assets/Buttons/movePlayerForward.png");
+    loadTexture("movePlayerBackwards", "Assets/Buttons/movePlayerBackwards.png");
+    loadTexture("attackPlayer", "Assets/Buttons/attackPlayer.png");
+    loadTexture("restPlayer", "Assets/Buttons/restPlayer.png");
 }
 
 void TextureManager::loadCursor() {

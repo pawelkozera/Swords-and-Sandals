@@ -59,5 +59,6 @@ public:
 	const int getCharisma();
 	const int getStamina();
 	const int getAvailablePoints();
+	const sf::Vector2f getBodyPosition();
 };
 

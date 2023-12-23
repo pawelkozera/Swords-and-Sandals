@@ -7,11 +7,25 @@ Arena::Arena()
 Arena::Arena(sf::Texture& cityTexture, std::unordered_map<std::string, Button>& buttons) : PlaceInterface(cityTexture, buttons) {
 }
 
-void Arena::setUpPositionOfButtons() {
+void Arena::setUpPositionOfButtons(Player& player) {
     std::unordered_map<std::string, Button>& buttons = getButtons();
 
-    if (buttons.find("movePlayer") != buttons.end()) {
-        buttons.at("movePlayer").setPosition(sf::Vector2f(400.0f, 420.0f));
+    sf::Vector2f playerPosition = player.getBodyPosition();
+
+    if (buttons.find("movePlayerForward") != buttons.end()) {
+        buttons.at("movePlayerForward").setPosition(sf::Vector2f(playerPosition.x + 90, playerPosition.y + 120));
+    }
+
+    if (buttons.find("movePlayerBackwards") != buttons.end()) {
+        buttons.at("movePlayerBackwards").setPosition(sf::Vector2f(playerPosition.x - 90, playerPosition.y + 120));
+    }
+
+    if (buttons.find("attackPlayer") != buttons.end()) {
+        buttons.at("attackPlayer").setPosition(sf::Vector2f(playerPosition.x + 90, playerPosition.y + 40));
+    }
+
+    if (buttons.find("restPlayer") != buttons.end()) {
+        buttons.at("restPlayer").setPosition(sf::Vector2f(playerPosition.x - 100, playerPosition.y + 40));
     }
 }
 
@@ -30,5 +44,6 @@ void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& pla
 void Arena::handleButtonClick(const std::string& buttonName, Player& player) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
         player.moveBody(sf::Vector2f(10, 0));
+        setUpPositionOfButtons(player);
     }
 }
