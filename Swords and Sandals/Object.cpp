@@ -34,3 +34,13 @@ void Object::flipSprite() {
 void Object::setScale(float scaleX, float scaleY) {
     sprite.setScale(scaleX, scaleY);
 }
+
+void Object::rotateSprite(float angle)
+{
+    sprite.rotate(angle);
+}
+
+void Object::setRotationSprite(float angle)
+{
+    sprite.setRotation(angle);
+}

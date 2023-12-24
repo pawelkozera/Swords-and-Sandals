@@ -47,10 +47,12 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Cha
     if (buttonName.find("movePlayerForward") != std::string::npos) {
         player.moveBody(sf::Vector2f(10, 0));
         setUpPositionOfButtons(player);
+        player.walkAnimation();
     }
     else if (buttonName.find("movePlayerBackwards") != std::string::npos) {
         player.moveBody(sf::Vector2f(-10, 0));
         setUpPositionOfButtons(player);
+        player.walkAnimation();
     }
     else if (buttonName.find("attackPlayer") != std::string::npos) {
         player.attackEnemy(enemy);

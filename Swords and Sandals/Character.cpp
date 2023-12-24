@@ -13,7 +13,8 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     vitality(1),
     charisma(1),
     stamina(1),
-    availablePoints(5)
+    availablePoints(5),
+    animationRunning(false)
 {
     bodyPosition = sf::Vector2f(800.0f, 600.0f);
 }
@@ -75,6 +76,44 @@ void Character::updateArmorPositions() {
             armorPieces.at(partKey).setPosition(characterPartPair.second.getPosition());
         }
     }
+}
+
+void Character::walkAnimation() {
+    float angle = 15;
+
+    characterParts.at("thighRight").rotateSprite(-angle);
+    characterParts.at("legRight").rotateSprite(-angle);
+    characterParts.at("footRight").rotateSprite(-angle);
+
+    characterParts.at("thighLeft").rotateSprite(angle);
+    characterParts.at("legLeft").rotateSprite(angle);
+    characterParts.at("footLeft").rotateSprite(angle);
+
+    characterParts.at("thighRight").setPosition(characterParts.at("thighRight").getPosition() + sf::Vector2f(0.0f, -4.0f));
+    characterParts.at("legRight").setPosition(characterParts.at("legRight").getPosition() + sf::Vector2f(12.0f, -4.0f));
+    characterParts.at("footRight").setPosition(characterParts.at("footRight").getPosition() + sf::Vector2f(24.0f, -8.0f));
+
+    characterParts.at("thighLeft").setPosition(characterParts.at("thighLeft").getPosition() + sf::Vector2f(0.0f, -4.0f));
+    characterParts.at("legLeft").setPosition(characterParts.at("legLeft").getPosition() + sf::Vector2f(-12.0f, -4.0f));
+    characterParts.at("footLeft").setPosition(characterParts.at("footLeft").getPosition() + sf::Vector2f(-24.0f, -8.0f));
+    
+    animationRunning = true;
+}
+
+void Character::resetAnimation() {
+    animationRunning = false;
+    
+    sf::sleep(sf::milliseconds(300));
+
+    characterParts.at("thighRight").setRotationSprite(0);
+    characterParts.at("legRight").setRotationSprite(0);
+    characterParts.at("footRight").setRotationSprite(0);
+    characterParts.at("thighLeft").setRotationSprite(0);
+    characterParts.at("legLeft").setRotationSprite(0);
+    characterParts.at("footLeft").setRotationSprite(0);
+
+    assembleBody();
+    updateArmorPositions();
 }
 
 void Character::moveBody(sf::Vector2f movePosition) {
@@ -276,4 +315,8 @@ void Character::addAvailablePoints(int amount) {
 
 const sf::Vector2f Character::getBodyPosition() {
     return bodyPosition;
+}
+
+const bool Character::getAnimationRunning() {
+    return animationRunning;
 }

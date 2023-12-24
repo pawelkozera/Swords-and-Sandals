@@ -22,11 +22,15 @@ private:
 	int charisma;
 	int stamina;
 	int availablePoints;
+
+	bool animationRunning;
 public:
 	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
 	void assembleBody();
 	void updateArmorPositions();
+	void walkAnimation();
+	void resetAnimation();
 	void moveBody(sf::Vector2f movePosition);
 	void setBodyPosition(sf::Vector2f bodyPosition);
 	void display(sf::RenderWindow& window);
@@ -62,5 +66,6 @@ public:
 	const int getStamina();
 	const int getAvailablePoints();
 	const sf::Vector2f getBodyPosition();
+	const bool getAnimationRunning();
 };
 

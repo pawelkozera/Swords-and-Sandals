@@ -17,5 +17,7 @@ public:
 	void setPosition(const sf::Vector2f position);
 	void flipSprite();
 	void setScale(float scaleX, float scaleY);
+	void rotateSprite(float angle);
+	void setRotationSprite(float angle);
 };
 

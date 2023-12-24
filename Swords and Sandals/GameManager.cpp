@@ -157,9 +157,14 @@ void GameManager::handleShopEvents() {
 
 void GameManager::handleArenaEvents() {
     arena.displayBackground(window);
+    if (player.getAnimationRunning()) {
+        player.resetAnimation();
+    }
+
     if (arena.getPlayerTurn()) {
-        arena.displayButtons(window);
         arena.checkForClickedButton(cursor.getPosition(), player, enemy);
+
+        if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
     else {
         arena.handleEnemyMove(enemy, player);
