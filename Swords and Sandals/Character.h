@@ -30,7 +30,9 @@ public:
 	void assembleBody();
 	void updateArmorPositions();
 	void walkAnimation();
+	void rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor);
 	void resetAnimation();
+	void resetPart(const std::string& partName);
 	void moveBody(sf::Vector2f movePosition);
 	void setBodyPosition(sf::Vector2f bodyPosition);
 	void display(sf::RenderWindow& window);

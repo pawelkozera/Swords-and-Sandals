@@ -81,39 +81,54 @@ void Character::updateArmorPositions() {
 void Character::walkAnimation() {
     float angle = 15;
 
-    characterParts.at("thighRight").rotateSprite(-angle);
-    characterParts.at("legRight").rotateSprite(-angle);
-    characterParts.at("footRight").rotateSprite(-angle);
+    rotateAndMovePart("thighRight", -angle, sf::Vector2f(0.0f, -4.0f), sf::Vector2f(0.0f, -4.0f));
+    rotateAndMovePart("legRight", -angle, sf::Vector2f(12.0f, -4.0f), sf::Vector2f(12.0f, -4.0f));
+    rotateAndMovePart("footRight", -angle, sf::Vector2f(24.0f, -8.0f), sf::Vector2f(24.0f, -8.0f));
 
-    characterParts.at("thighLeft").rotateSprite(angle);
-    characterParts.at("legLeft").rotateSprite(angle);
-    characterParts.at("footLeft").rotateSprite(angle);
+    rotateAndMovePart("thighLeft", angle, sf::Vector2f(0.0f, -4.0f), sf::Vector2f(0.0f, -4.0f));
+    rotateAndMovePart("legLeft", angle, sf::Vector2f(-12.0f, -4.0f), sf::Vector2f(-12.0f, -4.0f));
+    rotateAndMovePart("footLeft", angle, sf::Vector2f(-24.0f, -8.0f), sf::Vector2f(-24.0f, -8.0f));
 
-    characterParts.at("thighRight").setPosition(characterParts.at("thighRight").getPosition() + sf::Vector2f(0.0f, -4.0f));
-    characterParts.at("legRight").setPosition(characterParts.at("legRight").getPosition() + sf::Vector2f(12.0f, -4.0f));
-    characterParts.at("footRight").setPosition(characterParts.at("footRight").getPosition() + sf::Vector2f(24.0f, -8.0f));
-
-    characterParts.at("thighLeft").setPosition(characterParts.at("thighLeft").getPosition() + sf::Vector2f(0.0f, -4.0f));
-    characterParts.at("legLeft").setPosition(characterParts.at("legLeft").getPosition() + sf::Vector2f(-12.0f, -4.0f));
-    characterParts.at("footLeft").setPosition(characterParts.at("footLeft").getPosition() + sf::Vector2f(-24.0f, -8.0f));
-    
     animationRunning = true;
 }
 
+void Character::rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor) {
+    if (characterParts.find(partName) != characterParts.end()) {
+        characterParts.at(partName).rotateSprite(angle);
+        characterParts.at(partName).setPosition(characterParts.at(partName).getPosition() + moveCharacter);
+    }
+
+    if (armorPieces.find(partName) != armorPieces.end()) {
+        armorPieces.at(partName).rotateSprite(angle);
+        armorPieces.at(partName).setPosition(armorPieces.at(partName).getPosition() + moveArmor);
+    }
+}
+
+
 void Character::resetAnimation() {
     animationRunning = false;
-    
+
     sf::sleep(sf::milliseconds(300));
 
-    characterParts.at("thighRight").setRotationSprite(0);
-    characterParts.at("legRight").setRotationSprite(0);
-    characterParts.at("footRight").setRotationSprite(0);
-    characterParts.at("thighLeft").setRotationSprite(0);
-    characterParts.at("legLeft").setRotationSprite(0);
-    characterParts.at("footLeft").setRotationSprite(0);
+    resetPart("thighRight");
+    resetPart("legRight");
+    resetPart("footRight");
+    resetPart("thighLeft");
+    resetPart("legLeft");
+    resetPart("footLeft");
 
     assembleBody();
     updateArmorPositions();
+}
+
+void Character::resetPart(const std::string& partName) {
+    if (characterParts.find(partName) != characterParts.end()) {
+        characterParts.at(partName).setRotationSprite(0);
+    }
+
+    if (armorPieces.find(partName) != armorPieces.end()) {
+        armorPieces.at(partName).setRotationSprite(0);
+    }
 }
 
 void Character::moveBody(sf::Vector2f movePosition) {

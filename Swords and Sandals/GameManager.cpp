@@ -161,6 +161,10 @@ void GameManager::handleArenaEvents() {
         player.resetAnimation();
     }
 
+    if (enemy.getAnimationRunning()) {
+        enemy.resetAnimation();
+    }
+
     if (arena.getPlayerTurn()) {
         arena.checkForClickedButton(cursor.getPosition(), player, enemy);
 

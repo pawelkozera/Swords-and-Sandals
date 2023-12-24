@@ -62,7 +62,7 @@ void TextureManager::loadCityCenter() {
 }
 
 void TextureManager::loadArena() {
-    loadTexture("arena", "Assets/Arena/background.png");
+    loadTexture("arena", "Assets/Arena/background.jpg");
 }
 
 void TextureManager::loadButtons() {

@@ -65,6 +65,7 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Cha
 void Arena::handleEnemyMove(Character& enemy, Player& player) {
     if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > 80) {
         enemy.moveBody(sf::Vector2f(-40, 0));
+        enemy.walkAnimation();
     }
     else {
         enemy.attackEnemy(player);
