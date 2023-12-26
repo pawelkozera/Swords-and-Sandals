@@ -45,9 +45,11 @@ void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& pla
 
 void Arena::handleButtonClick(const std::string& buttonName, Player& player, Character &enemy) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
-        player.moveBody(sf::Vector2f(10, 0));
-        setUpPositionOfButtons(player);
-        player.walkAnimation();
+        if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > player.getReach()) {
+            player.moveBody(sf::Vector2f(player.getSpeed(), 0));
+            setUpPositionOfButtons(player);
+            player.walkAnimation();
+        }
     }
     else if (buttonName.find("movePlayerBackwards") != std::string::npos) {
         player.moveBody(sf::Vector2f(-10, 0));
@@ -64,8 +66,8 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Cha
 }
 
 void Arena::handleEnemyMove(Character& enemy, Player& player) {
-    if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > 80) {
-        enemy.moveBody(sf::Vector2f(-40, 0));
+    if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > enemy.getReach()) {
+        enemy.moveBody(sf::Vector2f(-enemy.getSpeed(), 0));
         enemy.walkAnimation();
     }
     else {

@@ -1,5 +1,7 @@
 #include "Character.h"
 
+std::random_device Character::rd;
+
 Character::Character()
 {
 }
@@ -17,6 +19,8 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     animationRunning(false)
 {
     bodyPosition = sf::Vector2f(800.0f, 600.0f);
+
+    std::mt19937 generator(rd());
 }
 
 void Character::assembleBody() {
@@ -242,12 +246,36 @@ void Character::removeWeapon(const std::string& characterPart) {
 }
 
 void Character::attackEnemy(Character& enemy) {
-    if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x < 80)) {
-        enemy.vitality -= 4;
+    if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x < getReach())) {
+        int numberRolled = rollDice(1, 100);
+        int chance = attack - enemy.defence;
+
+        if (numberRolled <= chance) {
+            int strengthDamage = rollDice(1, strength);
+            enemy.vitality -= 2 + strengthDamage;
+        }
     }
 }
 
 void Character::rest() {
+}
+
+int Character::rollDice(int min, int max) {
+    static std::random_device rd;
+    static std::mt19937 generator(rd());
+
+    std::uniform_int_distribution<int> distribution(min, max);
+    int number = distribution(generator);
+
+    return number;
+}
+
+int Character::getReach() {
+    return 90;
+}
+
+int Character::getSpeed() {
+    return 20 + 5 * agility;
 }
 
 void Character::incrementStrength() {

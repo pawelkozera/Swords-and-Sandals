@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <random>
 
 #include "CharacterPart.h"
 #include "ArmorPiece.h"
@@ -9,6 +10,8 @@
 class Character
 {
 private:
+	static std::random_device rd;
+
 	std::unordered_map<std::string, CharacterPart> characterParts;
 	std::unordered_map<std::string, ArmorPiece> armorPieces;
 	std::unordered_map<std::string, Weapon> weapons;
@@ -46,6 +49,9 @@ public:
 	void removeWeapon(const std::string &characterPart);
 	void attackEnemy(Character &enemy);
 	void rest();
+	int rollDice(int min, int max);
+	int getReach();
+	int getSpeed();
 	void addAvailablePoints(int amount);
 	void incrementStrength();
 	void decrementStrength();
