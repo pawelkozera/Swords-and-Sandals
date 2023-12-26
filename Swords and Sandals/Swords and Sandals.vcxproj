@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arena.cpp" />
+    <ClCompile Include="ArenaEntrance.cpp" />
     <ClCompile Include="ArmorPiece.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arena.h" />
+    <ClInclude Include="ArenaEntrance.h" />
     <ClInclude Include="ArmorPiece.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />

@@ -147,7 +147,7 @@ void PlayerCreation::handleButtonClick(const std::string& buttonName, Player& pl
     if (buttonName == "goToCityButton") {
         gameState.setMode(GameState::GameMode::InCity);
         setOldStats(player);
-
+        player.setHp(10 + player.getVitality() * 2);
     }
 }
 

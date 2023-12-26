@@ -9,6 +9,7 @@ public:
         InWeaponsmithShop,
         InArmorerShop,
         InArena,
+        InArenaEntrance,
         InCreationMenu,
     };
 
@@ -20,6 +21,7 @@ public:
     bool InWeaponsmithShop() const;
     bool InArmorerShop() const;
     bool InArena() const;
+    bool InArenaEntrance() const;
     bool InCreationMenu() const;
 
 private:

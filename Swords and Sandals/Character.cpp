@@ -16,6 +16,7 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     charisma(1),
     stamina(1),
     availablePoints(5),
+    hp(10 + vitality*2),
     animationRunning(false)
 {
     bodyPosition = sf::Vector2f(800.0f, 600.0f);
@@ -252,7 +253,7 @@ void Character::attackEnemy(Character& enemy) {
 
         if (numberRolled <= chance) {
             int strengthDamage = rollDice(1, strength);
-            enemy.vitality -= 2 + strengthDamage;
+            enemy.hp -= 2 + strengthDamage;
         }
     }
 }
@@ -334,6 +335,14 @@ void Character::decrementStamina() {
     stamina--;
 }
 
+void Character::setHp(int hp) {
+    this->hp = hp;
+}
+
+void Character::takeDamage(int damage) {
+    hp -= damage;
+}
+
 const int Character::getStrength()
 {
     return strength;
@@ -367,6 +376,11 @@ const int Character::getCharisma()
 const int Character::getStamina()
 {
     return stamina;
+}
+
+const int Character::getHp()
+{
+    return hp;
 }
 
 const int Character::getAvailablePoints()

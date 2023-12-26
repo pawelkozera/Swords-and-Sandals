@@ -31,6 +31,10 @@ bool GameState::InArena() const {
     return currentMode == GameMode::InArena;
 }
 
+bool GameState::InArenaEntrance() const {
+    return currentMode == GameMode::InArenaEntrance;
+}
+
 bool GameState::InCreationMenu() const
 {
     return currentMode == GameMode::InCreationMenu;

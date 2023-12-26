@@ -31,4 +31,24 @@ void PlayerInterface::displayInterface(sf::RenderWindow& window, Player& player)
     stats.setFillColor(sf::Color::White);
     stats.setPosition(sprite.getPosition().x + 80, sprite.getPosition().y);
     window.draw(stats);
+
+    stats.setCharacterSize(34);
+    stats.setString("HP");
+    stats.setPosition(sprite.getPosition().x + 180, sprite.getPosition().y + 8);
+    window.draw(stats);
+
+    stats.setCharacterSize(40);
+    stats.setString(std::to_string(player.getHp()));
+    stats.setPosition(sprite.getPosition().x + 240, sprite.getPosition().y);
+    window.draw(stats);
+
+    stats.setCharacterSize(34);
+    stats.setString("Stamina");
+    stats.setPosition(sprite.getPosition().x + 380, sprite.getPosition().y + 8);
+    window.draw(stats);
+
+    stats.setCharacterSize(40);
+    stats.setString(std::to_string(player.getStamina()));
+    stats.setPosition(sprite.getPosition().x + 520, sprite.getPosition().y);
+    window.draw(stats);
 }
