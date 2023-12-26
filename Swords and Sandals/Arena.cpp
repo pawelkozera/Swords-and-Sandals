@@ -56,6 +56,7 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Cha
     }
     else if (buttonName.find("attackPlayer") != std::string::npos) {
         player.attackEnemy(enemy);
+        player.attackAnimation(false);
     }
     else if (buttonName.find("restPlayer") != std::string::npos) {
         player.rest();
@@ -69,6 +70,7 @@ void Arena::handleEnemyMove(Character& enemy, Player& player) {
     }
     else {
         enemy.attackEnemy(player);
+        enemy.attackAnimation(true);
     }
     playerTurn = true;
 }

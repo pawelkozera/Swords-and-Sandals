@@ -24,15 +24,17 @@ private:
 	int availablePoints;
 
 	bool animationRunning;
+
+	void resetPart(const std::string& partName);
+	void rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor);
 public:
 	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
 	void assembleBody();
 	void updateArmorPositions();
 	void walkAnimation();
-	void rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor);
+	void attackAnimation(bool rightHand);
 	void resetAnimation();
-	void resetPart(const std::string& partName);
 	void moveBody(sf::Vector2f movePosition);
 	void setBodyPosition(sf::Vector2f bodyPosition);
 	void display(sf::RenderWindow& window);

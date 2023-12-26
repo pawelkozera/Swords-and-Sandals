@@ -92,6 +92,23 @@ void Character::walkAnimation() {
     animationRunning = true;
 }
 
+void Character::attackAnimation(bool rightHand) {
+    float angle = 90;
+
+    if (rightHand) {
+        rotateAndMovePart("shoulderRight", angle, sf::Vector2f(-22.0f, 26.0f), sf::Vector2f(-22.0f, 26.0f));
+        rotateAndMovePart("elbowRight", angle, sf::Vector2f(-49.0f, -4.0f), sf::Vector2f(-49.0f, -4.0f));
+        rotateAndMovePart("armRight", angle, sf::Vector2f(-71.0f, -26.0f), sf::Vector2f(-71.0f, -26.0f));
+    }
+    else {
+        rotateAndMovePart("shoulderLeft", -angle, sf::Vector2f(14.0f, 26.0f), sf::Vector2f(14.0f, 26.0f));
+        rotateAndMovePart("elbowLeft", -angle, sf::Vector2f(45.0f, -2.0f), sf::Vector2f(45.0f, -2.0f));
+        rotateAndMovePart("armLeft", -angle, sf::Vector2f(67.0f, -24.0f), sf::Vector2f(67.0f, -24.0f));
+    }
+
+    animationRunning = true;
+}
+
 void Character::rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor) {
     if (characterParts.find(partName) != characterParts.end()) {
         characterParts.at(partName).rotateSprite(angle);
@@ -104,10 +121,9 @@ void Character::rotateAndMovePart(const std::string& partName, float angle, cons
     }
 }
 
-
 void Character::resetAnimation() {
     animationRunning = false;
-
+    
     sf::sleep(sf::milliseconds(300));
 
     resetPart("thighRight");
@@ -116,6 +132,12 @@ void Character::resetAnimation() {
     resetPart("thighLeft");
     resetPart("legLeft");
     resetPart("footLeft");
+    resetPart("shoulderRight");
+    resetPart("elbowRight");
+    resetPart("armRight");
+    resetPart("shoulderLeft");
+    resetPart("elbowLeft");
+    resetPart("armLeft");
 
     assembleBody();
     updateArmorPositions();

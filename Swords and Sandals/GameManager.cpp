@@ -173,8 +173,15 @@ void GameManager::handleArenaEvents() {
     else {
         arena.handleEnemyMove(enemy, player);
     }
-    enemy.display(window);
-    player.display(window);
+
+    if (!arena.getPlayerTurn()) {
+        enemy.display(window);
+        player.display(window);
+    }
+    else {
+        player.display(window);
+        enemy.display(window);
+    }
 }
 
 void GameManager::handlePlayerCreationEvents() {
