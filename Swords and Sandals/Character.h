@@ -51,7 +51,7 @@ public:
 	void attackEnemy(Character &enemy);
 	void rest();
 	int rollDice(int min, int max);
-	void resetStats();
+	void resetStatsAndEq();
 	int getReach();
 	int getSpeed();
 	void addAvailablePoints(int amount);
@@ -89,5 +89,6 @@ public:
 	const int getAvailablePoints();
 	const sf::Vector2f getBodyPosition();
 	const bool getAnimationRunning();
+	const int getArmorSize();
 };
 

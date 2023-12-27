@@ -178,7 +178,7 @@ void GameManager::handleArenaEvents() {
     }
 
     if (arena.getPlayerTurn()) {
-        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager);
 
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }

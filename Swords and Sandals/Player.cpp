@@ -12,3 +12,7 @@ void Player::buy(int gold) {
 const int Player::getGold() {
     return gold;
 }
+
+void Player::setGold(int gold) {
+    this->gold = gold;
+}

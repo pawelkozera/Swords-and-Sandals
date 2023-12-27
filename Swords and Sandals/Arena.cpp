@@ -55,25 +55,25 @@ void Arena::setUpEndOfFightPositionOfButtons() {
     }
 }
 
-void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState) {
+void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            handleButtonClick(buttonName, player, enemy, gameState);
+            handleButtonClick(buttonName, player, enemy, gameState, textureManager);
             break;
         }
     }
 }
 
-void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState) {
+void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager) {
     if (fightInProgress) {
         handleButtonClickFightInProgress(buttonName, player, enemy);
         playerTurn = false;
     }
     else {
-        handleButtonClickFightEnded(buttonName, player, enemy, gameState);
+        handleButtonClickFightEnded(buttonName, player, enemy, gameState, textureManager);
     }
 }
 
@@ -106,19 +106,22 @@ void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Play
         }
     }
     else if (buttonName.find("restPlayer") != std::string::npos) {
-        player.rest();
+        enemy.setHp(-2);
+        //player.rest();
     }
 }
 
-void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState) {
+void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState, TextureManager& textureManager) {
     if (buttonName.find("continueButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
-        enemy.generateNewStatsAndEq(player);
+        enemy.resetStatsAndEq();
+        enemy.generateNewStatsAndEq(player, textureManager);
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
-        enemy.resetStats();
-        player.resetStats();
+        enemy.resetStatsAndEq();
+        player.resetStatsAndEq();
+        player.setGold(900);
     }
 }
 

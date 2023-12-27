@@ -272,7 +272,7 @@ int Character::rollDice(int min, int max) {
     return number;
 }
 
-void Character::resetStats() {
+void Character::resetStatsAndEq() {
     strength = 1;
     agility = 1;
     attack = 1;
@@ -284,6 +284,9 @@ void Character::resetStats() {
     hp = 10 + vitality * 2;
 
     animationRunning = false;
+
+    armorPieces.clear();
+    weapons.clear();
 }
 
 int Character::getReach() {
@@ -376,6 +379,10 @@ void Character::setVitality(int vitality) {
 
 void Character::setCharisma(int charisma) {
     this->charisma = charisma;
+}
+
+const int Character::getArmorSize() {
+    return armorPieces.size();
 }
 
 void Character::setStamina(int stamina) {
