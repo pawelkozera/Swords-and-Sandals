@@ -55,7 +55,7 @@ void Arena::setUpEndOfFightPositionOfButtons() {
     }
 }
 
-void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Character &enemy, GameState& gameState) {
+void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
@@ -67,17 +67,17 @@ void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& pla
     }
 }
 
-void Arena::handleButtonClick(const std::string& buttonName, Player& player, Character &enemy, GameState& gameState) {
+void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState) {
     if (fightInProgress) {
         handleButtonClickFightInProgress(buttonName, player, enemy);
         playerTurn = false;
     }
     else {
-        handleButtonClickFightEnded(buttonName, gameState);
+        handleButtonClickFightEnded(buttonName, player, enemy, gameState);
     }
 }
 
-void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Player& player, Character& enemy) {
+void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Player& player, Enemy& enemy) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
         if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > player.getReach()) {
             player.moveBody(sf::Vector2f(player.getSpeed(), 0));
@@ -110,12 +110,15 @@ void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Play
     }
 }
 
-void Arena::handleButtonClickFightEnded(const std::string& buttonName, GameState& gameState) {
+void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState) {
     if (buttonName.find("continueButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
+        enemy.generateNewStatsAndEq(player);
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
+        enemy.resetStats();
+        player.resetStats();
     }
 }
 

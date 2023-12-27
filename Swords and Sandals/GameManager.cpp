@@ -82,7 +82,7 @@ void GameManager::setUp() {
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
     std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
 
-    enemy = Character(characterPartsMap);
+    enemy = Enemy(characterPartsMap);
     enemy.assembleBody();
     enemy.updateArmorPositions();
     enemy.setBodyPosition(sf::Vector2f(920, 630));

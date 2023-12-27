@@ -51,6 +51,7 @@ public:
 	void attackEnemy(Character &enemy);
 	void rest();
 	int rollDice(int min, int max);
+	void resetStats();
 	int getReach();
 	int getSpeed();
 	void addAvailablePoints(int amount);
@@ -69,6 +70,13 @@ public:
 	void incrementStamina();
 	void decrementStamina();
 	void setHp(int hp);
+	void setStrength(int strength);
+	void setAgility(int agility);
+	void setAttack(int attack);
+	void setDefence(int defence);
+	void setVitality(int vitality);
+	void setCharisma(int charisma);
+	void setStamina(int stamina);
 	void takeDamage(int damage);
 	const int getStrength();
 	const int getAgility();

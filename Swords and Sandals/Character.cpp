@@ -272,6 +272,20 @@ int Character::rollDice(int min, int max) {
     return number;
 }
 
+void Character::resetStats() {
+    strength = 1;
+    agility = 1;
+    attack = 1;
+    defence = 1;
+    vitality = 1;
+    charisma = 1;
+    stamina = 1;
+    availablePoints = 5;
+    hp = 10 + vitality * 2;
+
+    animationRunning = false;
+}
+
 int Character::getReach() {
     return 90;
 }
@@ -338,6 +352,34 @@ void Character::decrementStamina() {
 
 void Character::setHp(int hp) {
     this->hp = hp;
+}
+
+void Character::setStrength(int strength) {
+    this->strength = strength;
+}
+
+void Character::setAgility(int agility) {
+    this->agility = agility;
+}
+
+void Character::setAttack(int attack) {
+    this->attack = attack;
+}
+
+void Character::setDefence(int defence) {
+    this->defence = defence;
+}
+
+void Character::setVitality(int vitality) {
+    this->vitality = vitality;
+}
+
+void Character::setCharisma(int charisma) {
+    this->charisma = charisma;
+}
+
+void Character::setStamina(int stamina) {
+    this->stamina = stamina;
 }
 
 void Character::takeDamage(int damage) {

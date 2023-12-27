@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Enemy.h"
 #include "TextureManager.h"
 #include "Button.h"
 #include "CityCenter.h"
@@ -17,7 +18,7 @@
 class GameManager {
 private:
     sf::RenderWindow window;
-    Character enemy;
+    Enemy enemy;
     Player player;
     CityCenter cityCenter;
     GameState gameState;

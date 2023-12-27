@@ -142,6 +142,7 @@
     <ClCompile Include="CharacterPart.cpp" />
     <ClCompile Include="CityCenter.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="CharacterPart.h" />
     <ClInclude Include="CityCenter.h" />
     <ClInclude Include="Cursor.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Object.h" />
