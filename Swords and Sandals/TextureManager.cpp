@@ -83,6 +83,8 @@ void TextureManager::loadButtons() {
     loadTexture("attackPlayer", "Assets/Buttons/attackPlayer.png");
     loadTexture("restPlayer", "Assets/Buttons/restPlayer.png");
     loadTexture("fightButton", "Assets/Buttons/Fight.png");
+    loadTexture("continueButton", "Assets/Buttons/Continue.png");
+    loadTexture("startOverButton", "Assets/Buttons/startOver.png");
 }
 
 void TextureManager::loadCursor() {

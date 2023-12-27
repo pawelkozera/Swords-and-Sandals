@@ -165,6 +165,10 @@ void GameManager::handleShopEvents() {
 void GameManager::handleArenaEvents() {
     arena.displayBackground(window);
 
+    if (!arena.getFightInProgress()) {
+        arena.displayEndOfFight(window);
+    }
+
     if (player.getAnimationRunning()) {
         player.resetAnimation();
     }
@@ -174,7 +178,7 @@ void GameManager::handleArenaEvents() {
     }
 
     if (arena.getPlayerTurn()) {
-        arena.checkForClickedButton(cursor.getPosition(), player, enemy);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState);
 
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
@@ -304,11 +308,15 @@ std::unordered_map<std::string, Button> GameManager::createArenaButtonsMap() {
     Button movePlayerBackwards(textureManager.getTexture("movePlayerBackwards"));
     Button attackPlayer(textureManager.getTexture("attackPlayer"));
     Button restPlayer(textureManager.getTexture("restPlayer"));
+    Button continueButton(textureManager.getTexture("continueButton"));
+    Button startOverButton(textureManager.getTexture("startOverButton"));
 
     Buttons.insert_or_assign("movePlayerForward", moveButtonForward);
     Buttons.insert_or_assign("movePlayerBackwards", movePlayerBackwards);
     Buttons.insert_or_assign("attackPlayer", attackPlayer);
     Buttons.insert_or_assign("restPlayer", restPlayer);
+    Buttons.insert_or_assign("continueButton", continueButton);
+    Buttons.insert_or_assign("startOverButton", startOverButton);
 
     return Buttons;
 }

@@ -247,9 +247,9 @@ void Character::removeWeapon(const std::string& characterPart) {
 }
 
 void Character::attackEnemy(Character& enemy) {
-    if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x < getReach())) {
+    if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x) < getReach()) {
         int numberRolled = rollDice(1, 100);
-        int chance = attack - enemy.defence;
+        int chance = 20 + attack*10 - enemy.defence*5;
 
         if (numberRolled <= chance) {
             int strengthDamage = rollDice(1, strength);
@@ -259,6 +259,7 @@ void Character::attackEnemy(Character& enemy) {
 }
 
 void Character::rest() {
+    this->setHp(-2);
 }
 
 int Character::rollDice(int min, int max) {

@@ -40,6 +40,7 @@ void ArenaEntrance::handleButtonClick(const std::string& buttonName, GameState& 
         player.setBodyPosition(sf::Vector2f(100, 630));
         enemy.setBodyPosition(sf::Vector2f(920, 630));
         arena.setUpPositionOfButtons(player);
+        arena.setFightInProgress(true);
     }
 }
 
