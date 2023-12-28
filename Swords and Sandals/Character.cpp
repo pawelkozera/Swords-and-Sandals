@@ -341,6 +341,14 @@ void Character::resetStatsAndEq() {
 }
 
 int Character::getReach() {
+    if (weapons.find("handRight") != weapons.end()) {
+        return 90 + weapons.at("handRight").getSpriteRect().height;
+    }
+
+    if (weapons.find("handLeft") != weapons.end()) {
+        return 90 + weapons.at("handLeft").getSpriteRect().height;
+    }
+
     return 90;
 }
 
