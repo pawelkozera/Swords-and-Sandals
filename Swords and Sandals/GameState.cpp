@@ -1,13 +1,13 @@
 #include "GameState.h"
 
 
-GameState::GameState() : currentMode(GameMode::InCity) {}
+GameState::GameState() : currentMode(GameMode::MainMenu) {}
 
 void GameState::setMode(GameMode mode) {
     currentMode = mode;
 }
 
-bool GameState::isMainMenu() const {
+bool GameState::InMainMenu() const {
     return currentMode == GameMode::MainMenu;
 }
 

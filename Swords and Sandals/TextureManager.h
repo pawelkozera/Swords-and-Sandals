@@ -21,5 +21,6 @@ public:
     void loadShop();
     void loadSwords();
     void loadPlayerCreation();
+    void loadMainMenu();
 };
 

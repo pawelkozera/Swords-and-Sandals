@@ -14,6 +14,7 @@
 #include "PlayerCreation.h"
 #include "Arena.h"
 #include "ArenaEntrance.h"
+#include "MainMenu.h"
 
 class GameManager {
 private:
@@ -29,6 +30,7 @@ private:
     PlayerCreation playerCreation;
     Arena arena;
     ArenaEntrance arenaEntrance;
+    MainMenu mainMenu;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 public:
@@ -36,6 +38,7 @@ public:
     void run();
     void setUp();
     void handleEvents();
+    void handleMainMenuEvents();
     void handleShopEvents();
     void handleArenaEvents();
     void handleArenaEntranceEvents();
@@ -49,5 +52,6 @@ public:
     std::unordered_map<std::string, Button> createArenaEntranceButtonsMap();
     std::unordered_map<std::string, Button> createShopButtonsMap();
     std::unordered_map<std::string, Button> createPlayerCreationButtonsMap();
+    std::unordered_map<std::string, Button> createMainMenuButtonsMap();
 };
 

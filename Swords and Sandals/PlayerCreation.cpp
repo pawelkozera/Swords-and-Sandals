@@ -122,6 +122,9 @@ void PlayerCreation::displayInterface(sf::RenderWindow& window, Player& player) 
         (player.getCharisma() < 5) ? "Low" :
         (player.getCharisma() < 8) ? "Moderate" :
         "High");
+
+    player.setBodyPosition(sf::Vector2f(700.0f, 420.0f));
+    player.display(window);
 }
 
 void PlayerCreation::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, GameState& gameState) {

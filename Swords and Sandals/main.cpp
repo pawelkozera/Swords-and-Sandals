@@ -13,6 +13,7 @@ int main() {
     textureManager.loadShop();
     textureManager.loadSwords();
     textureManager.loadPlayerCreation();
+    textureManager.loadMainMenu();
 
     GameManager gameManager(textureManager);
 

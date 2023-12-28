@@ -85,6 +85,10 @@ void TextureManager::loadButtons() {
     loadTexture("fightButton", "Assets/Buttons/Fight.png");
     loadTexture("continueButton", "Assets/Buttons/Continue.png");
     loadTexture("startOverButton", "Assets/Buttons/startOver.png");
+    loadTexture("newGameButton", "Assets/Buttons/newGame.png");
+    loadTexture("loadGameButton", "Assets/Buttons/loadGame.png");
+    loadTexture("settingsButton", "Assets/Buttons/settings.png");
+    loadTexture("quitButton", "Assets/Buttons/quit.png");
 }
 
 void TextureManager::loadCursor() {
@@ -114,4 +118,9 @@ void TextureManager::loadSwords() {
 
 void TextureManager::loadPlayerCreation() {
     loadTexture("playerCreationBackground", "Assets/PlayerCreation/background.jpg");
+}
+
+void TextureManager::loadMainMenu() {
+    loadTexture("mainMenuBackground", "Assets/MainMenu/background.jpg");
+    loadTexture("mainMenuLogo", "Assets/MainMenu/logo.png");
 }

@@ -81,6 +81,9 @@ void GameManager::setUp() {
     std::unordered_map<std::string, Button> arenaEntranceButtons = createArenaEntranceButtonsMap();
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
     std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
+    std::unordered_map<std::string, Button> mainMenuButtons = createMainMenuButtonsMap();
+
+    mainMenu = MainMenu(textureManager.getTexture("mainMenuBackground"), mainMenuButtons);
 
     enemy = Enemy(characterPartsMap);
     enemy.assembleBody();
@@ -116,6 +119,9 @@ void GameManager::setUp() {
 
 void GameManager::handleEvents() {
     switch (gameState.getMode()) {
+    case GameState::GameMode::MainMenu:
+        handleMainMenuEvents();
+        break;
     case GameState::GameMode::InCity:
         cityCenter.displayBackground(window);
         playerInterface.displayInterface(window, player);
@@ -143,6 +149,12 @@ void GameManager::handleEvents() {
     default:
         break;
     }
+}
+
+void GameManager::handleMainMenuEvents() {
+    mainMenu.displayBackground(window);
+    mainMenu.setUpPositionOfButtons();
+    mainMenu.displayButtons(window);
 }
 
 void GameManager::handleShopEvents() {
@@ -407,6 +419,26 @@ std::unordered_map<std::string, Button> GameManager::createPlayerCreationButtons
     Buttons.insert_or_assign("minusStaminaButton", minusButton);
 
     Buttons.insert_or_assign("goToCityButton", goToCityButton);
+
+    return Buttons;
+}
+
+std::unordered_map<std::string, Button> GameManager::createMainMenuButtonsMap() {
+    std::unordered_map<std::string, Button> Buttons;
+
+    Button continueButton(textureManager.getTexture("continueButton"));
+    Button newGameButton(textureManager.getTexture("newGameButton"));
+    Button loadGameButton(textureManager.getTexture("loadGameButton"));
+    Button settingsButton(textureManager.getTexture("settingsButton"));
+    Button quitButton(textureManager.getTexture("quitButton"));
+    Button mainMenuLogoButton(textureManager.getTexture("mainMenuLogo"));
+
+    Buttons.insert_or_assign("continue", continueButton);
+    Buttons.insert_or_assign("newGame", newGameButton);
+    Buttons.insert_or_assign("loadGame", loadGameButton);
+    Buttons.insert_or_assign("settings", settingsButton);
+    Buttons.insert_or_assign("quit", quitButton);
+    Buttons.insert_or_assign("mainMenuLogo", mainMenuLogoButton);
 
     return Buttons;
 }

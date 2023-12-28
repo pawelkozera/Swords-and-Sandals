@@ -23,6 +23,7 @@ public:
     bool InArena() const;
     bool InArenaEntrance() const;
     bool InCreationMenu() const;
+    bool InMainMenu() const;
 
 private:
     GameMode currentMode;
