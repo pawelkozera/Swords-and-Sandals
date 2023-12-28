@@ -135,7 +135,11 @@ void Arena::generatePrize(Player& player) {
     std::uniform_int_distribution<int> goldDistribution(1, 5);
     int goldAmount = goldDistribution(generator) * 100;
 
+    std::uniform_int_distribution<int> pointsDistribution(1, 2);
+    int points = pointsDistribution(generator);
+
     player.addGold(goldAmount);
+    player.addAvailablePoints(points);
 }
 
 void Arena::displayEndOfFight(sf::RenderWindow& window) {
