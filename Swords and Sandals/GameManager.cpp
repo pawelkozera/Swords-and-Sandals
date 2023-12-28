@@ -84,12 +84,12 @@ void GameManager::setUp() {
 
     enemy = Enemy(characterPartsMap);
     enemy.assembleBody();
-    enemy.updateArmorPositions();
+    enemy.updateArmorAndWeaponPositions();
     enemy.setBodyPosition(sf::Vector2f(920, 630));
 
     player = Player(characterPartsMap);
     player.assembleBody();
-    player.updateArmorPositions();
+    player.updateArmorAndWeaponPositions();
 
     playerInterface = PlayerInterface(textureManager.getTexture("coinIcon"));
 
@@ -158,7 +158,7 @@ void GameManager::handleShopEvents() {
     shop.checkForClickedItems(cursor.getPosition(), player);
     shop.displayStatsOfSelectedItem(window);
     
-    player.updateArmorPositions();
+    player.updateArmorAndWeaponPositions();
     player.display(window);
 }
 

@@ -35,7 +35,7 @@ public:
 	Character();
 	Character(std::unordered_map<std::string, CharacterPart> &characterParts);
 	void assembleBody();
-	void updateArmorPositions();
+	void updateArmorAndWeaponPositions();
 	void walkAnimation();
 	void attackAnimation(bool rightHand);
 	void resetAnimation();

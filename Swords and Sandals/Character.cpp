@@ -74,12 +74,28 @@ void Character::assembleBody() {
     characterParts.at("footRight").setPosition(footRightPosition);
 }
 
-void Character::updateArmorPositions() {
+void Character::updateArmorAndWeaponPositions() {
     for (const auto& characterPartPair : characterParts) {
         const std::string& partKey = characterPartPair.first;
         if (armorPieces.find(partKey) != armorPieces.end()) {
             armorPieces.at(partKey).setPosition(characterPartPair.second.getPosition());
         }
+    }
+
+    if (weapons.find("handRight") != weapons.end()) {
+        weapons.at("handRight").setRotationSprite(90);
+        sf::Vector2f weaponPositionRightHand = characterParts.at("armRight").getPosition();
+        weaponPositionRightHand.x += 10;
+        weaponPositionRightHand.y += 10;
+        weapons.at("handRight").setPosition(weaponPositionRightHand);
+    }
+
+    if (weapons.find("handLeft") != weapons.end()) {
+        weapons.at("handLeft").setRotationSprite(-90);
+        sf::Vector2f weaponPositionLeftHand = characterParts.at("armLeft").getPosition();
+        weaponPositionLeftHand.x -= 10;
+        weaponPositionLeftHand.y += 70;
+        weapons.at("handLeft").setPosition(weaponPositionLeftHand);
     }
 }
 
@@ -104,11 +120,25 @@ void Character::attackAnimation(bool rightHand) {
         rotateAndMovePart("shoulderRight", angle, sf::Vector2f(-22.0f, 26.0f), sf::Vector2f(-22.0f, 26.0f));
         rotateAndMovePart("elbowRight", angle, sf::Vector2f(-49.0f, -4.0f), sf::Vector2f(-49.0f, -4.0f));
         rotateAndMovePart("armRight", angle, sf::Vector2f(-71.0f, -26.0f), sf::Vector2f(-71.0f, -26.0f));
+
+        if (weapons.find("handLeft") != weapons.end()) {
+            sf::Vector2f weaponPositionRightHand = characterParts.at("armRight").getPosition();
+            weaponPositionRightHand.x -= 144;
+            weaponPositionRightHand.y += 20;
+            weapons.at("handLeft").setPosition(weaponPositionRightHand);
+        }
     }
     else {
         rotateAndMovePart("shoulderLeft", -angle, sf::Vector2f(14.0f, 26.0f), sf::Vector2f(14.0f, 26.0f));
         rotateAndMovePart("elbowLeft", -angle, sf::Vector2f(45.0f, -2.0f), sf::Vector2f(45.0f, -2.0f));
         rotateAndMovePart("armLeft", -angle, sf::Vector2f(67.0f, -24.0f), sf::Vector2f(67.0f, -24.0f));
+
+        if (weapons.find("handRight") != weapons.end()) {
+            sf::Vector2f weaponPositionRightHand = characterParts.at("armLeft").getPosition();
+            weaponPositionRightHand.x += 144;
+            weaponPositionRightHand.y -= 40;
+            weapons.at("handRight").setPosition(weaponPositionRightHand);
+        }
     }
 
     animationRunning = true;
@@ -145,7 +175,7 @@ void Character::resetAnimation() {
     resetPart("armLeft");
 
     assembleBody();
-    updateArmorPositions();
+    updateArmorAndWeaponPositions();
 }
 
 void Character::resetPart(const std::string& partName) {
@@ -161,22 +191,21 @@ void Character::resetPart(const std::string& partName) {
 void Character::moveBody(sf::Vector2f movePosition) {
     this->bodyPosition += movePosition;
     assembleBody();
-    updateArmorPositions();
+    updateArmorAndWeaponPositions();
 }
 
 void Character::setBodyPosition(sf::Vector2f bodyPosition) {
     this->bodyPosition = bodyPosition;
     assembleBody();
-    updateArmorPositions();
+    updateArmorAndWeaponPositions();
 }
 
 void Character::display(sf::RenderWindow& window) {
     std::vector<std::string> const renderOrderBody = {
-        "chest", "head", "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight", 
-        "thighLeft", "thighRight", "pelvis", "legLeft", "legRight", "footLeft", "footRight"
+        "chest", "head", "thighLeft", "thighRight", "pelvis", "legLeft", "legRight", "footLeft", "footRight"
     };
 
-    for (const std::string &partName : renderOrderBody) {
+    for (const std::string& partName : renderOrderBody) {
         if (characterParts.find(partName) != characterParts.end()) {
             const CharacterPart& part = characterParts.at(partName);
             window.draw(part.getSprite());
@@ -191,6 +220,28 @@ void Character::display(sf::RenderWindow& window) {
     for (const std::string& partName : renderOrderArmor) {
         if (armorPieces.find(partName) != armorPieces.end()) {
             const ArmorPiece& part = armorPieces.at(partName);
+            window.draw(part.getSprite());
+        }
+    }
+
+    std::vector<std::string> const renderOrderWeapon = {
+        "handRight", "handLeft"
+    };
+
+    for (const std::string& partName : renderOrderWeapon) {
+        if (weapons.find(partName) != weapons.end()) {
+            const Weapon& part = weapons.at(partName);
+            window.draw(part.getSprite());
+        }
+    }
+
+    std::vector<std::string> const renderOrderHand = {
+        "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight"
+    };
+
+    for (const std::string& partName : renderOrderHand) {
+        if (characterParts.find(partName) != characterParts.end()) {
+            const CharacterPart& part = characterParts.at(partName);
             window.draw(part.getSprite());
         }
     }

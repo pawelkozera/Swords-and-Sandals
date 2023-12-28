@@ -537,7 +537,7 @@ void Shop::buyItem() {
 
                         std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
                         player->addArmorPiece(characterPart, *selectedArmorPiece);
-                        player->updateArmorPositions();
+                        player->updateArmorAndWeaponPositions();
                     }
                 }
             }
@@ -561,7 +561,7 @@ void Shop::buyItem() {
 
                         std::string characterPart = this->findKeyForWeapon(selectedWeapon);
                         player->addWeapon(characterPart, *selectedWeapon);
-                        player->updateArmorPositions();
+                        player->updateArmorAndWeaponPositions();
                     }
                 }
             }
@@ -583,7 +583,7 @@ void Shop::equipItem() {
         else {
             std::string characterPart = this->findKeyForArmorPiece(selectedArmorPiece);
             player->addArmorPiece(characterPart, *selectedArmorPiece);
-            player->updateArmorPositions();
+            player->updateArmorAndWeaponPositions();
 
             buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
             buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
@@ -600,7 +600,7 @@ void Shop::equipItem() {
         else {
             std::string characterPart = this->findKeyForWeapon(selectedWeapon);
             player->addWeapon(characterPart, *selectedWeapon);
-            player->updateArmorPositions();
+            player->updateArmorAndWeaponPositions();
 
             buttons.at("unequipButton").setPosition(sf::Vector2f(770.0f, 450.0f));
             buttons.at("equipButton").setPosition(sf::Vector2f(-100.0f, -100.0f));
