@@ -11,6 +11,7 @@ public:
 	Player(std::unordered_map<std::string, CharacterPart>& characterPart);
 	void buy(int gold);
 	const int getGold();
-	void setGold(int gold);
+	void setGold(const int gold);
+	void addGold(const int gold);
 };
 

@@ -13,6 +13,10 @@ const int Player::getGold() {
     return gold;
 }
 
-void Player::setGold(int gold) {
+void Player::setGold(const int gold) {
     this->gold = gold;
+}
+
+void Player::addGold(const int gold) {
+    this->gold += gold;
 }

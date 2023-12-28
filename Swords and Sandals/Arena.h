@@ -21,6 +21,7 @@ public:
 	Arena(sf::Texture& arenaTexture, std::unordered_map<std::string, Button>& buttons);
 	void setUpPositionOfButtons(Player& player);
 	void checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy &enemy, GameState& gameState, TextureManager& textureManager);
+	void generatePrize(Player &player);
 	void displayEndOfFight(sf::RenderWindow& window);
 	void handleEnemyMove(Character &enemy, Player &player);
 	const bool getPlayerTurn();

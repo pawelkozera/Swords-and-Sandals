@@ -116,6 +116,7 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         gameState.setMode(GameState::GameMode::InCreationMenu);
         enemy.resetStatsAndEq();
         enemy.generateNewStatsAndEq(player, textureManager);
+        generatePrize(player);
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
@@ -123,6 +124,16 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         player.resetStatsAndEq();
         player.setGold(900);
     }
+}
+
+void Arena::generatePrize(Player& player) {
+    static std::random_device rd;
+    static std::mt19937 generator(rd());
+
+    std::uniform_int_distribution<int> goldDistribution(1, 5);
+    int goldAmount = goldDistribution(generator) * 100;
+
+    player.addGold(goldAmount);
 }
 
 void Arena::displayEndOfFight(sf::RenderWindow& window) {
