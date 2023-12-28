@@ -165,6 +165,8 @@ void GameManager::handleShopEvents() {
 void GameManager::handleArenaEvents() {
     arena.displayBackground(window);
 
+    arena.checkForEndOfFight(player, enemy);
+
     if (!arena.getFightInProgress()) {
         arena.displayEndOfFight(window);
     }

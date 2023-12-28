@@ -67,6 +67,19 @@ void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& pla
     }
 }
 
+void Arena::checkForEndOfFight(Player& player, Enemy& enemy) {
+    if (player.getHp() <= 0) {
+        setFightInProgress(false);
+        playerWon = false;
+        setUpEndOfFightPositionOfButtons();
+    }
+    else if (enemy.getHp() <= 0) {
+        setFightInProgress(false);
+        playerWon = true;
+        setUpEndOfFightPositionOfButtons();
+    }
+}
+
 void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager) {
     if (fightInProgress) {
         handleButtonClickFightInProgress(buttonName, player, enemy);
@@ -93,17 +106,6 @@ void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Play
     else if (buttonName.find("attackPlayer") != std::string::npos) {
         player.attackEnemy(enemy);
         player.attackAnimation(false);
-
-        if (player.getHp() <= 0) {
-            setFightInProgress(false);
-            playerWon = false;
-            setUpEndOfFightPositionOfButtons();
-        }
-        else if (enemy.getHp() <= 0) {
-            setFightInProgress(false);
-            playerWon = true;
-            setUpEndOfFightPositionOfButtons();
-        }
     }
     else if (buttonName.find("restPlayer") != std::string::npos) {
         enemy.setHp(-2);
