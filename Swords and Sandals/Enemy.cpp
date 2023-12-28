@@ -7,10 +7,50 @@ Enemy::Enemy(std::unordered_map<std::string, CharacterPart>& characterPart)
 }
 
 void Enemy::generateNewStatsAndEq(Player& player, TextureManager& textureManager) {
+    generateArmor(player, textureManager);
+    generateStats(player);
+    generateWeapon(player, textureManager);
+}
+
+void Enemy::generateStats(Player& player) {
     static std::random_device rd;
     static std::mt19937 generator(rd());
 
-	std::unordered_multimap<std::string, ArmorPiece> armorMap = createArmorMap(textureManager);
+    int playerModifiedAttributes[7] = {
+        player.getStrength(),
+        player.getAgility(),
+        player.getAttack(),
+        player.getDefence(),
+        player.getVitality(),
+        player.getCharisma(),
+        player.getStamina()
+    };
+
+    int availablePoints = player.getAvailablePoints() + 4;
+
+    int whichStatistics = 0;
+    for (int i = 0; i < availablePoints; i++) {
+        std::uniform_int_distribution<int> statsDistribution(0, 6);
+        whichStatistics = statsDistribution(generator);
+
+        playerModifiedAttributes[whichStatistics] += 1;
+    }
+
+    setStrength(playerModifiedAttributes[0]);
+    setAgility(playerModifiedAttributes[1]);
+    setAttack(playerModifiedAttributes[2]);
+    setDefence(playerModifiedAttributes[3]);
+    setVitality(playerModifiedAttributes[4]);
+    setCharisma(playerModifiedAttributes[5]);
+    setStamina(playerModifiedAttributes[6]);
+    setHp(10 + playerModifiedAttributes[4] * 2);
+}
+
+void Enemy::generateArmor(Player& player, TextureManager& textureManager) {
+    static std::random_device rd;
+    static std::mt19937 generator(rd());
+
+    std::unordered_multimap<std::string, ArmorPiece> armorMap = createArmorMap(textureManager);
 
     std::uniform_int_distribution<int> armorDistribution(-1, 1);
     int amountOfArmorPieces = player.getArmorSize() + armorDistribution(generator);
@@ -20,41 +60,24 @@ void Enemy::generateNewStatsAndEq(Player& player, TextureManager& textureManager
         int randomIndex = armorIndexDistribution(generator);
 
         auto it = std::next(armorMap.begin(), randomIndex);
-        
+
         std::string armorKey = it->first;
         addArmorPiece(armorKey, it->second);
 
         armorMap.erase(it);
     }
+}
 
-	int playerModifiedAttributes[7] = {
-		player.getStrength(),
-		player.getAgility(),
-		player.getAttack(),
-		player.getDefence(),
-		player.getVitality(),
-		player.getCharisma(),
-		player.getStamina()
-	};
+void Enemy::generateWeapon(Player& player, TextureManager& textureManager) {
+    std::unordered_multimap<std::string, Weapon> weaponMap = createWeaponMap(textureManager);
+    std::string key = "handLeft";
+    auto range = weaponMap.equal_range(key);
 
-	int availablePoints = player.getAvailablePoints() + 4;
-
-	int whichStatistics = 0;
-	for (int i = 0; i < availablePoints; i++) {
-		std::uniform_int_distribution<int> statsDistribution(0, 6);
-		whichStatistics = statsDistribution(generator);
-
-		playerModifiedAttributes[whichStatistics] += 1;
-	}
-
-	setStrength(playerModifiedAttributes[0]);
-	setAgility(playerModifiedAttributes[1]);
-	setAttack(playerModifiedAttributes[2]);
-	setDefence(playerModifiedAttributes[3]);
-	setVitality(playerModifiedAttributes[4]);
-	setCharisma(playerModifiedAttributes[5]);
-	setStamina(playerModifiedAttributes[6]);
-	setHp(10 + playerModifiedAttributes[4] * 2);
+    for (auto it = range.first; it != range.second; ++it) {
+        std::string keyName = it->first;
+        addWeapon(keyName, it->second);
+        break;
+    }
 }
 
 std::unordered_multimap<std::string, ArmorPiece> Enemy::createArmorMap(TextureManager& textureManager) {
@@ -102,4 +125,12 @@ std::unordered_multimap<std::string, ArmorPiece> Enemy::createArmorMap(TextureMa
     availableArmorPieces.insert({ "footRight",  DKAfootRight });
 
     return availableArmorPieces;
+}
+
+std::unordered_multimap<std::string, Weapon> Enemy::createWeaponMap(TextureManager& textureManager) {
+    std::unordered_multimap<std::string, Weapon> availableWeapons;
+
+    availableWeapons.insert({ "handLeft", Weapon(textureManager.getTexture("blueSword"), 1, 300, "Blue", "sword") });
+
+    return availableWeapons;
 }
