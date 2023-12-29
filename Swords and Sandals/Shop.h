@@ -46,6 +46,7 @@ public:
 	void setSelectedWeapon(Weapon* selectedWeapon);
 	void buyItem();
 	void equipItem();
+	void resetBoughtItems();
 private:
 	ShopMode currentMode;
 	sf::Texture* armorer;
@@ -63,5 +64,6 @@ private:
 
 	std::string findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) const;
 	std::string findKeyForWeapon(const Weapon* selectedWeapon) const;
+	void setAllElementsToFalse(std::unordered_map<std::string, bool>& itemMap);
 };
 

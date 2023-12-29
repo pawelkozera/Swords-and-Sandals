@@ -55,13 +55,13 @@ void Arena::setUpEndOfFightPositionOfButtons() {
     }
 }
 
-void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager) {
+void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            handleButtonClick(buttonName, player, enemy, gameState, textureManager);
+            handleButtonClick(buttonName, player, enemy, gameState, textureManager, shop);
             break;
         }
     }
@@ -80,13 +80,13 @@ void Arena::checkForEndOfFight(Player& player, Enemy& enemy) {
     }
 }
 
-void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager) {
+void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop) {
     if (fightInProgress) {
         handleButtonClickFightInProgress(buttonName, player, enemy);
         playerTurn = false;
     }
     else {
-        handleButtonClickFightEnded(buttonName, player, enemy, gameState, textureManager);
+        handleButtonClickFightEnded(buttonName, player, enemy, gameState, textureManager, shop);
     }
 }
 
@@ -113,7 +113,7 @@ void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Play
     }
 }
 
-void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState, TextureManager& textureManager) {
+void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState, TextureManager& textureManager, Shop& shop) {
     if (buttonName.find("continueButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
         enemy.resetStatsAndEq();
@@ -125,6 +125,7 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         enemy.resetStatsAndEq();
         player.resetStatsAndEq();
         player.setGold(900);
+        shop.resetBoughtItems();
     }
 }
 

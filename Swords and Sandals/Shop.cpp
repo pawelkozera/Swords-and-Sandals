@@ -608,6 +608,11 @@ void Shop::equipItem() {
     }
 }
 
+void Shop::resetBoughtItems() {
+    setAllElementsToFalse(boughtArmorPieces);
+    setAllElementsToFalse(boughtWeapons);
+}
+
 std::string Shop::findKeyForArmorPiece(const ArmorPiece* selectedArmorPiece) const {
     auto it = std::find_if(availableArmorPieces.begin(), availableArmorPieces.end(),
         [selectedArmorPiece, this](const auto& pair) {
@@ -633,5 +638,11 @@ std::string Shop::findKeyForWeapon(const Weapon* selectedWeapon) const {
     }
     else {
         return "";
+    }
+}
+
+void Shop::setAllElementsToFalse(std::unordered_map<std::string, bool>& myMap) {
+    for (auto& pair : myMap) {
+        pair.second = false;
     }
 }

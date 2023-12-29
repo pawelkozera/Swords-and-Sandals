@@ -155,6 +155,7 @@ void GameManager::handleMainMenuEvents() {
     mainMenu.displayBackground(window);
     mainMenu.setUpPositionOfButtons();
     mainMenu.displayButtons(window);
+    mainMenu.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop);
 }
 
 void GameManager::handleShopEvents() {
@@ -192,7 +193,7 @@ void GameManager::handleArenaEvents() {
     }
 
     if (arena.getPlayerTurn()) {
-        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop);
 
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
