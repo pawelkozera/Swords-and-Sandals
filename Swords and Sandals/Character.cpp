@@ -15,6 +15,7 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     vitality(1),
     charisma(1),
     stamina(1),
+    staminaUsage(5 + 5 * stamina),
     availablePoints(5),
     hp(10 + vitality*2),
     animationRunning(false)
@@ -310,7 +311,15 @@ void Character::attackEnemy(Character& enemy) {
 }
 
 void Character::rest() {
-    this->setHp(-2);
+    int restPoints = 5;
+    int maxStaminaUsage = 5 + stamina * 5;
+
+    if (staminaUsage + restPoints >= maxStaminaUsage) {
+        staminaUsage = maxStaminaUsage;
+    }
+    else {
+        staminaUsage += restPoints;
+    }
 }
 
 int Character::rollDice(int min, int max) {
@@ -333,6 +342,7 @@ void Character::resetStatsAndEq() {
     stamina = 1;
     availablePoints = 5;
     hp = 10 + vitality * 2;
+    staminaUsage = 5 + 5 * stamina;
 
     animationRunning = false;
 
@@ -416,6 +426,10 @@ void Character::setHp(int hp) {
     this->hp = hp;
 }
 
+void Character::setStaminaUsage(int newStamina) {
+    staminaUsage = newStamina;
+}
+
 void Character::setStrength(int strength) {
     this->strength = strength;
 }
@@ -490,6 +504,11 @@ const int Character::getStamina()
 const int Character::getHp()
 {
     return hp;
+}
+
+const int Character::getStaminaUsage()
+{
+    return staminaUsage;
 }
 
 const int Character::getAvailablePoints()

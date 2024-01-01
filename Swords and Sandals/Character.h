@@ -24,6 +24,7 @@ private:
 	int vitality;
 	int charisma;
 	int stamina;
+	int staminaUsage;
 	int availablePoints;
 	int hp;
 
@@ -70,6 +71,7 @@ public:
 	void incrementStamina();
 	void decrementStamina();
 	void setHp(int hp);
+	void setStaminaUsage(int newStamina);
 	void setStrength(int strength);
 	void setAgility(int agility);
 	void setAttack(int attack);
@@ -86,6 +88,7 @@ public:
 	const int getCharisma();
 	const int getStamina();
 	const int getHp();
+	const int getStaminaUsage();
 	const int getAvailablePoints();
 	const sf::Vector2f getBodyPosition();
 	const bool getAnimationRunning();

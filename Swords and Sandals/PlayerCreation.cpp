@@ -151,6 +151,7 @@ void PlayerCreation::handleButtonClick(const std::string& buttonName, Player& pl
         gameState.setMode(GameState::GameMode::InCity);
         setOldStats(player);
         player.setHp(10 + player.getVitality() * 2);
+        player.setStaminaUsage(5 + 5 * player.getStamina());
     }
 }
 

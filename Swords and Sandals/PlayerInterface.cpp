@@ -48,7 +48,7 @@ void PlayerInterface::displayInterface(sf::RenderWindow& window, Player& player)
     window.draw(stats);
 
     stats.setCharacterSize(40);
-    stats.setString(std::to_string(player.getStamina()));
+    stats.setString(std::to_string(player.getStaminaUsage()));
     stats.setPosition(sprite.getPosition().x + 520, sprite.getPosition().y);
     window.draw(stats);
 }

@@ -92,24 +92,41 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Ene
 
 void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Player& player, Enemy& enemy) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
-        if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > player.getReach()) {
-            player.moveBody(sf::Vector2f(player.getSpeed(), 0));
-            setUpPositionOfButtons(player);
-            player.walkAnimation();
+        if (player.getStaminaUsage() >= 5) {
+            if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > player.getReach()) {
+                player.moveBody(sf::Vector2f(player.getSpeed(), 0));
+                setUpPositionOfButtons(player);
+                player.walkAnimation();
+                player.setStaminaUsage(player.getStaminaUsage() - 5);
+            }
+        }
+        else {
+            player.rest();
         }
     }
     else if (buttonName.find("movePlayerBackwards") != std::string::npos) {
-        player.moveBody(sf::Vector2f(-10, 0));
-        setUpPositionOfButtons(player);
-        player.walkAnimation();
+        if (player.getStaminaUsage() >= 5) {
+            player.moveBody(sf::Vector2f(-10, 0));
+            setUpPositionOfButtons(player);
+            player.walkAnimation();
+            player.setStaminaUsage(player.getStaminaUsage() - 5);
+        }
+        else {
+            player.rest();
+        }
     }
     else if (buttonName.find("attackPlayer") != std::string::npos) {
-        player.attackEnemy(enemy);
-        player.attackAnimation(false);
+        if (player.getStaminaUsage() >= 7) {
+            player.attackEnemy(enemy);
+            player.attackAnimation(false);
+            player.setStaminaUsage(player.getStaminaUsage() - 7);
+        }
+        else {
+            player.rest();
+        }
     }
     else if (buttonName.find("restPlayer") != std::string::npos) {
-        enemy.setHp(-2);
-        //player.rest();
+        player.rest();
     }
 }
 
@@ -162,14 +179,22 @@ void Arena::displayEndOfFight(sf::RenderWindow& window) {
 }
 
 void Arena::handleEnemyMove(Character& enemy, Player& player) {
-    if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > enemy.getReach()) {
+    bool playerNotInReachOfAttack = abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > enemy.getReach();
+
+    if (playerNotInReachOfAttack && enemy.getStaminaUsage() >= 5) {
         enemy.moveBody(sf::Vector2f(-enemy.getSpeed(), 0));
         enemy.walkAnimation();
+        enemy.setStaminaUsage(enemy.getStaminaUsage() - 5);
     }
-    else {
+    else if (enemy.getStaminaUsage() >= 7) {
         enemy.attackEnemy(player);
         enemy.attackAnimation(true);
+        enemy.setStaminaUsage(enemy.getStaminaUsage() - 7);
     }
+    else {
+        enemy.rest();
+    }
+
     playerTurn = true;
 }
 
