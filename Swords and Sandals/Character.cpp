@@ -202,47 +202,27 @@ void Character::setBodyPosition(sf::Vector2f bodyPosition) {
 }
 
 void Character::display(sf::RenderWindow& window) {
-    std::vector<std::string> const renderOrderBody = {
-        "chest", "head", "thighLeft", "thighRight", "pelvis", "legLeft", "legRight", "footLeft", "footRight"
+    std::vector<std::string> const renderOrder = {
+        "chest", "head", "thighLeft", "thighRight", "pelvis",
+        "legLeft", "legRight", "footLeft", "footRight",
+        "handRight", "handLeft",
+        "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight",
+        "armLeft", "armRight"
     };
 
-    for (const std::string& partName : renderOrderBody) {
+    for (const std::string& partName : renderOrder) {
         if (characterParts.find(partName) != characterParts.end()) {
             const CharacterPart& part = characterParts.at(partName);
             window.draw(part.getSprite());
         }
-    }
 
-    std::vector<std::string> const renderOrderArmor = {
-        "pelvis", "chest", "head", "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight",
-        "thighLeft", "thighRight", "footLeft", "footRight", "legLeft", "legRight"
-    };
-
-    for (const std::string& partName : renderOrderArmor) {
         if (armorPieces.find(partName) != armorPieces.end()) {
             const ArmorPiece& part = armorPieces.at(partName);
             window.draw(part.getSprite());
         }
-    }
 
-    std::vector<std::string> const renderOrderWeapon = {
-        "handRight", "handLeft"
-    };
-
-    for (const std::string& partName : renderOrderWeapon) {
         if (weapons.find(partName) != weapons.end()) {
             const Weapon& part = weapons.at(partName);
-            window.draw(part.getSprite());
-        }
-    }
-
-    std::vector<std::string> const renderOrderHand = {
-        "shoulderLeft", "shoulderRight", "elbowLeft", "elbowRight", "armLeft", "armRight"
-    };
-
-    for (const std::string& partName : renderOrderHand) {
-        if (characterParts.find(partName) != characterParts.end()) {
-            const CharacterPart& part = characterParts.at(partName);
             window.draw(part.getSprite());
         }
     }

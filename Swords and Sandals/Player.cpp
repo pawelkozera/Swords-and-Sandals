@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(std::unordered_map<std::string, CharacterPart>& characterPart)
-    : Character(characterPart), gold(900)
+    : Character(characterPart), gold(9000)
 {
 }
 
