@@ -18,6 +18,7 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     staminaUsage(5 + 5 * stamina),
     availablePoints(5),
     hp(10 + vitality*2),
+    armor(0),
     animationRunning(false)
 {
     bodyPosition = sf::Vector2f(800.0f, 600.0f);
@@ -230,6 +231,7 @@ void Character::display(sf::RenderWindow& window) {
 
 void Character::addArmorPiece(std::string& characterPart,ArmorPiece& armorPiece) {
     armorPieces.insert_or_assign(characterPart, armorPiece);
+    armor += armorPiece.getDefence();
 }
 
 void Character::addWeapon(std::string& characterPart, Weapon& weapon) {
@@ -266,6 +268,8 @@ void Character::removeArmorPiece(const std::string& characterPart) {
     if (it != armorPieces.end()) {
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
         armorPieces.erase(it);
+
+        armor -= it->second.getDefence();
     }
 }
 
@@ -280,12 +284,36 @@ void Character::removeWeapon(const std::string& characterPart) {
 
 void Character::attackEnemy(Character& enemy) {
     if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x) < getReach()) {
+        int attackBonusFromWeapon = 0;
+
+        if (weapons.find("handLeft") != weapons.end()) {
+            attackBonusFromWeapon += weapons.at("handLeft").getAttack();
+        }
+
+        if (weapons.find("handRight") != weapons.end()) {
+            attackBonusFromWeapon += weapons.at("handRight").getAttack();
+        }
+
         int numberRolled = rollDice(1, 100);
-        int chance = 20 + attack*10 - enemy.defence*5;
+        int chance = 20 + (attack + attackBonusFromWeapon) * 10 - enemy.defence*5;
 
         if (numberRolled <= chance) {
             int strengthDamage = rollDice(1, strength);
-            enemy.hp -= 2 + strengthDamage;
+            int totalDamage = 2 + strengthDamage;
+
+            if (enemy.armor > 0) {
+                int diff = enemy.armor - totalDamage;
+                if (diff > 0) {
+                    enemy.armor -= totalDamage;
+                }
+                else {
+                    enemy.armor = 0;
+                    enemy.hp -= -diff;
+                }
+            }
+            else {
+                enemy.hp -= totalDamage;
+            }
         }
     }
 }
@@ -328,6 +356,14 @@ void Character::resetStatsAndEq() {
 
     armorPieces.clear();
     weapons.clear();
+}
+
+void Character::restoreArmor() {
+    armor = 0;
+
+    for (const auto& pair : armorPieces) {
+        armor += pair.second.getDefence();
+    }
 }
 
 int Character::getReach() {
@@ -506,4 +542,8 @@ const sf::Vector2f Character::getBodyPosition() {
 
 const bool Character::getAnimationRunning() {
     return animationRunning;
+}
+
+const int Character::getArmor() {
+    return armor;
 }

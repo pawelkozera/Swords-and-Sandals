@@ -27,6 +27,7 @@ private:
 	int staminaUsage;
 	int availablePoints;
 	int hp;
+	int armor;
 
 	bool animationRunning;
 
@@ -53,6 +54,7 @@ public:
 	void rest();
 	int rollDice(int min, int max);
 	void resetStatsAndEq();
+	void restoreArmor();
 	int getReach();
 	int getSpeed();
 	void addAvailablePoints(int amount);
@@ -93,5 +95,6 @@ public:
 	const sf::Vector2f getBodyPosition();
 	const bool getAnimationRunning();
 	const int getArmorSize();
+	const int getArmor();
 };
 

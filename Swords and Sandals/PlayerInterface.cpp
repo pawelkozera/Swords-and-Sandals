@@ -34,12 +34,12 @@ void PlayerInterface::displayInterface(sf::RenderWindow& window, Player& player)
 
     stats.setCharacterSize(34);
     stats.setString("HP");
-    stats.setPosition(sprite.getPosition().x + 180, sprite.getPosition().y + 8);
+    stats.setPosition(sprite.getPosition().x + 220, sprite.getPosition().y + 8);
     window.draw(stats);
 
     stats.setCharacterSize(40);
     stats.setString(std::to_string(player.getHp()));
-    stats.setPosition(sprite.getPosition().x + 240, sprite.getPosition().y);
+    stats.setPosition(sprite.getPosition().x + 280, sprite.getPosition().y);
     window.draw(stats);
 
     stats.setCharacterSize(34);
@@ -50,5 +50,15 @@ void PlayerInterface::displayInterface(sf::RenderWindow& window, Player& player)
     stats.setCharacterSize(40);
     stats.setString(std::to_string(player.getStaminaUsage()));
     stats.setPosition(sprite.getPosition().x + 520, sprite.getPosition().y);
+    window.draw(stats);
+
+    stats.setCharacterSize(34);
+    stats.setString("Armor");
+    stats.setPosition(sprite.getPosition().x + 600, sprite.getPosition().y + 8);
+    window.draw(stats);
+
+    stats.setCharacterSize(40);
+    stats.setString(std::to_string(player.getArmor()));
+    stats.setPosition(sprite.getPosition().x + 720, sprite.getPosition().y);
     window.draw(stats);
 }

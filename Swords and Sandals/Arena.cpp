@@ -136,6 +136,8 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         enemy.resetStatsAndEq();
         enemy.generateNewStatsAndEq(player, textureManager);
         generatePrize(player);
+        player.restoreArmor();
+        enemy.restoreArmor();
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
@@ -143,6 +145,8 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         player.resetStatsAndEq();
         player.setGold(900);
         shop.resetBoughtItems();
+        player.restoreArmor();
+        enemy.restoreArmor();
     }
 }
 
