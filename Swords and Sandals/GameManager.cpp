@@ -82,6 +82,7 @@ void GameManager::setUp() {
     std::unordered_map<std::string, Button> shopButtons = createShopButtonsMap();
     std::unordered_map<std::string, Button> playerCreationButtons = createPlayerCreationButtonsMap();
     std::unordered_map<std::string, Button> mainMenuButtons = createMainMenuButtonsMap();
+    std::unordered_map<std::string, Button> settingsButtons = createSettingsButtonsMap();
 
     mainMenu = MainMenu(textureManager.getTexture("mainMenuBackground"), mainMenuButtons);
 
@@ -111,6 +112,8 @@ void GameManager::setUp() {
 
     playerCreation = PlayerCreation(textureManager.getTexture("playerCreationBackground"), playerCreationButtons);
     playerCreation.setUpPositionOfButtons();
+
+    settings = Settings(textureManager.getTexture("playerCreationBackground"), settingsButtons);
 
     gameState = GameState();
 
@@ -440,6 +443,12 @@ std::unordered_map<std::string, Button> GameManager::createMainMenuButtonsMap() 
     Buttons.insert_or_assign("settings", settingsButton);
     Buttons.insert_or_assign("quit", quitButton);
     Buttons.insert_or_assign("mainMenuLogo", mainMenuLogoButton);
+
+    return Buttons;
+}
+
+std::unordered_map<std::string, Button> GameManager::createSettingsButtonsMap() {
+    std::unordered_map<std::string, Button> Buttons;
 
     return Buttons;
 }

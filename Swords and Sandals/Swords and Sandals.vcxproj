@@ -152,6 +152,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCreation.cpp" />
     <ClCompile Include="PlayerInterface.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCreation.h" />
     <ClInclude Include="PlayerInterface.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Weapon.h" />
