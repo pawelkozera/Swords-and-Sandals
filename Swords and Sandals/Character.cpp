@@ -266,10 +266,9 @@ void Character::removeArmorPiece(const std::string& characterPart) {
     auto it = armorPieces.find(characterPart);
 
     if (it != armorPieces.end()) {
+        armor -= it->second.getDefence();
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
         armorPieces.erase(it);
-
-        armor -= it->second.getDefence();
     }
 }
 
