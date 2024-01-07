@@ -45,6 +45,7 @@ public:
     void handleArenaEvents();
     void handleArenaEntranceEvents();
     void handlePlayerCreationEvents();
+    void handleSettingsEvents();
     void handleCityCenterButtons();
     void handleShopButtons();
     std::unordered_map<std::string, CharacterPart> createCharacterPartsMap();

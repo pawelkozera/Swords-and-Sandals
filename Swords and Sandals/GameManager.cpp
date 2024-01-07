@@ -113,7 +113,8 @@ void GameManager::setUp() {
     playerCreation = PlayerCreation(textureManager.getTexture("playerCreationBackground"), playerCreationButtons);
     playerCreation.setUpPositionOfButtons();
 
-    settings = Settings(textureManager.getTexture("playerCreationBackground"), settingsButtons);
+    settings = Settings(textureManager.getTexture("settingsBackground"), settingsButtons);
+    settings.setUpPositionOfButtons();
 
     gameState = GameState();
 
@@ -148,6 +149,9 @@ void GameManager::handleEvents() {
         break;
     case GameState::GameMode::InCreationMenu:
         handlePlayerCreationEvents();
+        break;
+    case GameState::GameMode::InSettings:
+        handleSettingsEvents();
         break;
     default:
         break;
@@ -226,6 +230,11 @@ void GameManager::handlePlayerCreationEvents() {
     playerCreation.displayInterface(window, player);
     playerCreation.displayButtons(window);
     playerCreation.checkForClickedButton(cursor.getPosition(), player, gameState);
+}
+
+void GameManager::handleSettingsEvents() {
+    settings.displayBackground(window);
+    settings.displayButtons(window);
 }
 
 void GameManager::handleCityCenterButtons() {
@@ -449,6 +458,14 @@ std::unordered_map<std::string, Button> GameManager::createMainMenuButtonsMap() 
 
 std::unordered_map<std::string, Button> GameManager::createSettingsButtonsMap() {
     std::unordered_map<std::string, Button> Buttons;
+
+    Button plusButton(textureManager.getTexture("plusButton"));
+    Button minusButton(textureManager.getTexture("minusButton"));
+    Button backButton(textureManager.getTexture("backButton"));
+
+    Buttons.insert_or_assign("plusVolume", plusButton);
+    Buttons.insert_or_assign("minusVolume", minusButton);
+    Buttons.insert_or_assign("backButton", backButton);
 
     return Buttons;
 }

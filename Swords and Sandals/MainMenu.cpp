@@ -55,11 +55,12 @@ void MainMenu::handleButtonClick(const std::string& buttonName, Player& player, 
         player.resetStatsAndEq();
         enemy.resetStatsAndEq();
         shop.resetBoughtItems();
-        gameState.setMode(GameState::GameMode::InCity);
+        gameState.setMode(GameState::GameMode::InCreationMenu);
     }
     else if (buttonName.find("loadGame") != std::string::npos) {
     }
     else if (buttonName.find("settings") != std::string::npos) {
+        gameState.setMode(GameState::GameMode::InSettings);
     }
     else if (buttonName.find("quit") != std::string::npos) {
         exit(0);

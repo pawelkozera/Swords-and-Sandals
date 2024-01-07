@@ -14,6 +14,7 @@ int main() {
     textureManager.loadSwords();
     textureManager.loadPlayerCreation();
     textureManager.loadMainMenu();
+    textureManager.loadSettings();
 
     GameManager gameManager(textureManager);
 

@@ -11,6 +11,7 @@ public:
         InArena,
         InArenaEntrance,
         InCreationMenu,
+        InSettings,
     };
 
     GameState();
@@ -24,6 +25,7 @@ public:
     bool InArenaEntrance() const;
     bool InCreationMenu() const;
     bool InMainMenu() const;
+    bool InSettings() const;
 
 private:
     GameMode currentMode;

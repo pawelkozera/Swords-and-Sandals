@@ -22,5 +22,6 @@ public:
     void loadSwords();
     void loadPlayerCreation();
     void loadMainMenu();
+    void loadSettings();
 };
 

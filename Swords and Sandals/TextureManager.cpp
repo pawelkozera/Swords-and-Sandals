@@ -124,3 +124,7 @@ void TextureManager::loadMainMenu() {
     loadTexture("mainMenuBackground", "Assets/MainMenu/background.jpg");
     loadTexture("mainMenuLogo", "Assets/MainMenu/logo.png");
 }
+
+void TextureManager::loadSettings() {
+    loadTexture("settingsBackground", "Assets/Settings/background.jpg");
+}
