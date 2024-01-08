@@ -71,11 +71,13 @@ void Arena::checkForEndOfFight(Player& player, Enemy& enemy) {
     if (player.getHp() <= 0) {
         setFightInProgress(false);
         playerWon = false;
+        playerTurn = true;
         setUpEndOfFightPositionOfButtons();
     }
     else if (enemy.getHp() <= 0) {
         setFightInProgress(false);
         playerWon = true;
+        playerTurn = true;
         setUpEndOfFightPositionOfButtons();
     }
 }

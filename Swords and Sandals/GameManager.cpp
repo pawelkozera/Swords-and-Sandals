@@ -205,7 +205,9 @@ void GameManager::handleArenaEvents() {
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
     else {
-        arena.handleEnemyMove(enemy, player);
+        if (arena.getFightInProgress()) {
+            arena.handleEnemyMove(enemy, player);
+        }
     }
 
     if (!arena.getPlayerTurn()) {
