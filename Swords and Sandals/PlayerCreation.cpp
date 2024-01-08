@@ -146,8 +146,7 @@ void PlayerCreation::handleButtonClick(const std::string& buttonName, Player& pl
     else if (buttonName.find("minus") != std::string::npos) {
         handleMinusButtonClick(buttonName, player);
     }
-
-    if (buttonName == "goToCityButton") {
+    else if (buttonName == "goToCityButton") {
         gameState.setMode(GameState::GameMode::InCity);
         setOldStats(player);
         player.setHp(10 + player.getVitality() * 2);

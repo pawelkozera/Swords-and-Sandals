@@ -236,7 +236,9 @@ void GameManager::handlePlayerCreationEvents() {
 
 void GameManager::handleSettingsEvents() {
     settings.displayBackground(window);
+    settings.displayInterface(window);
     settings.displayButtons(window);
+    settings.checkForClickedButton(cursor.getPosition(), gameState);
 }
 
 void GameManager::handleCityCenterButtons() {
