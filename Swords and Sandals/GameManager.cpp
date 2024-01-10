@@ -54,6 +54,8 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
 void GameManager::run() {
     setUp();
 
+    sf::Clock clock;
+
     while (window.isOpen()) {
         sf::Event event;
 
@@ -71,6 +73,9 @@ void GameManager::run() {
         cursor.render();
 
         window.display();
+
+        sf::Time elapsedTime = clock.restart();
+        sf::sleep(timePerFrame - elapsedTime);
     }
 }
 

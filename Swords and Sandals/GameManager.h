@@ -35,6 +35,9 @@ private:
     Settings settings;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
+
+    const float targetFPS = 60.0f;
+    const sf::Time timePerFrame = sf::seconds(1.0f / targetFPS);
 public:
     GameManager(TextureManager &textureManager);
     void run();

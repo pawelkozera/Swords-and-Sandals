@@ -66,8 +66,7 @@ void Settings::handleButtonClick(const std::string& buttonName, GameState &gameS
             volume -= 10;
         }
     }
-
-    if (buttonName == "backButton") {
+    else if (buttonName == "backButton") {
         gameState.setMode(GameState::GameMode::MainMenu);
     }
 }
