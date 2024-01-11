@@ -40,6 +40,7 @@ public:
 	void updateArmorAndWeaponPositions();
 	void walkAnimation();
 	void attackAnimation(bool rightHand);
+	void restAnimation();
 	void resetAnimation();
 	void moveBody(sf::Vector2f movePosition);
 	void setBodyPosition(sf::Vector2f bodyPosition);

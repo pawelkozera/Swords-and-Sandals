@@ -146,6 +146,12 @@ void Character::attackAnimation(bool rightHand) {
     animationRunning = true;
 }
 
+void Character::restAnimation() {
+    rotateAndMovePart("head", 0, sf::Vector2f(0.0f, 20.0f), sf::Vector2f(0.0f, 20.0f));
+
+    animationRunning = true;
+}
+
 void Character::rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor) {
     if (characterParts.find(partName) != characterParts.end()) {
         characterParts.at(partName).rotateSprite(angle);
@@ -327,6 +333,8 @@ void Character::rest() {
     else {
         staminaUsage += restPoints;
     }
+
+    restAnimation();
 }
 
 int Character::rollDice(int min, int max) {
