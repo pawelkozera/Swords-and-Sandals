@@ -34,7 +34,6 @@ private:
     ArenaEntrance arenaEntrance;
     MainMenu mainMenu;
     Settings settings;
-    SoundManager soundManager;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 

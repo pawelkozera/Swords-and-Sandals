@@ -134,6 +134,7 @@ void PlayerCreation::checkForClickedButton(const sf::Vector2f& mousePosition, Pl
 
         if (button.isClicked(mousePosition)) {
             handleButtonClick(buttonName, player, gameState);
+            SoundManager::playUIButton();
             break;
         }
     }

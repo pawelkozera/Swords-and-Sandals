@@ -6,12 +6,17 @@
 class SoundManager
 {
 private:
-	std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;
-	sf::Sound sound;
+	static std::unordered_map<std::string, sf::SoundBuffer>& getSoundBuffers();
+	static sf::Sound& getSound();
 public:
-	void setUp();
-	void setVolume(float volume);
-	void playAttackHit();
-	void playAttackMissInReach();
+	static void setUp();
+	static void setVolume(float volume);
+	static float getVolume();
+	static void playAttackHit();
+	static void playAttackMissInReach();
+	static void playAttackMissNotInReach();
+	static void playWalk();
+	static void playRest();
+	static void playUIButton();
 };
 

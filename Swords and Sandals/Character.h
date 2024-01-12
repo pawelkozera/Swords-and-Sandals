@@ -52,7 +52,7 @@ public:
 	bool isWeaponInMap(Weapon* armorPiece) const;
 	void removeArmorPiece(const std::string &characterPart);
 	void removeWeapon(const std::string &characterPart);
-	void attackEnemy(Character &enemy, SoundManager& soundManager);
+	void attackEnemy(Character &enemy);
 	void rest();
 	int rollDice(int min, int max);
 	void resetStatsAndEq();

@@ -9,12 +9,12 @@ class Settings : public PlaceInterface
 private:
 	int volume;
 
-	void handleButtonClick(const std::string& buttonName, GameState& gameState, SoundManager& soundManager);
+	void handleButtonClick(const std::string& buttonName, GameState& gameState);
 public:
 	Settings();
 	Settings(sf::Texture& cityTexture, std::unordered_map<std::string, Button>& buttons);
 	void setUpPositionOfButtons() override;
 	void displayInterface(sf::RenderWindow& window);
-	void checkForClickedButton(const sf::Vector2f& mousePosition, GameState& gameState, SoundManager &soundManager);
+	void checkForClickedButton(const sf::Vector2f& mousePosition, GameState& gameState);
 };
 

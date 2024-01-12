@@ -42,6 +42,7 @@ void MainMenu::checkForClickedButton(const sf::Vector2f& mousePosition, Player& 
 
         if (button.isClicked(mousePosition)) {
             handleButtonClick(buttonName, player, enemy, gameState, textureManager, shop);
+            SoundManager::playUIButton();
             break;
         }
     }

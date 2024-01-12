@@ -26,6 +26,7 @@ void ArenaEntrance::checkForClickedButton(const sf::Vector2f& mousePosition, Gam
 
         if (button.isClicked(mousePosition)) {
             handleButtonClick(buttonName, gameState, player, enemy, arena);
+            SoundManager::playUIButton();
             break;
         }
     }

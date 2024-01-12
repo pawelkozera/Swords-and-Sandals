@@ -121,8 +121,7 @@ void GameManager::setUp() {
     settings = Settings(textureManager.getTexture("settingsBackground"), settingsButtons);
     settings.setUpPositionOfButtons();
 
-    soundManager = SoundManager();
-    soundManager.setUp();
+    SoundManager::setUp();
 
     gameState = GameState();
 
@@ -208,13 +207,13 @@ void GameManager::handleArenaEvents() {
     }
 
     if (arena.getPlayerTurn()) {
-        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop, soundManager);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop);
 
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
     else {
         if (arena.getFightInProgress()) {
-            arena.handleEnemyMove(enemy, player, soundManager);
+            arena.handleEnemyMove(enemy, player);
         }
     }
 
@@ -246,28 +245,32 @@ void GameManager::handleSettingsEvents() {
     settings.displayBackground(window);
     settings.displayInterface(window);
     settings.displayButtons(window);
-    settings.checkForClickedButton(cursor.getPosition(), gameState, soundManager);
+    settings.checkForClickedButton(cursor.getPosition(), gameState);
 }
 
 void GameManager::handleCityCenterButtons() {
     if (cityCenter.getButton("arena").isClicked(cursor.getPosition())) {
         arena.setUpPositionOfButtons(player);
         gameState.setMode(GameState::GameMode::InArenaEntrance);
+        SoundManager::playUIButton();
     }
     else if (cityCenter.getButton("armorer").isClicked(cursor.getPosition())) {
         player.setBodyPosition(sf::Vector2f(800, 600));
         gameState.setMode(GameState::GameMode::InArmorerShop);
         shop.setShopToArmorer(true);
         shop.setUpPositionOfIconButtons();
+        SoundManager::playUIButton();
     }
     else if (cityCenter.getButton("weaponsmith").isClicked(cursor.getPosition())) {
         player.setBodyPosition(sf::Vector2f(800, 600));
         gameState.setMode(GameState::GameMode::InWeaponsmithShop);
         shop.setShopToArmorer(false);
         shop.setUpPositionOfIconButtons();
+        SoundManager::playUIButton();
     }
     else if (cityCenter.getButton("characterCreation").isClicked(cursor.getPosition())) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
+        SoundManager::playUIButton();
     }
 }
 
@@ -280,6 +283,7 @@ void GameManager::handleShopButtons() {
             if (buttonHandlers.find(buttonName) != buttonHandlers.end()) {
                 buttonHandlers[buttonName]();
                 shop.setUpItemsPosition();
+                SoundManager::playUIButton();
                 break;
             }
         }

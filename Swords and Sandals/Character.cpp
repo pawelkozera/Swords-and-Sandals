@@ -113,6 +113,8 @@ void Character::walkAnimation() {
     rotateAndMovePart("footLeft", angle, sf::Vector2f(-24.0f, -8.0f), sf::Vector2f(-24.0f, -8.0f));
 
     animationRunning = true;
+
+    SoundManager::playWalk();
 }
 
 void Character::attackAnimation(bool rightHand) {
@@ -287,7 +289,7 @@ void Character::removeWeapon(const std::string& characterPart) {
     }
 }
 
-void Character::attackEnemy(Character& enemy, SoundManager& soundManager) {
+void Character::attackEnemy(Character& enemy) {
     if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x) < getReach()) {
         int attackBonusFromWeapon = 0;
 
@@ -303,7 +305,7 @@ void Character::attackEnemy(Character& enemy, SoundManager& soundManager) {
         int chance = 20 + (attack + attackBonusFromWeapon) * 10 - enemy.defence*5;
 
         if (numberRolled <= chance) {
-            soundManager.playAttackHit();
+            SoundManager::playAttackHit();
 
             int strengthDamage = rollDice(1, strength);
             int totalDamage = 2 + strengthDamage;
@@ -323,8 +325,11 @@ void Character::attackEnemy(Character& enemy, SoundManager& soundManager) {
             }
         }
         else {
-            soundManager.playAttackMissInReach();
+            SoundManager::playAttackMissInReach();
         }
+    }
+    else {
+        SoundManager::playAttackMissNotInReach();
     }
 }
 
@@ -340,6 +345,7 @@ void Character::rest() {
     }
 
     restAnimation();
+    SoundManager::playRest();
 }
 
 int Character::rollDice(int min, int max) {
