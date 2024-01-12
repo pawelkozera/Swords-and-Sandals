@@ -154,6 +154,7 @@
     <ClCompile Include="PlayerInterface.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="PlayerInterface.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Shop.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

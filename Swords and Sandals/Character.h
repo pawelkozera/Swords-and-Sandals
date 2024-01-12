@@ -6,6 +6,7 @@
 #include "CharacterPart.h"
 #include "ArmorPiece.h"
 #include "Weapon.h"
+#include "SoundManager.h"
 
 class Character
 {
@@ -51,7 +52,7 @@ public:
 	bool isWeaponInMap(Weapon* armorPiece) const;
 	void removeArmorPiece(const std::string &characterPart);
 	void removeWeapon(const std::string &characterPart);
-	void attackEnemy(Character &enemy);
+	void attackEnemy(Character &enemy, SoundManager& soundManager);
 	void rest();
 	int rollDice(int min, int max);
 	void resetStatsAndEq();

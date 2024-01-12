@@ -121,6 +121,9 @@ void GameManager::setUp() {
     settings = Settings(textureManager.getTexture("settingsBackground"), settingsButtons);
     settings.setUpPositionOfButtons();
 
+    soundManager = SoundManager();
+    soundManager.setUp();
+
     gameState = GameState();
 
     cursor = Cursor(textureManager.getTexture("cursor"), window);
@@ -205,13 +208,13 @@ void GameManager::handleArenaEvents() {
     }
 
     if (arena.getPlayerTurn()) {
-        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop);
+        arena.checkForClickedButton(cursor.getPosition(), player, enemy, gameState, textureManager, shop, soundManager);
 
         if (!player.getAnimationRunning()) arena.displayButtons(window);
     }
     else {
         if (arena.getFightInProgress()) {
-            arena.handleEnemyMove(enemy, player);
+            arena.handleEnemyMove(enemy, player, soundManager);
         }
     }
 
@@ -243,7 +246,7 @@ void GameManager::handleSettingsEvents() {
     settings.displayBackground(window);
     settings.displayInterface(window);
     settings.displayButtons(window);
-    settings.checkForClickedButton(cursor.getPosition(), gameState);
+    settings.checkForClickedButton(cursor.getPosition(), gameState, soundManager);
 }
 
 void GameManager::handleCityCenterButtons() {

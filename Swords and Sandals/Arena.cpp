@@ -55,13 +55,13 @@ void Arena::setUpEndOfFightPositionOfButtons() {
     }
 }
 
-void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop) {
+void Arena::checkForClickedButton(const sf::Vector2f& mousePosition, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop, SoundManager& soundManager) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            handleButtonClick(buttonName, player, enemy, gameState, textureManager, shop);
+            handleButtonClick(buttonName, player, enemy, gameState, textureManager, shop, soundManager);
             break;
         }
     }
@@ -82,9 +82,9 @@ void Arena::checkForEndOfFight(Player& player, Enemy& enemy) {
     }
 }
 
-void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop) {
+void Arena::handleButtonClick(const std::string& buttonName, Player& player, Enemy&enemy, GameState& gameState, TextureManager& textureManager, Shop& shop, SoundManager& soundManager) {
     if (fightInProgress) {
-        handleButtonClickFightInProgress(buttonName, player, enemy);
+        handleButtonClickFightInProgress(buttonName, player, enemy, soundManager);
         playerTurn = false;
     }
     else {
@@ -92,7 +92,7 @@ void Arena::handleButtonClick(const std::string& buttonName, Player& player, Ene
     }
 }
 
-void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Player& player, Enemy& enemy) {
+void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Player& player, Enemy& enemy, SoundManager& soundManager) {
     if (buttonName.find("movePlayerForward") != std::string::npos) {
         if (player.getStaminaUsage() >= 5) {
             if (abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > player.getReach()) {
@@ -119,7 +119,7 @@ void Arena::handleButtonClickFightInProgress(const std::string& buttonName, Play
     }
     else if (buttonName.find("attackPlayer") != std::string::npos) {
         if (player.getStaminaUsage() >= 7) {
-            player.attackEnemy(enemy);
+            player.attackEnemy(enemy, soundManager);
             player.attackAnimation(false);
             player.setStaminaUsage(player.getStaminaUsage() - 7);
         }
@@ -184,7 +184,7 @@ void Arena::displayEndOfFight(sf::RenderWindow& window) {
     window.draw(stats);
 }
 
-void Arena::handleEnemyMove(Character& enemy, Player& player) {
+void Arena::handleEnemyMove(Character& enemy, Player& player, SoundManager& soundManager) {
     bool playerNotInReachOfAttack = abs(enemy.getBodyPosition().x - player.getBodyPosition().x) > enemy.getReach();
 
     if (playerNotInReachOfAttack && enemy.getStaminaUsage() >= 5) {
@@ -193,7 +193,7 @@ void Arena::handleEnemyMove(Character& enemy, Player& player) {
         enemy.setStaminaUsage(enemy.getStaminaUsage() - 5);
     }
     else if (enemy.getStaminaUsage() >= 7) {
-        enemy.attackEnemy(player);
+        enemy.attackEnemy(player, soundManager);
         enemy.attackAnimation(true);
         enemy.setStaminaUsage(enemy.getStaminaUsage() - 7);
     }

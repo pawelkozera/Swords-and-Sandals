@@ -287,7 +287,7 @@ void Character::removeWeapon(const std::string& characterPart) {
     }
 }
 
-void Character::attackEnemy(Character& enemy) {
+void Character::attackEnemy(Character& enemy, SoundManager& soundManager) {
     if (abs(this->getBodyPosition().x - enemy.getBodyPosition().x) < getReach()) {
         int attackBonusFromWeapon = 0;
 
@@ -303,6 +303,8 @@ void Character::attackEnemy(Character& enemy) {
         int chance = 20 + (attack + attackBonusFromWeapon) * 10 - enemy.defence*5;
 
         if (numberRolled <= chance) {
+            soundManager.playAttackHit();
+
             int strengthDamage = rollDice(1, strength);
             int totalDamage = 2 + strengthDamage;
 
@@ -319,6 +321,9 @@ void Character::attackEnemy(Character& enemy) {
             else {
                 enemy.hp -= totalDamage;
             }
+        }
+        else {
+            soundManager.playAttackMissInReach();
         }
     }
 }

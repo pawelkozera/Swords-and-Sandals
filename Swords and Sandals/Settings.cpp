@@ -43,27 +43,29 @@ void Settings::displayInterface(sf::RenderWindow& window) {
     window.draw(stats);
 }
 
-void Settings::checkForClickedButton(const sf::Vector2f& mousePosition, GameState& gameState) {
+void Settings::checkForClickedButton(const sf::Vector2f& mousePosition, GameState& gameState, SoundManager& soundManager) {
     for (auto& pair : getButtons()) {
         const std::string& buttonName = pair.first;
         Button& button = pair.second;
 
         if (button.isClicked(mousePosition)) {
-            handleButtonClick(buttonName, gameState);
+            handleButtonClick(buttonName, gameState, soundManager);
             break;
         }
     }
 }
 
-void Settings::handleButtonClick(const std::string& buttonName, GameState &gameState) {
+void Settings::handleButtonClick(const std::string& buttonName, GameState &gameState, SoundManager& soundManager) {
     if (buttonName.find("plusVolume") != std::string::npos) {
         if (volume < 100) {
             volume += 10;
+            soundManager.setVolume((float) volume);
         }
     }
     else if (buttonName.find("minusVolume") != std::string::npos) {
         if (volume > 0) {
             volume -= 10;
+            soundManager.setVolume((float) volume);
         }
     }
     else if (buttonName == "backButton") {
