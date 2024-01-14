@@ -50,7 +50,7 @@ GameManager::GameManager(TextureManager &textureManager) : textureManager(textur
         shop.setMode(Shop::ShopMode::Sword);
         };
 }
-
+#include <iostream>
 void GameManager::run() {
     setUp();
 
@@ -63,6 +63,8 @@ void GameManager::run() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+
+            keyboard.update(event);
         }
 
         window.clear();
@@ -76,6 +78,10 @@ void GameManager::run() {
 
         sf::Time elapsedTime = clock.restart();
         sf::sleep(timePerFrame - elapsedTime);
+
+        if (keyboard.isKeyPressed(sf::Keyboard::Escape)) {
+            gameState.setMode(GameState::GameMode::MainMenu);
+        }
     }
 }
 
@@ -124,6 +130,8 @@ void GameManager::setUp() {
     SoundManager::setUp();
 
     gameState = GameState();
+
+    keyboard = KeyboardInput();
 
     cursor = Cursor(textureManager.getTexture("cursor"), window);
 }

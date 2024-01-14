@@ -17,6 +17,7 @@
 #include "MainMenu.h"
 #include "Settings.h"
 #include "SoundManager.h"
+#include "KeyboardInput.h"
 
 class GameManager {
 private:
@@ -34,6 +35,7 @@ private:
     ArenaEntrance arenaEntrance;
     MainMenu mainMenu;
     Settings settings;
+    KeyboardInput keyboard;
 
     std::unordered_map<std::string, std::function<void()>> buttonHandlers;
 
