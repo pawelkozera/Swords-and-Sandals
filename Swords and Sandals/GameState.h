@@ -15,8 +15,9 @@ public:
     };
 
     GameState();
-    void setMode(GameMode mode);
+    void setMode(GameMode mode, bool setPrevious = true);
     GameMode getMode() const;
+    GameMode getPreviousMode() const;
     bool isMainMenu() const;
     bool isInCity() const;
     bool InWeaponsmithShop() const;
@@ -29,5 +30,6 @@ public:
 
 private:
     GameMode currentMode;
+    GameMode previousMode;
 };
 

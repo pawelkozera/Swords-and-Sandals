@@ -1,9 +1,13 @@
 #include "GameState.h"
 
 
-GameState::GameState() : currentMode(GameMode::MainMenu) {}
+GameState::GameState() : currentMode(GameMode::MainMenu), previousMode(GameMode::MainMenu) {}
 
-void GameState::setMode(GameMode mode) {
+void GameState::setMode(GameMode mode, bool setPrevious) {
+    if (setPrevious) {
+        previousMode = currentMode;
+    }
+
     currentMode = mode;
 }
 
@@ -13,6 +17,10 @@ bool GameState::InMainMenu() const {
 
 GameState::GameMode GameState::getMode() const {
     return currentMode;
+}
+
+GameState::GameMode GameState::getPreviousMode() const {
+    return previousMode;
 }
 
 bool GameState::isInCity() const {
