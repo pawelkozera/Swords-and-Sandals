@@ -240,10 +240,14 @@ void Character::display(sf::RenderWindow& window) {
 void Character::addArmorPiece(std::string& characterPart,ArmorPiece& armorPiece) {
     armorPieces.insert_or_assign(characterPart, armorPiece);
     armor += armorPiece.getDefence();
+
+    equipedArmor.insert({ armorPiece.getName() + armorPiece.getType(), true });
 }
 
 void Character::addWeapon(std::string& characterPart, Weapon& weapon) {
     weapons.insert_or_assign(characterPart, weapon);
+
+    equipedWeapons.insert({ weapon.getName() + weapon.getType(), true });
 }
 
 bool Character::isArmorPieceInMap(ArmorPiece* armorPiece) const {
@@ -276,6 +280,7 @@ void Character::removeArmorPiece(const std::string& characterPart) {
     if (it != armorPieces.end()) {
         armor -= it->second.getDefence();
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
+        equipedArmor.erase(it->second.getName() + it->second.getType());
         armorPieces.erase(it);
     }
 }
@@ -285,6 +290,7 @@ void Character::removeWeapon(const std::string& characterPart) {
 
     if (it != weapons.end()) {
         it->second.setPosition(sf::Vector2f(-100.0f, -100.0f));
+        equipedWeapons.erase(it->second.getName() + it->second.getType());
         weapons.erase(it);
     }
 }
@@ -496,6 +502,10 @@ void Character::setStamina(int stamina) {
     this->stamina = stamina;
 }
 
+void Character::setAvailablePoints(int availablePoints) {
+    this->availablePoints = availablePoints;
+}
+
 void Character::takeDamage(int damage) {
     hp -= damage;
 }
@@ -564,4 +574,12 @@ const bool Character::getAnimationRunning() {
 
 const int Character::getArmor() {
     return armor;
+}
+
+std::unordered_map<std::string, bool> Character::getEquipedArmor() {
+    return equipedArmor;
+}
+
+std::unordered_map<std::string, bool> Character::getEquipedWeapons() {
+    return equipedWeapons;
 }

@@ -47,6 +47,12 @@ public:
 	void buyItem();
 	void equipItem();
 	void resetBoughtItems();
+	std::unordered_map<std::string, bool> getBoughtArmorPieces();
+	std::unordered_multimap<std::string, ArmorPiece> getAvailableArmorPieces();
+	std::unordered_map<std::string, bool> getBoughtWeapons();
+	std::unordered_multimap<std::string, Weapon> getAvailableWeapons();
+	void addBoughtArmorPiece(const std::string& name);
+	void addBoughtWeapon(const std::string& name);
 private:
 	ShopMode currentMode;
 	sf::Texture* armorer;

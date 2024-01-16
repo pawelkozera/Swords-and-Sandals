@@ -157,6 +157,10 @@ void GameManager::handleEvents() {
     case GameState::GameMode::InWeaponsmithShop:
         handleShopEvents();
         playerInterface.displayInterface(window, player);
+        // aaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        SaveManager::saveCharacterStatsToFile(player);
+        SaveManager::saveBoughtItemsToFile(shop);
+        SaveManager::saveEquipedItemsToFile(shop, player);
         break;
     case GameState::GameMode::InArmorerShop:
         handleShopEvents();

@@ -32,6 +32,9 @@ private:
 
 	bool animationRunning;
 
+	std::unordered_map<std::string, bool> equipedArmor;
+	std::unordered_map<std::string, bool> equipedWeapons;
+
 	void resetPart(const std::string& partName);
 	void rotateAndMovePart(const std::string& partName, float angle, const sf::Vector2f& moveCharacter, const sf::Vector2f& moveArmor);
 public:
@@ -83,6 +86,7 @@ public:
 	void setVitality(int vitality);
 	void setCharisma(int charisma);
 	void setStamina(int stamina);
+	void setAvailablePoints(int availablePoints);
 	void takeDamage(int damage);
 	const int getStrength();
 	const int getAgility();
@@ -98,5 +102,7 @@ public:
 	const bool getAnimationRunning();
 	const int getArmorSize();
 	const int getArmor();
+	std::unordered_map<std::string, bool> getEquipedArmor();
+	std::unordered_map<std::string, bool> getEquipedWeapons();
 };
 

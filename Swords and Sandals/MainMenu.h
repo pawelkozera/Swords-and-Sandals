@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "GameState.h"
 #include "Shop.h"
+#include "SaveManager.h"
 
 class MainMenu : public PlaceInterface
 {

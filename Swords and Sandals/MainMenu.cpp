@@ -59,6 +59,10 @@ void MainMenu::handleButtonClick(const std::string& buttonName, Player& player, 
         gameState.setMode(GameState::GameMode::InCreationMenu);
     }
     else if (buttonName.find("loadGame") != std::string::npos) {
+        SaveManager::loadCharacterStatsFromFile(player);
+        SaveManager::loadBoughtItemsFromFile(shop);
+        SaveManager::loadEquipedItemsFromFile(shop, player);
+        gameState.setMode(GameState::GameMode::InCity);
     }
     else if (buttonName.find("settings") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InSettings, false);

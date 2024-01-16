@@ -1,6 +1,5 @@
 #include "Shop.h"
 
-
 Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& textureManager, Player* player)
     : PlaceInterface(textureManager.getTexture("armorerBackground"), buttons), player(player) {
     isArmorer = true;
@@ -55,7 +54,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
 
     for (const auto& armor : armorMap) {
         boughtArmorPieces.insert({ armor.second.getName() + armor.second.getType(), false});
-    }
+;    }
 
     availableWeapons.insert({ "handRight", Weapon(textureManager.getTexture("blueSword"), 1, 300, "Blue", "sword") });
 
@@ -644,5 +643,45 @@ std::string Shop::findKeyForWeapon(const Weapon* selectedWeapon) const {
 void Shop::setAllElementsToFalse(std::unordered_map<std::string, bool>& myMap) {
     for (auto& pair : myMap) {
         pair.second = false;
+    }
+}
+
+std::unordered_map<std::string, bool> Shop::getBoughtArmorPieces() {
+    return boughtArmorPieces;
+}
+
+std::unordered_multimap<std::string, ArmorPiece> Shop::getAvailableArmorPieces() {
+    return availableArmorPieces;
+}
+
+std::unordered_map<std::string, bool> Shop::getBoughtWeapons() {
+    return boughtWeapons;
+}
+
+std::unordered_multimap<std::string, Weapon> Shop::getAvailableWeapons() {
+    return availableWeapons;
+}
+
+void Shop::addBoughtArmorPiece(const std::string& name) {
+    auto it = boughtArmorPieces.find(name);
+
+    if (it != boughtArmorPieces.end()) {
+        bool itemIsBought = it->second;
+
+        if (!itemIsBought) {
+            it->second = true;
+        }
+    }
+}
+
+void Shop::addBoughtWeapon(const std::string& name) {
+    auto it = boughtWeapons.find(name);
+
+    if (it != boughtWeapons.end()) {
+        bool itemIsBought = it->second;
+
+        if (!itemIsBought) {
+            it->second = true;
+        }
     }
 }
