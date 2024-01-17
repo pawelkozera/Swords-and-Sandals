@@ -5,6 +5,7 @@ MainMenu::MainMenu()
 }
 
 MainMenu::MainMenu(sf::Texture& backgroundTexture, std::unordered_map<std::string, Button>& buttons) : PlaceInterface(backgroundTexture, buttons) {
+    firstRun = true;
 }
 
 void MainMenu::setUpPositionOfButtons() {
@@ -15,7 +16,12 @@ void MainMenu::setUpPositionOfButtons() {
     }
 
     if (buttons.find("continue") != buttons.end()) {
-        buttons.at("continue").setPosition(sf::Vector2f(100.0f, 400.0f));
+        if (!firstRun) {
+            buttons.at("continue").setPosition(sf::Vector2f(100.0f, 400.0f));
+        }
+        else {
+            buttons.at("continue").setPosition(sf::Vector2f(-100.0f, -100.0f));
+        }
     }
 
     if (buttons.find("newGame") != buttons.end()) {
@@ -56,13 +62,25 @@ void MainMenu::handleButtonClick(const std::string& buttonName, Player& player, 
         player.resetStatsAndEq();
         enemy.resetStatsAndEq();
         shop.resetBoughtItems();
+        player.setGold(300);
+        player.resetRoundsWin();
         gameState.setMode(GameState::GameMode::InCreationMenu);
+
+        firstRun = false;
     }
     else if (buttonName.find("loadGame") != std::string::npos) {
         SaveManager::loadCharacterStatsFromFile(player);
         SaveManager::loadBoughtItemsFromFile(shop);
         SaveManager::loadEquipedItemsFromFile(shop, player);
+
+        if (player.getRoundsWin() > 0) {
+            enemy.generateNewStatsAndEq(player, textureManager);
+        
+        }
+
         gameState.setMode(GameState::GameMode::InCity);
+
+        firstRun = false;
     }
     else if (buttonName.find("settings") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InSettings, false);

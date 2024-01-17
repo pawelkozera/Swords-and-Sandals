@@ -10,7 +10,7 @@ bool SaveManager::saveCharacterStatsToFile(Player &player) {
 
     file << player.getStrength() << " " << player.getAgility() << " " << player.getAttack() << " " << player.getDefence() << " "
         << player.getVitality() << " " << player.getCharisma() << " " << player.getStamina() << " " << player.getStaminaUsage() << " "
-        << player.getAvailablePoints() << " " << player.getGold();
+        << player.getAvailablePoints() << " " << player.getGold() << " " << player.getArmor() << " " << player.getHp() << " " << player.getRoundsWin();
 
     file.close();
     return true;
@@ -23,10 +23,9 @@ bool SaveManager::loadCharacterStatsFromFile(Player& player) {
         return false;
     }
 
-    int strength, agility, attack, defence, vitality, charisma, stamina, staminaUsage, availablePoints, gold;
+    int strength, agility, attack, defence, vitality, charisma, stamina, staminaUsage, availablePoints, gold, armor, hp, roundsWin;
 
-    file >> strength >> agility >> attack >> defence >> vitality
-        >> charisma >> stamina >> staminaUsage >> availablePoints >> gold;
+    file >> strength >> agility >> attack >> defence >> vitality >> charisma >> stamina >> staminaUsage >> availablePoints >> gold >> armor >> hp >> roundsWin;
 
     file.close();
 

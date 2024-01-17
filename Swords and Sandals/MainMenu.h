@@ -10,6 +10,7 @@
 class MainMenu : public PlaceInterface
 {
 private:
+	bool firstRun;
 	void handleButtonClick(const std::string& buttonName, Player& player, Enemy& enemy, GameState& gameState, TextureManager& textureManager, Shop& shop);
 public:
 	MainMenu();

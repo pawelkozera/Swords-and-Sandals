@@ -6,6 +6,7 @@
 #include "GameState.h"
 #include "Shop.h"
 #include "SoundManager.h"
+#include "SaveManager.h"
 
 class Arena : public PlaceInterface
 {

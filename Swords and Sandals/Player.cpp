@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(std::unordered_map<std::string, CharacterPart>& characterPart)
-    : Character(characterPart), gold(9000)
+    : Character(characterPart), gold(9000), roundsWin(0)
 {
 }
 
@@ -19,4 +19,16 @@ void Player::setGold(const int gold) {
 
 void Player::addGold(const int gold) {
     this->gold += gold;
+}
+
+const int Player::getRoundsWin() {
+    return roundsWin;
+}
+
+void Player::increaseRoundsWin() {
+    roundsWin++;
+}
+
+void Player::resetRoundsWin() {
+    roundsWin = 0;
 }
