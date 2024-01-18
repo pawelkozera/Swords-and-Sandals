@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "Shop.h"
+#include "Settings.h"
 
 class SaveManager
 {
@@ -16,5 +17,7 @@ public:
 	static void loadBoughtItemsFromFile(Shop& shop);
 	static void saveEquipedItemsToFile(Shop& shop, Player& player);
 	static void loadEquipedItemsFromFile(Shop& shop, Player& player);
+	static void saveSettings(int volume);
+	static int loadSettings();
 };
 

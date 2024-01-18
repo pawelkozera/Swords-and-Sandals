@@ -3,6 +3,7 @@
 #include "PlaceInterface.h"
 #include "GameState.h"
 #include "SoundManager.h";
+#include "SaveManager.h"
 
 class Settings : public PlaceInterface
 {
@@ -16,5 +17,7 @@ public:
 	void setUpPositionOfButtons() override;
 	void displayInterface(sf::RenderWindow& window);
 	void checkForClickedButton(const sf::Vector2f& mousePosition, GameState& gameState);
+	int getVolume();
+	void setVolume(int volume);
 };
 

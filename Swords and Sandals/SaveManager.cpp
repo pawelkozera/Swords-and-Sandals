@@ -209,3 +209,30 @@ void SaveManager::loadEquipedItemsFromFile(Shop& shop, Player& player) {
         std::cerr << "Error loading equiped weapons from file." << std::endl;
     }
 }
+
+void SaveManager::saveSettings(int volume) {
+    std::ofstream settingsFile("Saves/save_settings.txt", std::ios::trunc);
+    if (settingsFile.is_open()) {
+        settingsFile << volume;
+        settingsFile.close();
+    }
+    else {
+        std::cerr << "Save armor error." << std::endl;
+    }
+}
+
+int SaveManager::loadSettings() {
+    std::ifstream file("Saves/save_settings.txt");
+    int volume = 100;
+
+    if (file.is_open()) {
+        file >> volume;
+
+        file.close();
+    }
+    else {
+        std::cerr << "Can not open a file." << std::endl;
+    }
+
+    return volume;
+}

@@ -6,6 +6,8 @@ Settings::Settings()
 
 Settings::Settings(sf::Texture& backgroundTexture, std::unordered_map<std::string, Button>& buttons) : PlaceInterface(backgroundTexture, buttons) {
     volume = (int) SoundManager::getVolume();
+    volume = SaveManager::loadSettings();
+    SoundManager::setVolume(volume);
 }
 
 void Settings::setUpPositionOfButtons() {
@@ -71,5 +73,14 @@ void Settings::handleButtonClick(const std::string& buttonName, GameState &gameS
     }
     else if (buttonName == "backButton") {
         gameState.setMode(GameState::GameMode::MainMenu, false);
+        SaveManager::saveSettings(volume);
     }
+}
+
+int Settings::getVolume() {
+    return volume;
+}
+
+void Settings::setVolume(int volume) {
+    this->volume = volume;
 }

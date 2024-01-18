@@ -83,6 +83,7 @@ void GameManager::run() {
             if (gameState.getMode() != GameState::GameMode::MainMenu) {
                 if (gameState.getMode() == GameState::GameMode::InSettings) {
                     gameState.setMode(GameState::GameMode::MainMenu, false);
+                    SaveManager::saveSettings(settings.getVolume());
                 }
                 else {
                     gameState.setMode(GameState::GameMode::MainMenu);
