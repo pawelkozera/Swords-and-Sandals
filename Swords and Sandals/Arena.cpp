@@ -144,7 +144,8 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
 
         SaveManager::saveCharacterStatsToFile(player);
         SaveManager::saveBoughtItemsToFile(shop);
-        SaveManager::saveEquipedItemsToFile(shop, player);
+        SaveManager::saveEquipedItemsToFile(shop, player, true);
+        SaveManager::saveEquipedItemsToFile(shop, enemy, false);
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);

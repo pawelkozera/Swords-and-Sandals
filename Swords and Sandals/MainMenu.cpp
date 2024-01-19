@@ -71,7 +71,8 @@ void MainMenu::handleButtonClick(const std::string& buttonName, Player& player, 
     else if (buttonName.find("loadGame") != std::string::npos) {
         SaveManager::loadCharacterStatsFromFile(player);
         SaveManager::loadBoughtItemsFromFile(shop);
-        SaveManager::loadEquipedItemsFromFile(shop, player);
+        SaveManager::loadEquipedItemsFromFile(shop, player, true);
+        SaveManager::loadEquipedItemsFromFile(shop, enemy, false);
 
         if (player.getRoundsWin() > 0) {
             enemy.generateNewStatsAndEq(player, textureManager);

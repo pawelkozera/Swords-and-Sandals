@@ -104,58 +104,58 @@ void SaveManager::loadBoughtItemsFromFile(Shop& shop) {
     }
 }
 
-void SaveManager::saveEquipedItemsToFile(Shop& shop, Player& player) {
-    std::ofstream fileArmor("Saves/save_equiped_armor.txt", std::ios::trunc);
+void SaveManager::saveEquipedItemsToFile(Shop& shop, Character& player, bool isPlayer) {
+    std::string armorFilename = isPlayer ? "Saves/save_equiped_armor_player.txt" : "Saves/save_equiped_armor_enemy.txt";
+    std::string weaponFilename = isPlayer ? "Saves/save_equiped_weapon_player.txt" : "Saves/save_equiped_weapon_enemy.txt";
 
-    if (player.getEquipedArmor().size() > 0) {
-        if (fileArmor.is_open()) {
-            const std::unordered_multimap<std::string, ArmorPiece>& armorMap = shop.getAvailableArmorPieces();
+    std::ofstream fileArmor(armorFilename, std::ios::trunc);
+    if (player.getEquipedArmor().size() > 0 && fileArmor.is_open()) {
+        const std::unordered_multimap<std::string, ArmorPiece>& armorMap = shop.getAvailableArmorPieces();
 
-            for (const auto& armor : armorMap) {
-                std::string armorName = armor.second.getName() + armor.second.getType();
+        for (const auto& armor : armorMap) {
+            std::string armorName = armor.second.getName() + armor.second.getType();
 
-                for (const auto& equipedArmor : player.getEquipedArmor()) {
-                    if (equipedArmor.first == armorName) {
-                        fileArmor << armorName;
-                    }
+            for (const auto& equipedArmor : player.getEquipedArmor()) {
+                if (equipedArmor.first == armorName) {
+                    fileArmor << armorName << std::endl;
                 }
             }
+        }
 
-            fileArmor.close();
-        }
-        else {
-            std::cerr << "Save equiped armor error." << std::endl;
-        }
+        fileArmor.close();
+    }
+    else {
+        std::cerr << "Save equiped armor error." << std::endl;
     }
 
-    std::ofstream fileWeapon("Saves/save_equiped_weapon.txt", std::ios::trunc);
+    std::ofstream fileWeapon(weaponFilename, std::ios::trunc);
+    if (player.getEquipedWeapons().size() > 0 && fileWeapon.is_open()) {
+        const std::unordered_multimap<std::string, Weapon>& weaponMap = shop.getAvailableWeapons();
 
-    if (player.getEquipedWeapons().size() > 0) {
-        if (fileWeapon.is_open()) {
-            const std::unordered_multimap<std::string, Weapon>& weaponMap = shop.getAvailableWeapons();
+        for (const auto& weapon : weaponMap) {
+            std::string weaponName = weapon.second.getName() + weapon.second.getType();
 
-            for (const auto& weapon : weaponMap) {
-                std::string weaponName = weapon.second.getName() + weapon.second.getType();
-
-                for (const auto& equipedWeapon : player.getEquipedWeapons()) {
-                    if (equipedWeapon.first == weaponName) {
-                        fileWeapon << weaponName;
-                    }
+            for (const auto& equipedWeapon : player.getEquipedWeapons()) {
+                if (equipedWeapon.first == weaponName) {
+                    fileWeapon << weaponName << std::endl;
                 }
             }
+        }
 
-            fileWeapon.close();
-        }
-        else {
-            std::cerr << "Save equiped weapon error." << std::endl;
-        }
+        fileWeapon.close();
+    }
+    else {
+        std::cerr << "Save equiped weapon error." << std::endl;
     }
 }
 
-void SaveManager::loadEquipedItemsFromFile(Shop& shop, Player& player) {
+void SaveManager::loadEquipedItemsFromFile(Shop& shop, Character& player, bool isPlayer) {
+    std::string armorFilename = isPlayer ? "Saves/save_equiped_armor_player.txt" : "Saves/save_equiped_armor_enemy.txt";
+    std::string weaponFilename = isPlayer ? "Saves/save_equiped_weapon_player.txt" : "Saves/save_equiped_weapon_enemy.txt";
+
     std::string itemName;
 
-    std::ifstream fileArmor("Saves/save_equiped_armor.txt");
+    std::ifstream fileArmor(armorFilename);
     if (fileArmor.is_open()) {
         while (std::getline(fileArmor, itemName)) {
             if (!itemName.empty()) {
@@ -182,7 +182,7 @@ void SaveManager::loadEquipedItemsFromFile(Shop& shop, Player& player) {
         std::cerr << "Error loading equiped armor from file." << std::endl;
     }
 
-    std::ifstream fileWeapon("Saves/save_equiped_weapon.txt");
+    std::ifstream fileWeapon(weaponFilename);
     if (fileWeapon.is_open()) {
         while (std::getline(fileWeapon, itemName)) {
             if (!itemName.empty()) {
