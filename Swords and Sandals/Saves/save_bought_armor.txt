@@ -1,1 +1,5 @@
 Dark knighthelmet
+Dark knightbreastplate
+Dark knightshoulderguard left
+Dark knightgreave left
+Dark knightboot right

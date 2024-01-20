@@ -146,12 +146,13 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         SaveManager::saveBoughtItemsToFile(shop);
         SaveManager::saveEquipedItemsToFile(shop, player, true);
         SaveManager::saveEquipedItemsToFile(shop, enemy, false);
+        SaveManager::saveEnemyStatsToFile(enemy);
     }
     else if (buttonName.find("startOverButton") != std::string::npos) {
         gameState.setMode(GameState::GameMode::InCreationMenu);
         enemy.resetStatsAndEq();
         player.resetStatsAndEq();
-        player.setGold(900);
+        player.setGold(300);
         shop.resetBoughtItems();
         player.restoreArmor();
         enemy.restoreArmor();
@@ -163,7 +164,7 @@ void Arena::generatePrize(Player& player) {
     static std::random_device rd;
     static std::mt19937 generator(rd());
 
-    std::uniform_int_distribution<int> goldDistribution(1, 5);
+    std::uniform_int_distribution<int> goldDistribution(1, 3);
     int goldAmount = goldDistribution(generator) * 100;
 
     std::uniform_int_distribution<int> pointsDistribution(1, 2);

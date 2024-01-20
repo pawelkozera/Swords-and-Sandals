@@ -10,43 +10,43 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
     selectedWeapon = nullptr;
 
     availableArmorPieces.insert({ "head", ArmorPiece(textureManager.getTexture("DKAhead"), 1, 200, "Dark knight", "helmet")});
-    availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 1, 500, "Dark knight", "breastplate")});
+    availableArmorPieces.insert({ "chest", ArmorPiece(textureManager.getTexture("DKAchest"), 2, 400, "Dark knight", "breastplate")});
 
-    availableArmorPieces.insert({ "shoulderLeft", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguard left")});
+    availableArmorPieces.insert({ "shoulderLeft", ArmorPiece(textureManager.getTexture("DKAshoulder"), 1, 200, "Dark knight", "shoulderguard left")});
 
-    ArmorPiece DKAshoulderRight(textureManager.getTexture("DKAshoulder"), 1, 300, "Dark knight", "shoulderguard right");
+    ArmorPiece DKAshoulderRight(textureManager.getTexture("DKAshoulder"), 1, 200, "Dark knight", "shoulderguard right");
     DKAshoulderRight.flipSprite();
     availableArmorPieces.insert({ "shoulderRight", DKAshoulderRight });
 
-    availableArmorPieces.insert({ "elbowLeft", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlet left") });
+    availableArmorPieces.insert({ "elbowLeft", ArmorPiece(textureManager.getTexture("DKAelbow"), 1, 200, "Dark knight", "gauntlet left") });
 
-    ArmorPiece DKAeblowRight(textureManager.getTexture("DKAelbow"), 1, 300, "Dark knight", "gauntlet right");
+    ArmorPiece DKAeblowRight(textureManager.getTexture("DKAelbow"), 1, 200, "Dark knight", "gauntlet right");
     DKAeblowRight.flipSprite();
     availableArmorPieces.insert({ "elbowRight", DKAeblowRight });
 
-    availableArmorPieces.insert({ "armLeft", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "glove left")});
+    availableArmorPieces.insert({ "armLeft", ArmorPiece(textureManager.getTexture("DKAarm"), 1, 200, "Dark knight", "glove left")});
 
-    ArmorPiece DKAarmRight(textureManager.getTexture("DKAarm"), 1, 300, "Dark knight", "glove right");
+    ArmorPiece DKAarmRight(textureManager.getTexture("DKAarm"), 1, 200, "Dark knight", "glove right");
     DKAarmRight.flipSprite();
     availableArmorPieces.insert({ "armRight",  DKAarmRight });
 
-    availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis"), 1, 300, "Dark knight", "pants")});
+    availableArmorPieces.insert({ "pelvis", ArmorPiece(textureManager.getTexture("DKApelvis"), 1, 200, "Dark knight", "pants")});
 
-    availableArmorPieces.insert({ "thighLeft", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greave left")});
+    availableArmorPieces.insert({ "thighLeft", ArmorPiece(textureManager.getTexture("DKAthigh"), 1, 200, "Dark knight", "greave left")});
 
-    ArmorPiece DKAthighRight(textureManager.getTexture("DKAthigh"), 1, 300, "Dark knight", "greave right");
+    ArmorPiece DKAthighRight(textureManager.getTexture("DKAthigh"), 1, 200, "Dark knight", "greave right");
     DKAthighRight.flipSprite();
     availableArmorPieces.insert({ "thighRight",  DKAthighRight });
 
-    availableArmorPieces.insert({ "legLeft", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguard left")});
+    availableArmorPieces.insert({ "legLeft", ArmorPiece(textureManager.getTexture("DKAleg"), 1, 200, "Dark knight", "shinguard left")});
 
-    ArmorPiece DKAlegRight(textureManager.getTexture("DKAleg"), 1, 300, "Dark knight", "shinguard right");
+    ArmorPiece DKAlegRight(textureManager.getTexture("DKAleg"), 1, 200, "Dark knight", "shinguard right");
     DKAlegRight.flipSprite();
     availableArmorPieces.insert({ "legRight",  DKAlegRight });
 
-    availableArmorPieces.insert({ "footLeft", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boot left")});
+    availableArmorPieces.insert({ "footLeft", ArmorPiece(textureManager.getTexture("DKAfoot"), 1, 200, "Dark knight", "boot left")});
 
-    ArmorPiece DKAfootRight(textureManager.getTexture("DKAfoot"), 1, 300, "Dark knight", "boot right");
+    ArmorPiece DKAfootRight(textureManager.getTexture("DKAfoot"), 1, 200, "Dark knight", "boot right");
     DKAfootRight.flipSprite();
     availableArmorPieces.insert({ "footRight",  DKAfootRight });
 
@@ -54,7 +54,7 @@ Shop::Shop(std::unordered_map<std::string, Button> buttons, TextureManager& text
 
     for (const auto& armor : armorMap) {
         boughtArmorPieces.insert({ armor.second.getName() + armor.second.getType(), false});
-;    }
+;   }
 
     availableWeapons.insert({ "handRight", Weapon(textureManager.getTexture("blueSword"), 1, 300, "Blue", "sword") });
 

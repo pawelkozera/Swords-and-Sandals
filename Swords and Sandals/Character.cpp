@@ -16,7 +16,7 @@ Character::Character(std::unordered_map<std::string, CharacterPart> &characterPa
     charisma(1),
     stamina(1),
     staminaUsage(5 + 5 * stamina),
-    availablePoints(5),
+    availablePoints(2),
     hp(10 + vitality*2),
     armor(0),
     animationRunning(false)
@@ -372,7 +372,7 @@ void Character::resetStatsAndEq() {
     vitality = 1;
     charisma = 1;
     stamina = 1;
-    availablePoints = 5;
+    availablePoints = 2;
     hp = 10 + vitality * 2;
     staminaUsage = 5 + 5 * stamina;
 

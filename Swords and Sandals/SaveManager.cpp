@@ -124,9 +124,6 @@ void SaveManager::saveEquipedItemsToFile(Shop& shop, Character& player, bool isP
 
         fileArmor.close();
     }
-    else {
-        std::cerr << "Save equiped armor error." << std::endl;
-    }
 
     std::ofstream fileWeapon(weaponFilename, std::ios::trunc);
     if (player.getEquipedWeapons().size() > 0 && fileWeapon.is_open()) {
@@ -195,7 +192,13 @@ void SaveManager::loadEquipedItemsFromFile(Shop& shop, Character& player, bool i
                     Weapon newWeapon = weapon.second;
 
                     if (itemName == weaponName) {
-                        player.addWeapon(characterPart, newWeapon);
+                        if (isPlayer) {
+                            player.addWeapon(characterPart, newWeapon);
+                        }
+                        else {
+                            std::string key = "handLeft";
+                            player.addWeapon(key, newWeapon);
+                        }
                     }
                 }
 
@@ -235,4 +238,40 @@ int SaveManager::loadSettings() {
     }
 
     return volume;
+}
+
+void SaveManager::saveEnemyStatsToFile(Enemy& enemy) {
+    std::ofstream file("Saves/save_enemy_stats.txt", std::ios::trunc);
+    if (!file.is_open()) {
+        std::cerr << "Can not open a file." << std::endl;
+    }
+
+    file << enemy.getStrength() << " " << enemy.getAgility() << " " << enemy.getAttack() << " " << enemy.getDefence() << " "
+        << enemy.getVitality() << " " << enemy.getCharisma() << " " << enemy.getStamina() << " " << enemy.getStaminaUsage() << " "
+        << enemy.getAvailablePoints() << " " << enemy.getArmor() << " " << enemy.getHp();
+
+    file.close();
+}
+
+void SaveManager::loadEnemyStatsFromFile(Enemy& enemy) {
+    std::ifstream file("Saves/save_enemy_stats.txt");
+    if (!file.is_open()) {
+        std::cerr << "Can not open a file." << std::endl;
+    }
+
+    int strength, agility, attack, defence, vitality, charisma, stamina, staminaUsage, availablePoints, gold, armor, hp;
+
+    file >> strength >> agility >> attack >> defence >> vitality >> charisma >> stamina >> staminaUsage >> availablePoints >> armor >> hp;
+
+    file.close();
+
+    enemy.setStrength(strength);
+    enemy.setAgility(agility);
+    enemy.setAttack(attack);
+    enemy.setDefence(defence);
+    enemy.setVitality(vitality);
+    enemy.setCharisma(charisma);
+    enemy.setStamina(stamina);
+    enemy.setStaminaUsage(staminaUsage);
+    enemy.setAvailablePoints(availablePoints);
 }

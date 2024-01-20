@@ -1,2 +1,8 @@
+Dark knighthelmet
 Dark knightshoulderguard left
+Dark knightglove right
 Dark knightgauntlet left
+Dark knightgauntlet right
+Dark knightgreave left
+Dark knightshinguard right
+Dark knightboot right

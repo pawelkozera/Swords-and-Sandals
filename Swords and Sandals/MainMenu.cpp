@@ -73,11 +73,7 @@ void MainMenu::handleButtonClick(const std::string& buttonName, Player& player, 
         SaveManager::loadBoughtItemsFromFile(shop);
         SaveManager::loadEquipedItemsFromFile(shop, player, true);
         SaveManager::loadEquipedItemsFromFile(shop, enemy, false);
-
-        if (player.getRoundsWin() > 0) {
-            enemy.generateNewStatsAndEq(player, textureManager);
-        
-        }
+        SaveManager::loadEnemyStatsFromFile(enemy);
 
         gameState.setMode(GameState::GameMode::InCity);
 

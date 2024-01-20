@@ -6,6 +6,7 @@
 #include <fstream>
 #include "Shop.h"
 #include "Settings.h"
+#include "Enemy.h"
 
 class SaveManager
 {
@@ -19,5 +20,7 @@ public:
 	static void loadEquipedItemsFromFile(Shop& shop, Character& player, bool isPlayer);
 	static void saveSettings(int volume);
 	static int loadSettings();
+	static void saveEnemyStatsToFile(Enemy& enemy);
+	static void loadEnemyStatsFromFile(Enemy& enemy);
 };
 
