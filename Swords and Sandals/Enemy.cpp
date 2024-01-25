@@ -43,7 +43,8 @@ void Enemy::generateStats(Player& player) {
     setVitality(playerModifiedAttributes[4]);
     setCharisma(playerModifiedAttributes[5]);
     setStamina(playerModifiedAttributes[6]);
-    setHp(10 + playerModifiedAttributes[4] * 2);
+
+    setStaminaUsageAndHp();
 }
 
 void Enemy::generateArmor(Player& player, TextureManager& textureManager) {

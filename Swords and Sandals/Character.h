@@ -104,5 +104,6 @@ public:
 	const int getArmor();
 	std::unordered_map<std::string, bool> getEquipedArmor();
 	std::unordered_map<std::string, bool> getEquipedWeapons();
+	void setStaminaUsageAndHp();
 };
 

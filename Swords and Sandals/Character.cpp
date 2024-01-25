@@ -583,3 +583,8 @@ std::unordered_map<std::string, bool> Character::getEquipedArmor() {
 std::unordered_map<std::string, bool> Character::getEquipedWeapons() {
     return equipedWeapons;
 }
+
+void Character::setStaminaUsageAndHp() {
+    staminaUsage = 5 + 5 * stamina;
+    hp = 10 + vitality * 2;
+}

@@ -141,6 +141,7 @@ void Arena::handleButtonClickFightEnded(const std::string& buttonName, Player& p
         player.restoreArmor();
         enemy.restoreArmor();
         player.increaseRoundsWin();
+        player.setStaminaUsageAndHp();
 
         SaveManager::saveCharacterStatsToFile(player);
         SaveManager::saveBoughtItemsToFile(shop);
