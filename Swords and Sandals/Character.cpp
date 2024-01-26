@@ -373,8 +373,8 @@ void Character::resetStatsAndEq() {
     charisma = 1;
     stamina = 1;
     availablePoints = 2;
-    hp = 10 + vitality * 2;
-    staminaUsage = 5 + 5 * stamina;
+
+    setStaminaUsageAndHp();
 
     animationRunning = false;
 
